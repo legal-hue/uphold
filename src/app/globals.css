@@ -54,3 +54,85 @@ h1, h2, h3 {
   font-weight: 700;
   color: var(--uphold-neutral-800);
 }
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes countdown-ring {
+  from { stroke-dashoffset: 283; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.4s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.stagger-1 { animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation-delay: 0.3s; opacity: 0; }
+.stagger-4 { animation-delay: 0.4s; opacity: 0; }
+
+/* Strength meter */
+.strength-meter {
+  background: linear-gradient(90deg, var(--uphold-red-500) 0%, var(--uphold-amber-500) 50%, var(--uphold-green-success) 100%);
+  border-radius: 999px;
+}
+
+/* Countdown ring */
+.countdown-ring {
+  transform: rotate(-90deg);
+}
+
+/* Option select animation */
+.option-selected {
+  animation: scaleIn 0.2s ease-out;
+}
+
+/* Warm blob backgrounds */
+.blob-bg {
+  background: radial-gradient(ellipse at 30% 50%, var(--uphold-green-50) 0%, transparent 70%),
+              radial-gradient(ellipse at 70% 50%, var(--uphold-warm-50) 0%, transparent 70%);
+}
