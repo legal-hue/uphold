@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Briefcase, Home, FileText, ArrowRight, Shield, Users, Clock, CheckCircle } from "lucide-react";
+import { Briefcase, Home, FileText, ArrowRight, Shield, Users, Clock, CheckCircle, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const areas = [
@@ -133,12 +133,14 @@ export default function HomePage() {
 
           <div className="space-y-6">
             {[
-              { num: "1", title: "Tell us what happened", desc: "Simple questions, one at a time. No jargon.", icon: "💬" },
-              { num: "2", title: "See where you stand", desc: "Instant assessment with your key deadlines.", icon: "🛡️" },
-              { num: "3", title: "Get your plan", desc: "Step-by-step guidance tailored to your situation.", icon: "🗺️" },
+              { num: "1", title: "Tell us what happened", desc: "Simple questions, one at a time. No jargon.", icon: MessageCircle },
+              { num: "2", title: "See where you stand", desc: "Instant assessment with your key deadlines.", icon: Shield },
+              { num: "3", title: "Get your plan", desc: "Step-by-step guidance tailored to your situation.", icon: ArrowRight },
             ].map((step, i) => (
               <div key={step.num} className={`flex items-center gap-6 p-6 rounded-2xl bg-white border border-uphold-neutral-200 animate-fade-in-up stagger-${i + 1}`}>
-                <div className="text-4xl">{step.icon}</div>
+                <div className="w-12 h-12 bg-uphold-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <step.icon className="w-6 h-6 text-uphold-green-500" />
+                </div>
                 <div>
                   <div className="text-sm text-uphold-green-500 font-semibold mb-1">Step {step.num}</div>
                   <h3 className="text-lg font-bold text-uphold-neutral-800">{step.title}</h3>

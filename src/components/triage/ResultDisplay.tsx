@@ -21,7 +21,7 @@ const resultConfig = {
     colour: "text-uphold-success",
     bg: "bg-green-50",
     border: "border-green-200",
-    emoji: "🟢",
+    dotColour: "bg-green-500",
     encouragement: "Whatever happens next, you've taken the hardest step — you've started.",
   },
   maybe: {
@@ -30,7 +30,7 @@ const resultConfig = {
     colour: "text-uphold-amber",
     bg: "bg-amber-50",
     border: "border-amber-200",
-    emoji: "🟡",
+    dotColour: "bg-amber-500",
     encouragement: "Many successful cases start exactly where you are now. Let's keep going.",
   },
   difficult: {
@@ -39,7 +39,7 @@ const resultConfig = {
     colour: "text-uphold-red",
     bg: "bg-red-50",
     border: "border-red-200",
-    emoji: "🔴",
+    dotColour: "bg-red-500",
     encouragement: "Even if this route is difficult, you still have options. Don't give up.",
   },
 };
@@ -203,7 +203,7 @@ export function ResultDisplay() {
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
       {/* Result card with animation */}
       <div className={`${config.bg} ${config.border} border-2 rounded-2xl p-6 md:p-8 text-center mb-6 ${revealed ? "animate-scale-in" : "opacity-0"}`}>
-        <div className="text-5xl mb-4">{config.emoji}</div>
+        <div className={`w-4 h-4 ${config.dotColour} rounded-full mx-auto mb-4`} />
         <Icon className={`w-12 h-12 ${config.colour} mx-auto mb-3`} />
         <h1 className="text-2xl md:text-3xl font-bold text-uphold-neutral-800 mb-3">
           {config.title}

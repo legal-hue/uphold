@@ -296,8 +296,8 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
   if (currentIndex === -1) {
     return (
       <div className="max-w-xl mx-auto px-4 py-12 md:py-20 text-center">
-        <div className="w-20 h-20 bg-uphold-green-50 rounded-full flex items-center justify-center mx-auto mb-6 animate-scale-in">
-          <Shield className="w-10 h-10 text-uphold-green-500" />
+        <div className="w-16 h-16 bg-uphold-green-50 rounded-2xl flex items-center justify-center mx-auto mb-6 animate-scale-in border border-uphold-green-100">
+          <Shield className="w-8 h-8 text-uphold-green-500" />
         </div>
         <h1 className="text-2xl md:text-3xl font-bold text-uphold-neutral-800 mb-4 animate-fade-in-up stagger-1">
           {quiz.introMessage}
