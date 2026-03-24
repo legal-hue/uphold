@@ -303,7 +303,7 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
           {quiz.introMessage}
         </h1>
         <p className="text-uphold-neutral-600 mb-3 animate-fade-in-up stagger-2">
-          We&apos;ll ask you {totalQuestions} simple questions.
+          We&apos;ll ask you {totalQuestions} short questions.
         </p>
         <p className="text-sm text-uphold-neutral-400 mb-8 animate-fade-in-up stagger-2">
           Your answers stay on your device. We don&apos;t store anything.

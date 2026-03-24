@@ -60,9 +60,45 @@ function AnimatedCounter({ target, suffix = "" }: { target: string; suffix?: str
   return <span>{displayed}{suffix}</span>;
 }
 
+function PreviousResultBanner() {
+  const [hasResult, setHasResult] = useState(false);
+  const [area, setArea] = useState("");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("uphold_latest_triage");
+    if (stored) {
+      try {
+        const data = JSON.parse(stored);
+        setArea(data.area || "employment");
+        setHasResult(true);
+      } catch { /* ignore */ }
+    }
+  }, []);
+
+  if (!hasResult) return null;
+
+  return (
+    <div className="bg-uphold-green-50 border-b border-uphold-green-100">
+      <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        <p className="text-sm text-uphold-neutral-600">
+          You have a previous assessment result.
+        </p>
+        <Link
+          href={`/triage/${area}/result`}
+          className="text-sm font-semibold text-uphold-green-500 hover:text-uphold-green-700 flex items-center gap-1"
+        >
+          View result <ArrowRight className="w-3 h-3" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   return (
     <div>
+      <PreviousResultBanner />
+
       {/* Hero — stripped back, immediate */}
       <section className="blob-bg min-h-[70vh] flex items-center">
         <div className="max-w-3xl mx-auto px-4 py-16 md:py-24 text-center">
@@ -167,30 +203,6 @@ export default function HomePage() {
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <p className="text-xs text-uphold-neutral-400 font-medium">{t.who}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What you get — compact */}
-      <section className="py-16">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">Everything you need</h2>
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              "Instant claim assessment",
-              "Deadline calculator",
-              "Step-by-step guidance",
-              "Document generator",
-              "Evidence checklist",
-              "Timeline builder",
-              "Plain English only",
-              "100% free to start",
-            ].map((item) => (
-              <div key={item} className="flex items-center gap-2 py-2">
-                <CheckCircle className="w-4 h-4 text-uphold-green-500 flex-shrink-0" />
-                <span className="text-sm text-uphold-neutral-600">{item}</span>
               </div>
             ))}
           </div>

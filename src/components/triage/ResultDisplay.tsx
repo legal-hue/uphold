@@ -180,8 +180,11 @@ export function ResultDisplay() {
   useEffect(() => {
     const stored = localStorage.getItem("uphold_latest_triage");
     if (stored) {
-      setOutcome(JSON.parse(stored));
-      setTimeout(() => setRevealed(true), 500);
+      // Deliberate 1.5s pause — makes the result feel considered
+      setTimeout(() => {
+        setOutcome(JSON.parse(stored));
+        setTimeout(() => setRevealed(true), 400);
+      }, 1500);
     }
   }, []);
 
