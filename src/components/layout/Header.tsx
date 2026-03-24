@@ -16,14 +16,14 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/triage" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
+          <Link href="/#situations" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
             Check Your Rights
           </Link>
           <Link href="/about" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
             About
           </Link>
           <Link
-            href="/triage"
+            href="/#situations"
             className="bg-uphold-green-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-uphold-green-700 transition-colors"
           >
             Get Started — Free
@@ -42,7 +42,7 @@ export function Header() {
       {menuOpen && (
         <div className="md:hidden border-t border-uphold-neutral-200 bg-white px-4 py-4 space-y-3">
           <Link
-            href="/triage"
+            href="/#situations"
             className="block text-uphold-neutral-600 hover:text-uphold-green-500 py-2"
             onClick={() => setMenuOpen(false)}
           >
@@ -56,7 +56,7 @@ export function Header() {
             About
           </Link>
           <Link
-            href="/triage"
+            href="/#situations"
             className="block bg-uphold-green-500 text-white text-center font-semibold px-5 py-3 rounded-lg hover:bg-uphold-green-700 transition-colors"
             onClick={() => setMenuOpen(false)}
           >

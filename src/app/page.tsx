@@ -82,7 +82,7 @@ export default function HomePage() {
             Find out if you have a claim, see your deadlines, and get a clear plan — all in 2 minutes.
           </p>
 
-          <div className="space-y-4 max-w-md mx-auto animate-fade-in-up stagger-3">
+          <div id="situations" className="space-y-4 max-w-md mx-auto animate-fade-in-up stagger-3">
             {areas.map((area) => (
               <Link
                 key={area.title}
@@ -157,7 +157,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex items-center justify-center gap-2 mb-8">
             <Users className="w-5 h-5 text-uphold-green-500" />
-            <span className="text-sm font-medium text-uphold-neutral-600">People we&apos;ve helped</span>
+            <span className="text-sm font-medium text-uphold-neutral-600">Inspired by real cases</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -212,7 +212,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/triage"
-            className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold text-lg px-8 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors animate-pulse-soft"
+            className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold text-lg px-8 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors"
           >
             Check your rights now
             <ArrowRight className="w-5 h-5" />

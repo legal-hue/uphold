@@ -165,7 +165,7 @@ function InteractiveChecklist({ steps, area }: { steps: typeof nextSteps.employm
       {completedCount === steps.length && (
         <div className="mt-4 p-4 bg-uphold-green-50 border border-uphold-green-200 rounded-xl text-center animate-scale-in">
           <p className="text-uphold-green-700 font-semibold">
-            Amazing — you&apos;ve completed all the immediate steps!
+            Well done — you&apos;ve completed all the immediate steps.
           </p>
         </div>
       )}
