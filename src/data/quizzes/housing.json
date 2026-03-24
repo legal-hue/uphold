@@ -1,0 +1,120 @@
+{
+  "area": "housing",
+  "introMessage": "Living in poor conditions is stressful. Let's work out what your landlord should be doing — and what you can do about it.",
+  "questions": [
+    {
+      "id": "what_happened",
+      "text": "What's wrong with your home?",
+      "helpText": "Select all that apply.",
+      "type": "multiple",
+      "required": true,
+      "options": [
+        { "value": "damp_mould", "label": "Damp or mould", "score": 3 },
+        { "value": "heating", "label": "Broken heating or boiler", "score": 3 },
+        { "value": "leaks", "label": "Leaking roof, pipes, or windows", "score": 3 },
+        { "value": "structural", "label": "Cracks, collapsing ceiling, or structural damage", "score": 3 },
+        { "value": "pests", "label": "Mice, rats, or cockroaches", "score": 2 },
+        { "value": "electrical", "label": "Electrical faults or exposed wiring", "score": 3 },
+        { "value": "windows_doors", "label": "Broken windows or doors", "score": 2 },
+        { "value": "other", "label": "Something else", "score": 1 }
+      ]
+    },
+    {
+      "id": "when_happened",
+      "text": "When did you first notice the problem?",
+      "helpText": "This helps us understand how long you've been living with it.",
+      "type": "date",
+      "required": true,
+      "options": [
+        { "value": "date", "label": "", "score": 0, "flag": "deadline" }
+      ]
+    },
+    {
+      "id": "tenancy_type",
+      "text": "What type of tenant are you?",
+      "helpText": "This affects which rules apply to your landlord.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "council", "label": "Council tenant", "score": 3 },
+        { "value": "housing_association", "label": "Housing association", "score": 3 },
+        { "value": "private", "label": "Private landlord", "score": 2 },
+        { "value": "not_sure", "label": "I'm not sure", "score": 1 }
+      ]
+    },
+    {
+      "id": "reported",
+      "text": "Have you told your landlord about the problem?",
+      "helpText": "Your landlord is only legally responsible once they know about it. Reporting in writing is strongest.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes_writing", "label": "Yes, in writing (email or letter)", "score": 3 },
+        { "value": "yes_verbal", "label": "Yes, but only verbally or by phone", "score": 1 },
+        { "value": "yes_portal", "label": "Yes, through an online portal or app", "score": 2 },
+        { "value": "no", "label": "No, not yet", "score": 0 }
+      ]
+    },
+    {
+      "id": "landlord_response",
+      "text": "How did your landlord respond?",
+      "helpText": "This tells us whether they've met their legal obligations.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "fixed", "label": "They fixed it properly", "score": 0 },
+        { "value": "partial", "label": "They did some work but the problem remains", "score": 2 },
+        { "value": "ignored", "label": "They ignored me or haven't responded", "score": 3 },
+        { "value": "blamed_me", "label": "They blamed me for the problem", "score": 3 },
+        { "value": "not_reported", "label": "I haven't reported it yet", "score": 0 }
+      ]
+    },
+    {
+      "id": "health_impact",
+      "text": "Is the problem affecting your health?",
+      "helpText": "Health impact strengthens your case significantly. See your GP if you can — it creates evidence.",
+      "type": "multiple",
+      "required": false,
+      "options": [
+        { "value": "breathing", "label": "Breathing problems or asthma", "score": 3 },
+        { "value": "mental_health", "label": "Anxiety, depression, or sleep problems", "score": 2 },
+        { "value": "skin", "label": "Skin conditions or allergies", "score": 2 },
+        { "value": "children", "label": "It's affecting my children's health", "score": 3 },
+        { "value": "none", "label": "No health impact so far", "score": 0 }
+      ]
+    },
+    {
+      "id": "evidence",
+      "text": "What evidence do you have?",
+      "helpText": "Don't worry if you don't have much — we'll help you build your evidence.",
+      "type": "multiple",
+      "required": false,
+      "options": [
+        { "value": "photos", "label": "Photos or videos of the problem", "score": 2 },
+        { "value": "correspondence", "label": "Emails or letters to/from my landlord", "score": 2 },
+        { "value": "medical", "label": "GP letter or medical evidence", "score": 3 },
+        { "value": "council_report", "label": "Environmental health inspection report", "score": 3 },
+        { "value": "surveyor", "label": "Surveyor or inspection report", "score": 3 },
+        { "value": "none", "label": "I don't have any yet", "score": 0 }
+      ]
+    },
+    {
+      "id": "desired_outcome",
+      "text": "What do you want to happen?",
+      "type": "multiple",
+      "required": true,
+      "options": [
+        { "value": "repairs", "label": "I want the repairs done", "score": 1 },
+        { "value": "compensation", "label": "I want compensation for what I've been through", "score": 2 },
+        { "value": "rent_reduction", "label": "I want a rent reduction until it's fixed", "score": 1 },
+        { "value": "rehousing", "label": "I want to be moved to another property", "score": 1 },
+        { "value": "not_sure", "label": "I'm not sure yet", "score": 0 }
+      ]
+    }
+  ],
+  "scoring": {
+    "strong": { "min": 12, "message": "Based on what you've told us, your landlord may be in breach of their legal obligations. Here's what to do next." },
+    "maybe": { "min": 6, "message": "You may have grounds to take action. The key is making sure your landlord has been properly notified in writing." },
+    "difficult": { "min": 0, "message": "Your case may need more evidence before you can take formal action. Here are the steps to strengthen your position." }
+  }
+}

@@ -45,6 +45,44 @@ const microFeedback: Record<string, Record<string, string>> = {
     no: "You'll need to contact ACAS before you can go to tribunal. It's free.",
     whats_acas: "ACAS is a free service that helps resolve workplace disputes. We'll explain everything.",
   },
+  // Housing
+  tenancy_type: {
+    council: "Council tenants have strong legal protections under Awaab's Law.",
+    housing_association: "Housing associations must follow the same repair obligations as councils.",
+    private: "Private landlords have legal obligations under the Landlord and Tenant Act 1985.",
+    not_sure: "That's OK — your rights don't depend on knowing this. We'll guide you.",
+  },
+  reported: {
+    yes_writing: "Good — written evidence of your report is very important.",
+    yes_verbal: "A verbal report counts, but we'd recommend following up in writing.",
+    yes_portal: "Portal reports are good evidence. Take a screenshot for your records.",
+    no: "That's the first step. Your landlord must be told before they're legally responsible.",
+  },
+  landlord_response: {
+    fixed: "That's good. If the problem returns, document it and report again.",
+    partial: "A partial fix that doesn't resolve the issue still counts as a failure to repair.",
+    ignored: "Being ignored strengthens your case. Document the dates you reported it.",
+    blamed_me: "The government has been clear: damp and mould are not a lifestyle choice. Your landlord cannot blame you.",
+    not_reported: "Reporting is the essential first step. We can help you write the letter.",
+  },
+  // Contract
+  contract_type: {
+    written: "A written contract makes your position much stronger.",
+    partial: "Even partial written records can be used as evidence.",
+    verbal: "Verbal contracts are legally binding in most cases — they're just harder to prove.",
+    not_sure: "We can help you work out what evidence supports your agreement.",
+  },
+  contacted_other_party: {
+    yes_writing: "Good — courts look favourably on people who try to resolve things first.",
+    yes_verbal: "It's worth following up in writing so you have a record.",
+    no: "The first step is to write a formal letter setting out the issue.",
+    they_wont_respond: "If they won't respond, that strengthens your position for formal action.",
+  },
+  mediation: {
+    yes: "Having tried mediation shows the court you've been reasonable.",
+    no: "Consider it — it's often faster and cheaper than court. Many services are free.",
+    whats_that: "Mediation is where an independent person helps you both find a solution. It's usually free or low cost.",
+  },
 };
 
 function ClaimStrengthMeter({ score, maxScore }: { score: number; maxScore: number }) {

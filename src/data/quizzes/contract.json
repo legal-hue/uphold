@@ -1,0 +1,118 @@
+{
+  "area": "contract",
+  "introMessage": "Contract disputes can feel overwhelming. Let's work out where you stand and what your options are.",
+  "questions": [
+    {
+      "id": "what_happened",
+      "text": "What best describes your situation?",
+      "helpText": "Pick the one that fits closest.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "breach", "label": "Someone broke the terms of our agreement", "score": 3 },
+        { "value": "non_payment", "label": "Someone won't pay what they owe me", "score": 3 },
+        { "value": "faulty_service", "label": "I paid for a service that wasn't delivered properly", "score": 2 },
+        { "value": "faulty_goods", "label": "I bought goods that were faulty or not as described", "score": 2 },
+        { "value": "review", "label": "I need a contract reviewed before signing", "score": 1 },
+        { "value": "termination", "label": "Someone ended our contract unfairly", "score": 2 },
+        { "value": "other", "label": "Something else", "score": 1 }
+      ]
+    },
+    {
+      "id": "when_happened",
+      "text": "When did this happen?",
+      "helpText": "If it's ongoing, enter when the problem first started.",
+      "type": "date",
+      "required": true,
+      "options": [
+        { "value": "date", "label": "", "score": 0, "flag": "deadline" }
+      ]
+    },
+    {
+      "id": "contract_type",
+      "text": "Was the agreement written down?",
+      "helpText": "Written contracts are easier to enforce, but verbal agreements can also be binding.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "written", "label": "Yes, there's a written contract", "score": 3 },
+        { "value": "partial", "label": "Some things were written, some were verbal", "score": 2 },
+        { "value": "verbal", "label": "It was a verbal agreement only", "score": 1 },
+        { "value": "not_sure", "label": "I'm not sure", "score": 1 }
+      ]
+    },
+    {
+      "id": "value",
+      "text": "Roughly how much is at stake?",
+      "helpText": "This helps us advise on the right course of action. Claims under £10,000 can go to the Small Claims Court.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "under_1000", "label": "Under £1,000", "score": 1 },
+        { "value": "1000_5000", "label": "£1,000 – £5,000", "score": 2 },
+        { "value": "5000_10000", "label": "£5,000 – £10,000", "score": 2 },
+        { "value": "over_10000", "label": "Over £10,000", "score": 3 },
+        { "value": "not_sure", "label": "I'm not sure", "score": 1 }
+      ]
+    },
+    {
+      "id": "contacted_other_party",
+      "text": "Have you raised this with the other party?",
+      "helpText": "Courts expect you to try to resolve the issue directly before taking legal action.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes_writing", "label": "Yes, in writing", "score": 2 },
+        { "value": "yes_verbal", "label": "Yes, but only verbally", "score": 1 },
+        { "value": "no", "label": "No, not yet", "score": 0 },
+        { "value": "they_wont_respond", "label": "I tried but they won't respond", "score": 2 }
+      ]
+    },
+    {
+      "id": "evidence",
+      "text": "What evidence do you have?",
+      "helpText": "Evidence is key in contract disputes. Select all that apply.",
+      "type": "multiple",
+      "required": false,
+      "options": [
+        { "value": "contract", "label": "The contract or agreement", "score": 3 },
+        { "value": "correspondence", "label": "Emails, letters, or messages about the dispute", "score": 2 },
+        { "value": "invoices", "label": "Invoices or payment records", "score": 2 },
+        { "value": "receipts", "label": "Receipts for losses or expenses", "score": 2 },
+        { "value": "photos", "label": "Photos of faulty goods or work", "score": 1 },
+        { "value": "witnesses", "label": "Witnesses", "score": 1 },
+        { "value": "none", "label": "I don't have any yet", "score": 0 }
+      ]
+    },
+    {
+      "id": "mediation",
+      "text": "Have you tried mediation or alternative dispute resolution?",
+      "helpText": "Courts prefer it if you've attempted to resolve things without going to court. Mediation is often free or low cost.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes", "label": "Yes, we tried but it didn't work", "score": 2 },
+        { "value": "no", "label": "No, not yet", "score": 0 },
+        { "value": "whats_that", "label": "What's mediation?", "score": 0 }
+      ]
+    },
+    {
+      "id": "desired_outcome",
+      "text": "What outcome are you looking for?",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "payment", "label": "I want to be paid what I'm owed", "score": 2 },
+        { "value": "compensation", "label": "I want compensation for my losses", "score": 2 },
+        { "value": "contract_honoured", "label": "I want the agreement to be honoured", "score": 1 },
+        { "value": "contract_ended", "label": "I want to get out of the contract", "score": 1 },
+        { "value": "review_only", "label": "I just want to understand my options", "score": 0 }
+      ]
+    }
+  ],
+  "scoring": {
+    "strong": { "min": 12, "message": "Based on what you've told us, you may have strong grounds to take action. Here's what to do next." },
+    "maybe": { "min": 6, "message": "You may have a claim. The strength depends on your evidence and whether the other party was clearly in breach." },
+    "difficult": { "min": 0, "message": "This may be harder to pursue, but there are still steps you can take. Here's where to start." }
+  }
+}
