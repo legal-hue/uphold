@@ -1,0 +1,121 @@
+{
+  "area": "employment",
+  "introMessage": "I'm sorry this happened. Let's work out where you stand — it only takes a couple of minutes.",
+  "questions": [
+    {
+      "id": "what_happened",
+      "text": "Which of these best describes your situation?",
+      "helpText": "Pick the one that fits best. You can give more detail later.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "dismissed", "label": "I was fired or dismissed", "score": 3 },
+        { "value": "redundancy", "label": "I was made redundant", "score": 2 },
+        { "value": "constructive", "label": "I felt forced to resign", "score": 3 },
+        { "value": "discrimination", "label": "I'm being discriminated against", "score": 3 },
+        { "value": "harassment", "label": "I'm being bullied or harassed", "score": 2 },
+        { "value": "wages", "label": "I'm owed wages or holiday pay", "score": 2 },
+        { "value": "settlement", "label": "I've been offered a settlement agreement", "score": 2 },
+        { "value": "other", "label": "Something else", "score": 1 }
+      ]
+    },
+    {
+      "id": "when_happened",
+      "text": "When did this happen?",
+      "helpText": "If it's ongoing, enter when it first started. This helps us calculate your deadlines.",
+      "type": "date",
+      "required": true,
+      "options": [
+        { "value": "date", "label": "", "score": 0, "flag": "deadline" }
+      ]
+    },
+    {
+      "id": "still_employed",
+      "text": "Are you still working there?",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes", "label": "Yes, I'm still employed", "score": 1 },
+        { "value": "notice", "label": "I'm on my notice period", "score": 2 },
+        { "value": "no", "label": "No, I've already left", "score": 2 },
+        { "value": "suspended", "label": "I've been suspended", "score": 2 }
+      ]
+    },
+    {
+      "id": "length_of_service",
+      "text": "How long have you worked there?",
+      "helpText": "This affects which rights apply to you. From January 2027, unfair dismissal protection starts from day one.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "under_6_months", "label": "Less than 6 months", "score": 0 },
+        { "value": "6_to_2_years", "label": "6 months to 2 years", "score": 1 },
+        { "value": "over_2_years", "label": "More than 2 years", "score": 3 }
+      ]
+    },
+    {
+      "id": "protected_characteristic",
+      "text": "Do you think this is connected to any of the following?",
+      "helpText": "Discrimination claims don't need 2 years' service. Select all that apply.",
+      "type": "multiple",
+      "required": false,
+      "options": [
+        { "value": "race", "label": "Race or ethnicity", "score": 3 },
+        { "value": "sex", "label": "Sex or gender", "score": 3 },
+        { "value": "disability", "label": "Disability or health condition", "score": 3 },
+        { "value": "age", "label": "Age", "score": 3 },
+        { "value": "pregnancy", "label": "Pregnancy or maternity", "score": 3 },
+        { "value": "religion", "label": "Religion or belief", "score": 3 },
+        { "value": "sexual_orientation", "label": "Sexual orientation", "score": 3 },
+        { "value": "none", "label": "None of these", "score": 0 }
+      ]
+    },
+    {
+      "id": "grievance",
+      "text": "Have you raised a formal grievance?",
+      "helpText": "A grievance is a formal written complaint to your employer. It's not required, but it can strengthen your case.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes_written", "label": "Yes, in writing", "score": 2 },
+        { "value": "yes_verbal", "label": "Yes, but only verbally", "score": 1 },
+        { "value": "no", "label": "No, I haven't", "score": 0 },
+        { "value": "not_sure", "label": "I'm not sure", "score": 0 }
+      ]
+    },
+    {
+      "id": "evidence",
+      "text": "Do you have any evidence?",
+      "helpText": "Evidence makes your case stronger, but don't worry if you don't have much yet — we'll help you gather what you need.",
+      "type": "multiple",
+      "required": false,
+      "options": [
+        { "value": "emails", "label": "Emails or messages", "score": 2 },
+        { "value": "contract", "label": "My employment contract", "score": 1 },
+        { "value": "letters", "label": "Letters from my employer", "score": 2 },
+        { "value": "witnesses", "label": "Witnesses who saw what happened", "score": 2 },
+        { "value": "medical", "label": "Medical evidence (GP notes, sick notes)", "score": 1 },
+        { "value": "payslips", "label": "Payslips or financial records", "score": 1 },
+        { "value": "none", "label": "I don't have any yet", "score": 0 }
+      ]
+    },
+    {
+      "id": "acas",
+      "text": "Have you contacted ACAS?",
+      "helpText": "ACAS provides free early conciliation. You must contact them before you can file a tribunal claim.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes_certificate", "label": "Yes, and I have a certificate", "score": 2 },
+        { "value": "yes_ongoing", "label": "Yes, it's still ongoing", "score": 1 },
+        { "value": "no", "label": "No, not yet", "score": 0, "flag": "urgent" },
+        { "value": "whats_acas", "label": "What's ACAS?", "score": 0, "flag": "urgent" }
+      ]
+    }
+  ],
+  "scoring": {
+    "strong": { "min": 12, "message": "Based on what you've told us, you may have a strong case. Here's what to do next." },
+    "maybe": { "min": 6, "message": "You may have a claim, but we need to look at the details. Here are your options." },
+    "difficult": { "min": 0, "message": "This may be a difficult case to pursue, but you still have options. Here's what we suggest." }
+  }
+}

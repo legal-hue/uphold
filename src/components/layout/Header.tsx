@@ -1,0 +1,69 @@
+"use client";
+
+import Link from "next/link";
+import { Shield, Menu, X } from "lucide-react";
+import { useState } from "react";
+
+export function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <header className="bg-white border-b border-uphold-neutral-200 sticky top-0 z-50">
+      <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <Shield className="w-7 h-7 text-uphold-green-500" />
+          <span className="text-xl font-bold text-uphold-neutral-800 tracking-tight">Uphold</span>
+        </Link>
+
+        <nav className="hidden md:flex items-center gap-8">
+          <Link href="/triage" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
+            Check Your Rights
+          </Link>
+          <Link href="/about" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
+            About
+          </Link>
+          <Link
+            href="/triage"
+            className="bg-uphold-green-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-uphold-green-700 transition-colors"
+          >
+            Get Started — Free
+          </Link>
+        </nav>
+
+        <button
+          className="md:hidden p-2"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {menuOpen && (
+        <div className="md:hidden border-t border-uphold-neutral-200 bg-white px-4 py-4 space-y-3">
+          <Link
+            href="/triage"
+            className="block text-uphold-neutral-600 hover:text-uphold-green-500 py-2"
+            onClick={() => setMenuOpen(false)}
+          >
+            Check Your Rights
+          </Link>
+          <Link
+            href="/about"
+            className="block text-uphold-neutral-600 hover:text-uphold-green-500 py-2"
+            onClick={() => setMenuOpen(false)}
+          >
+            About
+          </Link>
+          <Link
+            href="/triage"
+            className="block bg-uphold-green-500 text-white text-center font-semibold px-5 py-3 rounded-lg hover:bg-uphold-green-700 transition-colors"
+            onClick={() => setMenuOpen(false)}
+          >
+            Get Started — Free
+          </Link>
+        </div>
+      )}
+    </header>
+  );
+}

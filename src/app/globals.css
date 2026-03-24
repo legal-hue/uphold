@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAFAF7;
+  --foreground: #2D2D2D;
+  --uphold-green-50: #F0F7F4;
+  --uphold-green-100: #D1E8DB;
+  --uphold-green-500: #3D8B5E;
+  --uphold-green-700: #2A6242;
+  --uphold-warm-50: #FDF8F3;
+  --uphold-warm-100: #F5EDE3;
+  --uphold-warm-200: #E8DDD0;
+  --uphold-neutral-50: #F8F8F8;
+  --uphold-neutral-100: #EFEFEF;
+  --uphold-neutral-200: #E0E0E0;
+  --uphold-neutral-400: #9A9A9A;
+  --uphold-neutral-600: #5A5A5A;
+  --uphold-neutral-800: #2D2D2D;
+  --uphold-red-500: #C44D4D;
+  --uphold-amber-500: #D4A843;
+  --uphold-green-success: #4CAF73;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-uphold-green-50: var(--uphold-green-50);
+  --color-uphold-green-100: var(--uphold-green-100);
+  --color-uphold-green-500: var(--uphold-green-500);
+  --color-uphold-green-700: var(--uphold-green-700);
+  --color-uphold-warm-50: var(--uphold-warm-50);
+  --color-uphold-warm-100: var(--uphold-warm-100);
+  --color-uphold-warm-200: var(--uphold-warm-200);
+  --color-uphold-neutral-50: var(--uphold-neutral-50);
+  --color-uphold-neutral-100: var(--uphold-neutral-100);
+  --color-uphold-neutral-200: var(--uphold-neutral-200);
+  --color-uphold-neutral-400: var(--uphold-neutral-400);
+  --color-uphold-neutral-600: var(--uphold-neutral-600);
+  --color-uphold-neutral-800: var(--uphold-neutral-800);
+  --color-uphold-red: var(--uphold-red-500);
+  --color-uphold-amber: var(--uphold-amber-500);
+  --color-uphold-success: var(--uphold-green-success);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  color: var(--uphold-neutral-800);
 }
