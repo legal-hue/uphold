@@ -14,6 +14,8 @@ import {
   Shield,
 } from "lucide-react";
 import type { Stage, StageStatus, Deadline } from "@/lib/types";
+import { getTemplatesForArea } from "@/lib/documents";
+import type { PracticeArea } from "@/lib/types";
 
 interface StageDetailProps {
   stage: Stage;
@@ -287,6 +289,29 @@ export function StageDetail({
         <GuidanceSection guidance={stage.guidance} />
       </div>
 
+      {/* Evidence builder link (for evidence stages) */}
+      {stage.id === "evidence" && (
+        <div className="mb-6 animate-fade-in-up stagger-2">
+          <Link
+            href={`/evidence/${area}`}
+            className="flex items-center gap-3 p-4 bg-uphold-green-50 rounded-xl border-2 border-uphold-green-200 hover:border-uphold-green-500 transition-colors"
+          >
+            <div className="w-10 h-10 bg-uphold-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-sm text-uphold-neutral-800">
+                Evidence Timeline
+              </h3>
+              <p className="text-xs text-uphold-neutral-600">
+                Log and organise your evidence in date order
+              </p>
+            </div>
+            <ArrowRight className="w-5 h-5 text-uphold-green-500" />
+          </Link>
+        </div>
+      )}
+
       {/* Checklist */}
       <div className="mb-8 animate-fade-in-up stagger-3">
         <StageChecklist
@@ -306,18 +331,45 @@ export function StageDetail({
             </h3>
           </div>
           <div className="space-y-2">
-            {stage.documentsAvailable.map((doc) => (
-              <div
-                key={doc}
-                className="flex items-center gap-3 p-3 bg-uphold-neutral-50 rounded-xl border border-uphold-neutral-200"
-              >
-                <FileText className="w-4 h-4 text-uphold-neutral-400" />
-                <span className="text-sm text-uphold-neutral-600">{doc}</span>
-                <span className="text-xs text-uphold-neutral-400 ml-auto">
-                  Coming soon
-                </span>
-              </div>
-            ))}
+            {(() => {
+              const areaTemplates = getTemplatesForArea(area as PracticeArea).filter(
+                (t) => t.stageId === stage.id
+              );
+              return stage.documentsAvailable.map((doc) => {
+                const matchedTemplate = areaTemplates.find(
+                  (t) =>
+                    t.name.toLowerCase().includes(doc.toLowerCase().split(" ")[0]) ||
+                    doc.toLowerCase().includes(t.name.toLowerCase().split(" ")[0])
+                );
+                if (matchedTemplate) {
+                  return (
+                    <Link
+                      key={doc}
+                      href={`/documents/${matchedTemplate.id}`}
+                      className="flex items-center gap-3 p-3 bg-uphold-green-50 rounded-xl border border-uphold-green-200 hover:border-uphold-green-500 transition-colors"
+                    >
+                      <FileText className="w-4 h-4 text-uphold-green-500" />
+                      <span className="text-sm font-medium text-uphold-green-700">
+                        {matchedTemplate.name}
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-uphold-green-500 ml-auto" />
+                    </Link>
+                  );
+                }
+                return (
+                  <div
+                    key={doc}
+                    className="flex items-center gap-3 p-3 bg-uphold-neutral-50 rounded-xl border border-uphold-neutral-200"
+                  >
+                    <FileText className="w-4 h-4 text-uphold-neutral-400" />
+                    <span className="text-sm text-uphold-neutral-600">{doc}</span>
+                    <span className="text-xs text-uphold-neutral-400 ml-auto">
+                      Coming soon
+                    </span>
+                  </div>
+                );
+              });
+            })()}
           </div>
         </div>
       )}

@@ -7,9 +7,17 @@ import { useState, useEffect } from "react";
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hasCase, setHasCase] = useState(false);
+  const [caseArea, setCaseArea] = useState("employment");
 
   useEffect(() => {
-    setHasCase(localStorage.getItem("uphold_case_employment") !== null);
+    const areas = ["employment", "housing", "contract"] as const;
+    for (const area of areas) {
+      if (localStorage.getItem(`uphold_case_${area}`) !== null) {
+        setHasCase(true);
+        setCaseArea(area);
+        return;
+      }
+    }
   }, []);
 
   return (
@@ -25,7 +33,7 @@ export function Header() {
             Check Your Rights
           </Link>
           {hasCase && (
-            <Link href="/journey/employment" className="text-sm text-uphold-green-500 hover:text-uphold-green-700 transition-colors flex items-center gap-1 font-semibold">
+            <Link href={`/journey/${caseArea}`} className="text-sm text-uphold-green-500 hover:text-uphold-green-700 transition-colors flex items-center gap-1 font-semibold">
               <MapPin className="w-3.5 h-3.5" />
               My Journey
             </Link>
@@ -61,7 +69,7 @@ export function Header() {
           </Link>
           {hasCase && (
             <Link
-              href="/journey/employment"
+              href={`/journey/${caseArea}`}
               className="block text-uphold-green-500 hover:text-uphold-green-700 py-2 flex items-center gap-1 font-semibold"
               onClick={() => setMenuOpen(false)}
             >

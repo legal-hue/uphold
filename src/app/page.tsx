@@ -74,7 +74,14 @@ function PreviousResultBanner() {
         setHasResult(true);
       } catch { /* ignore */ }
     }
-    setHasCase(localStorage.getItem("uphold_case_employment") !== null);
+    const areas = ["employment", "housing", "contract"];
+    for (const a of areas) {
+      if (localStorage.getItem(`uphold_case_${a}`) !== null) {
+        setHasCase(true);
+        if (!stored) setArea(a);
+        break;
+      }
+    }
   }, []);
 
   if (!hasResult) return null;
