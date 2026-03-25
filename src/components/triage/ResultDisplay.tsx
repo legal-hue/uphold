@@ -290,6 +290,21 @@ export function ResultDisplay() {
         Time limits are approximate — verify with a legal professional.
       </div>
 
+      {/* Start journey CTA */}
+      {outcome.area === "employment" && (
+        <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <Link
+            href="/journey/employment"
+            className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
+          >
+            Start your guided journey
+            <span className="block text-sm font-normal opacity-90 mt-1">
+              Step-by-step guidance from here to resolution
+            </span>
+          </Link>
+        </div>
+      )}
+
       {/* CTAs */}
       <div className="flex flex-col items-center gap-3 mt-6">
         <Link

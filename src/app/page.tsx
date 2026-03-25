@@ -62,6 +62,7 @@ function AnimatedCounter({ target, suffix = "" }: { target: string; suffix?: str
 
 function PreviousResultBanner() {
   const [hasResult, setHasResult] = useState(false);
+  const [hasCase, setHasCase] = useState(false);
   const [area, setArea] = useState("");
 
   useEffect(() => {
@@ -73,6 +74,7 @@ function PreviousResultBanner() {
         setHasResult(true);
       } catch { /* ignore */ }
     }
+    setHasCase(localStorage.getItem("uphold_case_employment") !== null);
   }, []);
 
   if (!hasResult) return null;
@@ -81,13 +83,13 @@ function PreviousResultBanner() {
     <div className="bg-uphold-green-50 border-b border-uphold-green-100">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <p className="text-sm text-uphold-neutral-600">
-          You have a previous assessment result.
+          {hasCase ? "You have an active case journey." : "You have a previous assessment result."}
         </p>
         <Link
-          href={`/triage/${area}/result`}
+          href={hasCase ? `/journey/${area}` : `/triage/${area}/result`}
           className="text-sm font-semibold text-uphold-green-500 hover:text-uphold-green-700 flex items-center gap-1"
         >
-          View result <ArrowRight className="w-3 h-3" />
+          {hasCase ? "Continue journey" : "View result"} <ArrowRight className="w-3 h-3" />
         </Link>
       </div>
     </div>
