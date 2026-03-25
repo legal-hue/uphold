@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.uphold.app",
-  appName: "Uphold",
+  appId: "com.upheld.app",
+  appName: "Upheld",
   webDir: "out",
   server: {
     androidScheme: "https",

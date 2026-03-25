@@ -25,7 +25,7 @@ export function Header() {
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <Shield className="w-7 h-7 text-uphold-green-500" />
-          <span className="text-xl font-bold text-uphold-neutral-800 tracking-tight">Uphold</span>
+          <span className="text-xl font-bold text-uphold-neutral-800 tracking-tight">Upheld</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">

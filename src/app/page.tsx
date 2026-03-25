@@ -29,8 +29,8 @@ const areas = [
 ];
 
 const testimonials = [
-  { quote: "I didn't think I had a case. Uphold showed me I did — and what to do next.", who: "Sarah, unfair dismissal" },
-  { quote: "My landlord ignored my complaints for months. Uphold helped me write a letter that finally got things moving.", who: "James, housing disrepair" },
+  { quote: "I didn't think I had a case. Upheld showed me I did — and what to do next.", who: "Sarah, unfair dismissal" },
+  { quote: "My landlord ignored my complaints for months. Upheld helped me write a letter that finally got things moving.", who: "James, housing disrepair" },
   { quote: "I was terrified of the tribunal process. The step-by-step guide made it feel manageable.", who: "Priya, discrimination claim" },
 ];
 

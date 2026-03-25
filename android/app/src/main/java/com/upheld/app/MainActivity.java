@@ -1,4 +1,4 @@
-package com.uphold.app;
+package com.upheld.app;
 
 import com.getcapacitor.BridgeActivity;
 

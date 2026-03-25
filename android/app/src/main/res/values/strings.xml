@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Uphold</string>
-    <string name="title_activity_main">Uphold</string>
-    <string name="package_name">com.uphold.app</string>
-    <string name="custom_url_scheme">com.uphold.app</string>
+    <string name="app_name">Upheld</string>
+    <string name="title_activity_main">Upheld</string>
+    <string name="package_name">com.upheld.app</string>
+    <string name="custom_url_scheme">com.upheld.app</string>
 </resources>

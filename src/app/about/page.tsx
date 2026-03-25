@@ -5,7 +5,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 md:py-20">
       <h1 className="text-3xl md:text-4xl font-bold text-uphold-neutral-800 mb-6 text-center">
-        About Uphold
+        About Upheld
       </h1>
 
       <p className="text-lg text-uphold-neutral-600 text-center mb-12 leading-relaxed max-w-2xl mx-auto">
@@ -48,7 +48,7 @@ export default function AboutPage() {
         <h2 className="text-xl font-bold text-uphold-neutral-800 mb-4">Important information</h2>
         <div className="space-y-3 text-sm text-uphold-neutral-600 leading-relaxed">
           <p>
-            <strong>Uphold provides legal information, not legal advice.</strong> We help you
+            <strong>Upheld provides legal information, not legal advice.</strong> We help you
             understand your rights and navigate the process, but we are not a law firm and
             cannot represent you.
           </p>

@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Uphold — Know Where You Stand",
+  title: "Upheld — Your Rights, Upheld.",
   description: "Free legal guidance for UK employees, tenants, and contract disputes. Check your rights, understand your deadlines, and navigate your case step by step.",
   keywords: ["employment rights", "housing disrepair", "UK legal help", "unfair dismissal", "tribunal"],
 };
