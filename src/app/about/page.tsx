@@ -9,7 +9,7 @@ export default function AboutPage() {
       </h1>
 
       <p className="text-lg text-uphold-neutral-600 text-center mb-12 leading-relaxed max-w-2xl mx-auto">
-        We believe everyone should be able to understand their legal rights —
+        We believe everyone should be able to understand their legal rights -
         not just those who can afford a solicitor.
       </p>
 

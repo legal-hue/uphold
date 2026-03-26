@@ -22,7 +22,7 @@ const resultConfig = {
     bg: "bg-green-50",
     border: "border-green-200",
     dotColour: "bg-green-500",
-    encouragement: "Whatever happens next, you've taken the hardest step — you've started.",
+    encouragement: "Whatever happens next, you've taken the hardest step. You've started.",
   },
   maybe: {
     icon: AlertTriangle,
@@ -165,7 +165,7 @@ function InteractiveChecklist({ steps, area }: { steps: typeof nextSteps.employm
       {completedCount === steps.length && (
         <div className="mt-4 p-4 bg-uphold-green-50 border border-uphold-green-200 rounded-xl text-center animate-scale-in">
           <p className="text-uphold-green-700 font-semibold">
-            Well done — you&apos;ve completed all the immediate steps.
+            Well done. You&apos;ve completed all the immediate steps.
           </p>
         </div>
       )}
@@ -180,7 +180,7 @@ export function ResultDisplay() {
   useEffect(() => {
     const stored = localStorage.getItem("uphold_latest_triage");
     if (stored) {
-      // Deliberate 1.5s pause — makes the result feel considered
+      // Deliberate 1.5s pause - makes the result feel considered
       setTimeout(() => {
         setOutcome(JSON.parse(stored));
         setTimeout(() => setRevealed(true), 400);
@@ -263,7 +263,7 @@ export function ResultDisplay() {
           <div>
             <h2 className="font-bold text-uphold-neutral-800 mb-2">How are you feeling?</h2>
             <p className="text-sm text-uphold-neutral-600 mb-3 leading-relaxed">
-              Going through this is stressful — that&apos;s completely normal. You&apos;re not alone.
+              Going through this is stressful. That&apos;s completely normal. You&apos;re not alone.
               Over 500,000 people are going through something similar right now.
             </p>
             <div className="space-y-2 text-sm">
@@ -277,7 +277,7 @@ export function ResultDisplay() {
               </a>
               <a href="https://www.mind.org.uk" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-uphold-green-500 hover:text-uphold-green-700">
                 <ExternalLink className="w-4 h-4" />
-                Mind — mental health support
+                Mind - mental health support
               </a>
             </div>
           </div>
@@ -287,7 +287,7 @@ export function ResultDisplay() {
       {/* Disclaimer */}
       <div className="text-xs text-uphold-neutral-400 text-center p-4 border-t border-uphold-neutral-200">
         This assessment is based on general legal principles and does not constitute legal advice.
-        Time limits are approximate — verify with a legal professional.
+        Time limits are approximate. Verify with a legal professional.
       </div>
 
       {/* Start journey CTA */}

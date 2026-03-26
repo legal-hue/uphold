@@ -25,7 +25,7 @@ const microFeedback: Record<string, Record<string, string>> = {
   still_employed: {
     yes: "Being still employed gives you more options.",
     notice: "Make sure you document everything during your notice period.",
-    no: "Don't worry — you can still take action after leaving.",
+    no: "Don't worry, you can still take action after leaving.",
     suspended: "A suspension doesn't mean you've done anything wrong.",
   },
   length_of_service: {
@@ -35,12 +35,12 @@ const microFeedback: Record<string, Record<string, string>> = {
   },
   grievance: {
     yes_written: "Having a written grievance strengthens your position.",
-    yes_verbal: "A verbal complaint counts — but we'd recommend putting it in writing too.",
+    yes_verbal: "A verbal complaint counts, but we'd recommend putting it in writing too.",
     no: "It's not too late to raise one. We can help you draft it.",
-    not_sure: "No worries — we'll guide you through this.",
+    not_sure: "No worries, we'll guide you through this.",
   },
   acas: {
-    yes_certificate: "Great — you're ready to file a tribunal claim if needed.",
+    yes_certificate: "Great, you're ready to file a tribunal claim if needed.",
     yes_ongoing: "ACAS conciliation can lead to a settlement without tribunal.",
     no: "You'll need to contact ACAS before you can go to tribunal. It's free.",
     whats_acas: "ACAS is a free service that helps resolve workplace disputes. We'll explain everything.",
@@ -50,10 +50,10 @@ const microFeedback: Record<string, Record<string, string>> = {
     council: "Council tenants have strong legal protections under Awaab's Law.",
     housing_association: "Housing associations must follow the same repair obligations as councils.",
     private: "Private landlords have legal obligations under the Landlord and Tenant Act 1985.",
-    not_sure: "That's OK — your rights don't depend on knowing this. We'll guide you.",
+    not_sure: "That's OK. Your rights don't depend on knowing this. We'll guide you.",
   },
   reported: {
-    yes_writing: "Good — written evidence of your report is very important.",
+    yes_writing: "Good. Written evidence of your report is very important.",
     yes_verbal: "A verbal report counts, but we'd recommend following up in writing.",
     yes_portal: "Portal reports are good evidence. Take a screenshot for your records.",
     no: "That's the first step. Your landlord must be told before they're legally responsible.",
@@ -69,18 +69,18 @@ const microFeedback: Record<string, Record<string, string>> = {
   contract_type: {
     written: "A written contract makes your position much stronger.",
     partial: "Even partial written records can be used as evidence.",
-    verbal: "Verbal contracts are legally binding in most cases — they're just harder to prove.",
+    verbal: "Verbal contracts are legally binding in most cases, but they're just harder to prove.",
     not_sure: "We can help you work out what evidence supports your agreement.",
   },
   contacted_other_party: {
-    yes_writing: "Good — courts look favourably on people who try to resolve things first.",
+    yes_writing: "Good. Courts look favourably on people who try to resolve things first.",
     yes_verbal: "It's worth following up in writing so you have a record.",
     no: "The first step is to write a formal letter setting out the issue.",
     they_wont_respond: "If they won't respond, that strengthens your position for formal action.",
   },
   mediation: {
     yes: "Having tried mediation shows the court you've been reasonable.",
-    no: "Consider it — it's often faster and cheaper than court. Many services are free.",
+    no: "Consider it. It's often faster and cheaper than court. Many services are free.",
     whats_that: "Mediation is where an independent person helps you both find a solution. It's usually free or low cost.",
   },
 };
@@ -149,8 +149,8 @@ function DeadlinePreview({ dateStr }: { dateStr: string }) {
           </div>
           <div className="text-xs text-uphold-neutral-600 mt-1">
             {isPast
-              ? `The standard deadline was ${deadlineStr}. Don't give up — speak to a professional urgently.`
-              : `Your ET1 deadline is ${deadlineStr}. Contact ACAS first — it's free.`}
+              ? `The standard deadline was ${deadlineStr}. Don't give up. Speak to a professional urgently.`
+              : `Your ET1 deadline is ${deadlineStr}. Contact ACAS first. It's free.`}
           </div>
         </div>
       </div>

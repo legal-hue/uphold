@@ -9,7 +9,7 @@ export const housingJourney: Journey = {
       name: "Report the problem",
       shortName: "Report",
       description:
-        "Notify your landlord in writing. This is the essential first step — they can only be held responsible once they know about the problem.",
+        "Notify your landlord in writing. This is the essential first step. They can only be held responsible once they know about the problem.",
       guidance: [
         "Your landlord is legally responsible for repairs to the structure and exterior of your home, heating and hot water systems, and plumbing. But they can only be held responsible once they know about the problem.",
         "The most important thing you can do right now is report the problem in writing. An email or letter creates a dated record that you told them. A phone call is harder to prove.",
@@ -49,10 +49,10 @@ export const housingJourney: Journey = {
       documentsAvailable: ["Repair Request Letter"],
       estimatedDuration: "1-2 hours",
       tips: [
-        "Always report in writing — emails are best because they're automatically dated.",
+        "Always report in writing. Emails are best because they're automatically dated.",
         "If you've already reported verbally, follow up in writing saying 'as discussed on [date]...'",
-        "Keep taking photos regularly — it shows the problem is ongoing or getting worse.",
-        "Don't stop paying rent because of disrepair — it can be used against you.",
+        "Keep taking photos regularly. It shows the problem is ongoing or getting worse.",
+        "Don't stop paying rent because of disrepair. It can be used against you.",
       ],
     },
     {
@@ -61,7 +61,7 @@ export const housingJourney: Journey = {
       name: "Build your evidence",
       shortName: "Evidence",
       description:
-        "Document everything. Photos, medical records, correspondence — the more evidence you have, the stronger your position.",
+        "Document everything. Photos, medical records, correspondence. The more evidence you have, the stronger your position.",
       guidance: [
         "Evidence is what turns a complaint into a case. Your landlord may dispute what you say, but they can't argue with dated photos, medical records, and written correspondence.",
         "The key types of evidence for housing disrepair are: photos and videos of the conditions, your correspondence with the landlord, any inspection reports, medical evidence if your health has been affected, and a log of how long the problems have persisted.",
@@ -73,14 +73,14 @@ export const housingJourney: Journey = {
           id: "evidence-1",
           text: "Take dated photos and videos of all affected areas",
           helpText:
-            "Do this regularly — weekly if the problem is ongoing. Show the progression.",
+            "Do this regularly, weekly if the problem is ongoing. Show the progression.",
           required: true,
         },
         {
           id: "evidence-2",
           text: "Save all correspondence with your landlord",
           helpText:
-            "Emails, letters, text messages, portal messages — save everything.",
+            "Emails, letters, text messages, portal messages. Save everything.",
           required: true,
         },
         {
@@ -109,8 +109,8 @@ export const housingJourney: Journey = {
       estimatedDuration: "1-4 weeks",
       tips: [
         "Date everything. A photo without a date is much weaker as evidence.",
-        "If you have children, document how the conditions affect them specifically — this strengthens your case significantly.",
-        "Your landlord cannot blame you for damp and mould — the government has been clear on this.",
+        "If you have children, document how the conditions affect them specifically. This strengthens your case significantly.",
+        "Your landlord cannot blame you for damp and mould. The government has been clear on this.",
         "An Environmental Health inspection report is one of the strongest pieces of evidence you can have.",
       ],
     },
@@ -160,7 +160,7 @@ export const housingJourney: Journey = {
       documentsAvailable: [],
       estimatedDuration: "2-4 weeks",
       tips: [
-        "Environmental Health inspections are free — you don't need to pay for anything.",
+        "Environmental Health inspections are free. You don't need to pay for anything.",
         "Keep a record of every contact with the council including dates, names, and reference numbers.",
         "If the council issues an improvement notice, your landlord must comply. Failure to do so is a criminal offence.",
         "You can involve your local councillor or MP if the council is slow to respond.",
@@ -175,7 +175,7 @@ export const housingJourney: Journey = {
         "A formal letter before action puts your landlord on notice that you're prepared to take legal steps if they don't fix the problem.",
       guidance: [
         "If your landlord still hasn't acted, it's time to send a formal letter before action. This is a legal letter that tells your landlord you intend to take court action if the repairs aren't done.",
-        "The letter should set out what's wrong, how long it's been, what you've already done to report it, and what you want them to do. Give them a clear deadline — usually 14 days.",
+        "The letter should set out what's wrong, how long it's been, what you've already done to report it, and what you want them to do. Give them a clear deadline, usually 14 days.",
         "This letter shows a court that you've been reasonable and given your landlord every opportunity to fix the problem before resorting to legal action.",
         "Many cases settle at this stage. A well-written letter before action often prompts landlords to take the issue seriously for the first time.",
       ],
@@ -265,7 +265,7 @@ export const housingJourney: Journey = {
       estimatedDuration: "2-6 months",
       tips: [
         "Most housing disrepair cases settle before reaching a full hearing.",
-        "No-win no-fee solicitors are common for housing disrepair — you shouldn't need to pay upfront.",
+        "No-win no-fee solicitors are common for housing disrepair. You shouldn't need to pay upfront.",
         "Keep living in the property and paying rent during the process. Moving out can weaken your position.",
         "Document any new damage or worsening conditions as the case progresses.",
       ],
@@ -302,7 +302,7 @@ export const housingJourney: Journey = {
           id: "resolution-3",
           text: "Store all case documents safely",
           helpText:
-            "Keep everything — you may need it if problems recur.",
+            "Keep everything. You may need it if problems recur.",
           required: false,
         },
         {

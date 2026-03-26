@@ -1,6 +1,6 @@
 {
   "area": "employment",
-  "introMessage": "I'm sorry this happened. Let's work out where you stand — it only takes a couple of minutes.",
+  "introMessage": "I'm sorry this happened. Let's work out where you stand. It only takes a couple of minutes.",
   "questions": [
     {
       "id": "what_happened",
@@ -86,7 +86,7 @@
     {
       "id": "evidence",
       "text": "Do you have any evidence?",
-      "helpText": "Evidence makes your case stronger, but don't worry if you don't have much yet — we'll help you gather what you need.",
+      "helpText": "Evidence makes your case stronger, but don't worry if you don't have much yet. We'll help you gather what you need.",
       "type": "multiple",
       "required": false,
       "options": [

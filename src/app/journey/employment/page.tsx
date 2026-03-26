@@ -40,7 +40,7 @@ export default function EmploymentJourneyPage() {
       }
     }
 
-    // No triage result — redirect to triage
+    // No triage result - redirect to triage
     setLoading(false);
   }, [router]);
 
@@ -106,8 +106,8 @@ export default function EmploymentJourneyPage() {
         </h1>
         <p className="text-uphold-neutral-600">
           {allDone
-            ? "You've completed every stage. Well done — you should be proud."
-            : "Follow each stage step by step. Take your time — there's no rush."}
+            ? "You've completed every stage. Well done. You should be proud."
+            : "Follow each stage step by step. Take your time. There's no rush."}
         </p>
       </div>
 

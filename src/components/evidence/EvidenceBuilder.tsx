@@ -351,7 +351,7 @@ export function EvidenceBuilder({ area }: EvidenceBuilderProps) {
             </h3>
             <p className="text-sm text-uphold-neutral-600 max-w-sm mx-auto">
               Start by adding the first thing that happened. Include dates,
-              emails, photos, witness details — anything that supports your
+              emails, photos, witness details, anything that supports your
               account.
             </p>
           </div>

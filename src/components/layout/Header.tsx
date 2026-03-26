@@ -45,7 +45,7 @@ export function Header() {
             href={hasCase ? "/journey/employment" : "/#situations"}
             className="bg-uphold-green-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-uphold-green-700 transition-colors"
           >
-            {hasCase ? "Continue Journey" : "Get Started — Free"}
+            {hasCase ? "Continue Journey" : "Get Started. Free"}
           </Link>
         </nav>
 
@@ -89,7 +89,7 @@ export function Header() {
             className="block bg-uphold-green-500 text-white text-center font-semibold px-5 py-3 rounded-lg hover:bg-uphold-green-700 transition-colors"
             onClick={() => setMenuOpen(false)}
           >
-            {hasCase ? "Continue Journey" : "Get Started — Free"}
+            {hasCase ? "Continue Journey" : "Get Started. Free"}
           </Link>
         </div>
       )}

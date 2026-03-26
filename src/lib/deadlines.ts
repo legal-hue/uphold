@@ -33,7 +33,7 @@ export function calculateEmploymentDeadlines(
     explanation:
       et1DaysRemaining > 0
         ? `You have ${et1DaysRemaining} days to file your ET1 claim (by ${formatDate(et1Deadline)}). You must contact ACAS first.`
-        : `Your ET1 deadline may have passed on ${formatDate(et1Deadline)}. Contact a legal professional urgently — there may still be options.`,
+        : `Your ET1 deadline may have passed on ${formatDate(et1Deadline)}. Contact a legal professional urgently. There may still be options.`,
   });
 
   // ACAS early conciliation: should be started ASAP (before ET1 deadline)

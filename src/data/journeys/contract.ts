@@ -11,10 +11,10 @@ export const contractJourney: Journey = {
       description:
         "Understand what was agreed, what went wrong, and whether you have a legal claim.",
       guidance: [
-        "A contract is an agreement between two parties where both sides promise to do something. It doesn't have to be written down — verbal agreements can be legally binding too.",
+        "A contract is an agreement between two parties where both sides promise to do something. It doesn't have to be written down. Verbal agreements can be legally binding too.",
         "To have a breach of contract claim, you generally need to show: there was a clear agreement, the other party failed to do what they promised, and you suffered a loss as a result.",
         "Gather the contract or agreement (if written), and any communications about what was agreed. Even texts, emails, and invoices can show what the deal was.",
-        "The time limit for breach of contract claims is 6 years from the date of the breach under the Limitation Act 1980. But don't wait — the sooner you act, the better.",
+        "The time limit for breach of contract claims is 6 years from the date of the breach under the Limitation Act 1980. But don't wait. The sooner you act, the better.",
       ],
       checklist: [
         {
@@ -51,7 +51,7 @@ export const contractJourney: Journey = {
       tips: [
         "Even if there's no written contract, you may have a claim based on what was agreed verbally or implied by conduct.",
         "Screenshots, texts, and emails count as evidence of an agreement.",
-        "If the contract has a dispute resolution clause, check what it says — you may need to follow a specific process.",
+        "If the contract has a dispute resolution clause, check what it says. You may need to follow a specific process.",
         "Consider whether the amount at stake justifies the time and cost of pursuing a claim.",
       ],
     },
@@ -66,7 +66,7 @@ export const contractJourney: Journey = {
         "In contract disputes, the evidence usually tells the story. Courts decide based on what can be proved, not just what's claimed.",
         "The strongest evidence is the contract itself, followed by correspondence showing what was agreed, invoices and payment records, and any expert evidence about quality of work or goods.",
         "If the other party did some of what was agreed but not all, document exactly what was and wasn't delivered. Photos of faulty work or goods are very helpful.",
-        "Keep records of all your losses — receipts for replacement goods or services, costs of putting things right, and any other expenses caused by the breach.",
+        "Keep records of all your losses: receipts for replacement goods or services, costs of putting things right, and any other expenses caused by the breach.",
       ],
       checklist: [
         {
@@ -80,7 +80,7 @@ export const contractJourney: Journey = {
           id: "evidence-2",
           text: "Collect all correspondence about the agreement",
           helpText:
-            "Emails, texts, letters, invoices, quotes — anything showing what was discussed and agreed.",
+            "Emails, texts, letters, invoices, quotes, anything showing what was discussed and agreed.",
           required: true,
         },
         {
@@ -108,7 +108,7 @@ export const contractJourney: Journey = {
       documentsAvailable: ["Evidence checklist"],
       estimatedDuration: "1-2 weeks",
       tips: [
-        "Organise everything in date order — it makes your case much easier to follow.",
+        "Organise everything in date order. It makes your case much easier to follow.",
         "If you paid by bank transfer, your bank statements prove the payment.",
         "Independent expert quotes or reports strengthen your position significantly.",
         "Don't throw anything away, even if it seems unimportant now.",
@@ -125,7 +125,7 @@ export const contractJourney: Journey = {
         "Before taking legal action, you should try to resolve the dispute directly with the other party. Courts expect this and may penalise you in costs if you don't.",
         "Write a clear, professional letter or email setting out: what was agreed, what went wrong, what you've lost, and what you want them to do about it. Give them a reasonable deadline to respond (14-28 days).",
         "Keep the tone businesslike. Even if you're frustrated, aggressive language weakens your position and makes settlement less likely.",
-        "If they respond with a reasonable offer, consider it carefully. Settling early saves time, stress, and money — even if you don't get everything you want.",
+        "If they respond with a reasonable offer, consider it carefully. Settling early saves time, stress, and money, even if you don't get everything you want.",
       ],
       checklist: [
         {
@@ -160,10 +160,10 @@ export const contractJourney: Journey = {
       documentsAvailable: [],
       estimatedDuration: "2-4 weeks",
       tips: [
-        "Always communicate in writing — verbal conversations are hard to prove.",
+        "Always communicate in writing. Verbal conversations are hard to prove.",
         "If they make an offer, take time to think about it. Don't reject it in anger.",
-        "A 'without prejudice' offer means it can't be used in court — use this label if you want to negotiate openly.",
-        "If they don't respond at all, that's actually helpful — it shows a court they were uncooperative.",
+        "A 'without prejudice' offer means it can't be used in court. Use this label if you want to negotiate openly.",
+        "If they don't respond at all, that's actually helpful. It shows a court they were uncooperative.",
       ],
     },
     {
@@ -176,7 +176,7 @@ export const contractJourney: Journey = {
       guidance: [
         "Mediation is where an independent person helps both sides find a solution. It's voluntary, confidential, and much cheaper than going to court.",
         "For claims under £10,000, the Small Claims Mediation Service is free and provided by HMCTS. For larger claims, you can use private mediators.",
-        "Mediation works well when both sides want to resolve things but can't agree on terms. The mediator doesn't decide who's right — they help you find common ground.",
+        "Mediation works well when both sides want to resolve things but can't agree on terms. The mediator doesn't decide who's right. They help you find common ground.",
         "If mediation doesn't work, you haven't lost anything. The discussions are confidential and can't be used in court. You can still proceed with your claim.",
       ],
       checklist: [
@@ -213,7 +213,7 @@ export const contractJourney: Journey = {
       estimatedDuration: "1-4 weeks",
       tips: [
         "Refusing mediation without good reason can result in cost penalties at court.",
-        "The Small Claims Mediation Service is a one-hour phone call — it's quick and easy.",
+        "The Small Claims Mediation Service is a one-hour phone call. It's quick and easy.",
         "Go into mediation with a realistic idea of what you'd accept.",
         "Even if mediation doesn't resolve everything, it can narrow the issues for court.",
       ],
@@ -265,7 +265,7 @@ export const contractJourney: Journey = {
       estimatedDuration: "2-3 weeks",
       tips: [
         "A well-written letter before action settles many disputes. It's worth getting it right.",
-        "Include the phrase 'in accordance with the Pre-Action Protocol' — it shows you know the process.",
+        "Include the phrase 'in accordance with the Pre-Action Protocol'. It shows you know the process.",
         "Keep copies of the letter and proof of delivery.",
         "If they ignore your letter, that strengthens your position at court.",
       ],
@@ -279,7 +279,7 @@ export const contractJourney: Journey = {
         "If the dispute can't be resolved, you can issue a court claim. For claims under £10,000, the Small Claims Court is designed for people without lawyers.",
       guidance: [
         "If all attempts to resolve the dispute have failed, you can issue a claim through the county court. For claims under £10,000, your case will be allocated to the Small Claims Track.",
-        "The Small Claims Court is designed for ordinary people — you don't need a solicitor, the procedures are simpler, and even if you lose, you usually won't have to pay the other side's legal costs.",
+        "The Small Claims Court is designed for ordinary people. You don't need a solicitor, the procedures are simpler, and even if you lose, you usually won't have to pay the other side's legal costs.",
         "To issue a claim, you can use Money Claims Online (for claims up to £100,000) or fill in an N1 form. You'll need to pay a court fee (which you can usually recover if you win).",
         "After you issue the claim, the other party has 14 days to respond. If they don't, you can apply for judgment in default. If they do, the court will set a hearing date.",
       ],
@@ -319,7 +319,7 @@ export const contractJourney: Journey = {
         "Court fees range from £35 (claims up to £300) to £455 (claims up to £10,000). Check if you qualify for fee remission.",
         "The Small Claims Court is less formal than you might expect. Judges are usually patient with self-represented parties.",
         "Bring three copies of everything to the hearing: one for you, one for the judge, one for the other party.",
-        "If the other side doesn't respond to your claim within 14 days, apply for default judgment — you may win without a hearing.",
+        "If the other side doesn't respond to your claim within 14 days, apply for default judgment. You may win without a hearing.",
       ],
     },
     {
@@ -330,7 +330,7 @@ export const contractJourney: Journey = {
       description:
         "If you win but the other party won't pay, there are enforcement options to recover what you're owed.",
       guidance: [
-        "Winning a court judgment is one thing — getting paid is another. If the other party doesn't pay within the time set by the court (usually 14 days), you can take enforcement action.",
+        "Winning a court judgment is one thing. Getting paid is another. If the other party doesn't pay within the time set by the court (usually 14 days), you can take enforcement action.",
         "The main enforcement options are: a warrant of control (bailiffs collect the money or seize goods), an attachment of earnings order (money is taken from their wages), a third-party debt order (money is taken from their bank account), or a charging order (a charge is placed on their property).",
         "Each enforcement method has a court fee, but these are usually added to what the other party owes you.",
         "If the other party genuinely can't pay, you may need to accept payment in instalments. The court can order this.",

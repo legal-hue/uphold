@@ -1,6 +1,6 @@
 {
   "area": "housing",
-  "introMessage": "Living in poor conditions is stressful. Let's work out what your landlord should be doing — and what you can do about it.",
+  "introMessage": "Living in poor conditions is stressful. Let's work out what your landlord should be doing, and what you can do about it.",
   "questions": [
     {
       "id": "what_happened",
@@ -72,7 +72,7 @@
     {
       "id": "health_impact",
       "text": "Is the problem affecting your health?",
-      "helpText": "Health impact strengthens your case significantly. See your GP if you can — it creates evidence.",
+      "helpText": "Health impact strengthens your case significantly. See your GP if you can. It creates evidence.",
       "type": "multiple",
       "required": false,
       "options": [
@@ -86,7 +86,7 @@
     {
       "id": "evidence",
       "text": "What evidence do you have?",
-      "helpText": "Don't worry if you don't have much — we'll help you build your evidence.",
+      "helpText": "Don't worry if you don't have much. We'll help you build your evidence.",
       "type": "multiple",
       "required": false,
       "options": [

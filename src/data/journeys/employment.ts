@@ -12,9 +12,9 @@ export const employmentJourney: Journey = {
         "Understand what happened, what your rights are, and whether you have a claim. This is where you get clarity.",
       guidance: [
         "You've already taken the first step by completing your triage assessment. Now it's time to get clear on exactly what happened and what legal protections apply to you.",
-        "Think about the key events — what happened, when, who was involved, and how it affected you. Write it all down while it's fresh.",
+        "Think about the key events: what happened, when, who was involved, and how it affected you. Write it all down while it's fresh.",
         "Check your employment contract and staff handbook. These documents set out what your employer promised you and the procedures they should have followed.",
-        "Understand your time limits. For most employment tribunal claims, you have 3 months minus 1 day from the date of the event. This is strict — don't leave it until the last moment.",
+        "Understand your time limits. For most employment tribunal claims, you have 3 months minus 1 day from the date of the event. This is strict. Don't leave it until the last moment.",
       ],
       checklist: [
         {
@@ -49,17 +49,17 @@ export const employmentJourney: Journey = {
           id: "assess-5",
           text: "Identify the type of claim you may have",
           helpText:
-            "Unfair dismissal, discrimination, whistleblowing, unpaid wages — your triage result will guide you.",
+            "Unfair dismissal, discrimination, whistleblowing, unpaid wages. Your triage result will guide you.",
           required: true,
         },
       ],
       documentsAvailable: ["Timeline template", "Rights checker"],
       estimatedDuration: "1-2 hours",
       tips: [
-        "Write things down as soon as possible — memory fades quickly.",
+        "Write things down as soon as possible. Memory fades quickly.",
         "Don't worry about legal language. Just describe what happened in your own words.",
-        "If you're still employed, be careful about accessing documents. Don't remove originals — take photos or copies.",
-        "Keep all correspondence — emails, texts, letters. Don't delete anything.",
+        "If you're still employed, be careful about accessing documents. Don't remove originals. Take photos or copies.",
+        "Keep all correspondence: emails, texts, letters. Don't delete anything.",
       ],
     },
     {
@@ -72,7 +72,7 @@ export const employmentJourney: Journey = {
       guidance: [
         "Tribunals decide cases based on evidence, not just what you say happened. The stronger your evidence, the stronger your position.",
         "There are different types of evidence: documents (emails, letters, contracts), records (payslips, rotas, performance reviews), witness accounts, and your own detailed notes.",
-        "Think about who else saw or heard what happened. Colleagues, managers, HR — anyone who can support your account. You can ask them to provide a witness statement later.",
+        "Think about who else saw or heard what happened. Colleagues, managers, HR, anyone who can support your account. You can ask them to provide a witness statement later.",
         "If your employer has documents you need but don't have access to, don't worry. You can request disclosure during the tribunal process. For now, focus on what you can gather.",
       ],
       checklist: [
@@ -108,7 +108,7 @@ export const employmentJourney: Journey = {
           id: "evidence-5",
           text: "Take photos or screenshots of anything relevant",
           helpText:
-            "Working conditions, text messages, internal systems, rotas — anything that supports your account.",
+            "Working conditions, text messages, internal systems, rotas, anything that supports your account.",
           required: false,
         },
         {
@@ -122,7 +122,7 @@ export const employmentJourney: Journey = {
       documentsAvailable: ["Evidence checklist", "Witness statement template"],
       estimatedDuration: "2-5 days",
       tips: [
-        "Save everything in at least two places — your phone and your email, or a cloud folder.",
+        "Save everything in at least two places: your phone and your email, or a cloud folder.",
         "Don't tamper with or alter any evidence. Present things exactly as they are.",
         "Contemporaneous notes (made at or near the time) carry more weight than notes made later.",
         "If you're still employed, be discreet. Don't discuss your potential claim with colleagues unnecessarily.",
@@ -138,7 +138,7 @@ export const employmentJourney: Journey = {
       guidance: [
         "A grievance is a formal written complaint to your employer about how you've been treated. It puts your concerns on the record and gives your employer a chance to respond.",
         "You don't have to raise a grievance before going to tribunal, but it's usually a good idea. If you skip it without good reason, a tribunal may reduce any award by up to 25%.",
-        "Your grievance should be clear, factual, and specific. Set out what happened, when, and what outcome you want. You don't need to use legal language — just be honest and direct.",
+        "Your grievance should be clear, factual, and specific. Set out what happened, when, and what outcome you want. You don't need to use legal language. Just be honest and direct.",
         "Your employer should follow the ACAS Code of Practice on grievances. This means they should hold a meeting, let you bring a companion, and give you a written outcome with a right of appeal.",
       ],
       checklist: [
@@ -166,7 +166,7 @@ export const employmentJourney: Journey = {
           id: "grievance-4",
           text: "Attend the grievance meeting",
           helpText:
-            "You have the right to bring a companion — a colleague or trade union rep.",
+            "You have the right to bring a companion, a colleague or trade union rep.",
           required: false,
         },
         {
@@ -182,7 +182,7 @@ export const employmentJourney: Journey = {
       tips: [
         "Keep your grievance professional, even if you're angry. Stick to facts.",
         "You can raise a grievance even after you've left your job.",
-        "Don't wait too long — your tribunal deadline keeps running while the grievance process is underway.",
+        "Don't wait too long. Your tribunal deadline keeps running while the grievance process is underway.",
         "If your employer doesn't follow the ACAS Code, that can count in your favour at tribunal.",
       ],
     },
@@ -194,7 +194,7 @@ export const employmentJourney: Journey = {
       description:
         "You must contact ACAS before you can file a tribunal claim. It's free, and it might resolve things without a hearing.",
       guidance: [
-        "Before you can submit a claim to the employment tribunal, you must contact ACAS for early conciliation. This is a legal requirement — you cannot skip it.",
+        "Before you can submit a claim to the employment tribunal, you must contact ACAS for early conciliation. This is a legal requirement. You cannot skip it.",
         "Early conciliation is free. An ACAS conciliator will contact both you and your employer to see if the dispute can be settled without going to tribunal.",
         "The process usually takes up to 6 weeks. During this time, your tribunal deadline is paused (the clock stops while ACAS is involved).",
         "If conciliation works, you may agree a settlement. If it doesn't, ACAS will issue you an Early Conciliation Certificate with a reference number. You need this number to file your tribunal claim.",
@@ -239,7 +239,7 @@ export const employmentJourney: Journey = {
       documentsAvailable: [],
       estimatedDuration: "1-6 weeks",
       tips: [
-        "Don't wait until the last day of your time limit to contact ACAS — do it as soon as you're ready.",
+        "Don't wait until the last day of your time limit to contact ACAS. Do it as soon as you're ready.",
         "You don't need a lawyer for early conciliation.",
         "Everything you say to ACAS is confidential and cannot be used at tribunal.",
         "If your employer makes a settlement offer, ask for time to consider it. Don't feel pressured to accept on the spot.",
@@ -254,7 +254,7 @@ export const employmentJourney: Journey = {
         "Fill in your ET1 form and submit it to the employment tribunal. This is where you formally set out your case.",
       guidance: [
         "The ET1 is the form you use to start a claim at the employment tribunal. You can submit it online through the government's employment tribunal service.",
-        "The most important section is the 'details of claim' — this is where you explain what happened and why it was wrong. Be clear, factual, and organised. Set out events in date order.",
+        "The most important section is the 'details of claim'. This is where you explain what happened and why it was wrong. Be clear, factual, and organised. Set out events in date order.",
         "You'll also need to set out what remedy (outcome) you're seeking. This is usually compensation, but could also include reinstatement or a recommendation.",
         "Once you submit your ET1, the tribunal will send a copy to your employer, who then has 28 days to respond with an ET3 (their defence). The tribunal will also set a timetable for the case.",
       ],
@@ -324,7 +324,7 @@ export const employmentJourney: Journey = {
         "A tribunal hearing can feel daunting, but preparation is everything. Most self-represented claimants who prepare well do better than those with lawyers who don't.",
         "Before the hearing, you'll need to prepare a bundle of documents (all the evidence both sides will refer to), a witness statement, and possibly a chronology or cast list.",
         "At the hearing, the judge (and possibly two lay members) will hear evidence from both sides. You'll give your evidence, be cross-examined by the other side, and have a chance to cross-examine their witnesses.",
-        "Dress smartly but comfortably. Arrive early. Bring water and snacks — hearings can be long. The tribunal staff are there to help you.",
+        "Dress smartly but comfortably. Arrive early. Bring water and snacks. Hearings can be long. The tribunal staff are there to help you.",
       ],
       checklist: [
         {
@@ -389,10 +389,10 @@ export const employmentJourney: Journey = {
       name: "After the hearing",
       shortName: "After",
       description:
-        "The hearing is over — now understand the judgment, enforcement, and what comes next.",
+        "The hearing is over. Now understand the judgment, enforcement, and what comes next.",
       guidance: [
         "The tribunal may give its decision on the day (a reserved judgment), or it may take several weeks to send a written judgment. Both are normal.",
-        "If you win, the judgment will set out what your employer must do — usually pay you compensation. If they don't comply, you can enforce the judgment.",
+        "If you win, the judgment will set out what your employer must do, usually pay you compensation. If they don't comply, you can enforce the judgment.",
         "If you lose, you may have the right to appeal on a point of law (not just because you disagree). Appeals go to the Employment Appeal Tribunal (EAT) and must be filed within 42 days.",
         "Whatever the outcome, take time to process it. You've been through something significant. Lean on your support network and look after yourself.",
       ],
@@ -437,7 +437,7 @@ export const employmentJourney: Journey = {
       estimatedDuration: "Varies",
       tips: [
         "Even if you lose, the process itself has value. You stood up for your rights.",
-        "If your employer doesn't pay, don't chase them informally forever. Use the enforcement process — it's straightforward.",
+        "If your employer doesn't pay, don't chase them informally forever. Use the enforcement process. It's straightforward.",
         "Consider whether your experience could help others. Many people who go through this process go on to support others in similar situations.",
         "Look after your mental health. This has been a marathon. Give yourself credit.",
       ],

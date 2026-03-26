@@ -222,7 +222,7 @@ ${values.landlord_address}
 
 Dear ${values.landlord_name},
 
-FORMAL NOTICE OF DISREPAIR — REQUEST FOR REPAIRS
+FORMAL NOTICE OF DISREPAIR - REQUEST FOR REPAIRS
 
 I am a tenant at the above address. I am writing to formally notify you of disrepair at the property and to request that you carry out the necessary repairs without further delay.
 
@@ -321,7 +321,7 @@ const preActionLetter: DocumentTemplate = {
       id: "what_went_wrong",
       label: "What went wrong?",
       placeholder:
-        "e.g. The work was not completed by the agreed date. The work that was done is of poor quality — the cabinets are misaligned and the plumbing leaks.",
+        "e.g. The work was not completed by the agreed date. The work that was done is of poor quality. The cabinets are misaligned and the plumbing leaks.",
       type: "textarea",
       required: true,
     },
@@ -358,7 +358,7 @@ ${values.other_party_address}
 
 Dear ${values.other_party_name},
 
-LETTER BEFORE ACTION — PRE-ACTION PROTOCOL FOR DEBT CLAIMS / BREACH OF CONTRACT
+LETTER BEFORE ACTION - PRE-ACTION PROTOCOL FOR DEBT CLAIMS / BREACH OF CONTRACT
 
 I am writing in accordance with the Pre-Action Protocol for Debt Claims to set out my claim against you before commencing court proceedings.
 

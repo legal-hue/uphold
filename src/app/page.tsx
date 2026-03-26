@@ -29,7 +29,7 @@ const areas = [
 ];
 
 const testimonials = [
-  { quote: "I didn't think I had a case. Upheld showed me I did — and what to do next.", who: "Sarah, unfair dismissal" },
+  { quote: "I didn't think I had a case. Upheld showed me I did, and what to do next.", who: "Sarah, unfair dismissal" },
   { quote: "My landlord ignored my complaints for months. Upheld helped me write a letter that finally got things moving.", who: "James, housing disrepair" },
   { quote: "I was terrified of the tribunal process. The step-by-step guide made it feel manageable.", who: "Priya, discrimination claim" },
 ];
@@ -108,26 +108,32 @@ export default function HomePage() {
     <div>
       <PreviousResultBanner />
 
-      {/* Hero — stripped back, immediate */}
-      <section className="blob-bg min-h-[70vh] flex items-center">
-        <div className="max-w-3xl mx-auto px-4 py-16 md:py-24 text-center">
-          <div className="animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-uphold-green-50 text-uphold-green-700 text-sm font-medium px-4 py-2 rounded-full mb-8 border border-uphold-green-100">
-              <Shield className="w-4 h-4" />
-              Free. No sign-up. 2 minutes.
-            </div>
-          </div>
-
-          <h1 className="text-4xl md:text-6xl font-bold text-uphold-neutral-800 leading-tight mb-6 animate-fade-in-up stagger-1">
-            Something happened?<br />
-            <span className="text-uphold-green-500">Let&apos;s figure it out.</span>
+      {/* Hero - clean, big, immediate */}
+      <section className="blob-bg min-h-[80vh] flex items-center">
+        <div className="max-w-4xl mx-auto px-4 py-20 md:py-28 text-center">
+          <h1 className="text-5xl md:text-8xl font-bold text-uphold-neutral-800 leading-[1.05] mb-8 animate-fade-in-up tracking-tight">
+            Know where you stand.
           </h1>
 
-          <p className="text-lg md:text-xl text-uphold-neutral-600 max-w-xl mx-auto mb-10 leading-relaxed animate-fade-in-up stagger-2">
-            Find out if you have a claim, see your deadlines, and get a clear plan — all in 2 minutes.
+          <p className="text-lg md:text-xl text-uphold-neutral-600 max-w-xl mx-auto mb-12 leading-relaxed animate-fade-in-up stagger-1">
+            Something happened at work, at home, or with a contract? Find out if you have a claim, understand your deadlines, and get a step-by-step plan. For free.
           </p>
 
-          <div id="situations" className="space-y-4 max-w-md mx-auto animate-fade-in-up stagger-3">
+          <div className="animate-fade-in-up stagger-2">
+            <Link
+              href="/triage"
+              className="inline-flex items-center gap-3 bg-uphold-green-500 text-white font-semibold text-lg px-10 py-5 rounded-2xl hover:bg-uphold-green-700 transition-all duration-300 hover:scale-105"
+            >
+              Check your rights now
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+
+          <p className="text-sm text-uphold-neutral-500 mt-6 animate-fade-in-up stagger-3">
+            Free. No sign-up required. Takes 2 minutes.
+          </p>
+
+          <div id="situations" className="mt-16 space-y-4 max-w-md mx-auto animate-fade-in-up stagger-3">
             {areas.map((area) => (
               <Link
                 key={area.title}
@@ -169,7 +175,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it works — visual, minimal */}
+      {/* How it works - visual, minimal */}
       <section className="py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
@@ -229,7 +235,7 @@ export default function HomePage() {
             Employment claims must be filed within 3 months
           </h2>
           <p className="text-uphold-neutral-400 mb-8 max-w-lg mx-auto">
-            Every day counts. Check where you stand now — it takes 2 minutes and it&apos;s free.
+            Every day counts. Check where you stand now. It takes 2 minutes and it&apos;s free.
           </p>
           <Link
             href="/triage"
