@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ShieldCheck, AlertTriangle, XCircle, Clock, Phone, ArrowRight, ExternalLink, Heart, CheckCircle, Circle } from "lucide-react";
-import type { TriageResult, Deadline } from "@/lib/types";
+import { ShieldCheck, AlertTriangle, XCircle, Clock, Phone, ArrowRight, ExternalLink, Heart, CheckCircle, Circle, Lock } from "lucide-react";
+import type { TriageResult, Deadline, PracticeArea } from "@/lib/types";
+import { isSubscribed } from "@/lib/subscription";
+import { generateSwot } from "@/lib/swot";
+import { CaseReview } from "@/components/premium/CaseReview";
+import { UpgradeScreen } from "@/components/premium/UpgradeScreen";
 
 interface TriageOutcomeData {
   area: string;
@@ -12,6 +16,7 @@ interface TriageOutcomeData {
   message: string;
   deadlines: Deadline[];
   completedAt: string;
+  answers?: Record<string, string | string[]>;
 }
 
 const resultConfig = {
@@ -176,6 +181,12 @@ function InteractiveChecklist({ steps, area }: { steps: typeof nextSteps.employm
 export function ResultDisplay() {
   const [outcome, setOutcome] = useState<TriageOutcomeData | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const [premium, setPremium] = useState(false);
+  const [showUpgrade, setShowUpgrade] = useState(false);
+
+  useEffect(() => {
+    setPremium(isSubscribed());
+  }, []);
 
   useEffect(() => {
     const stored = localStorage.getItem("uphold_latest_triage");
@@ -186,6 +197,13 @@ export function ResultDisplay() {
         setTimeout(() => setRevealed(true), 400);
       }, 1500);
     }
+  }, []);
+
+  // Re-check subscription when URL changes (after upgrade redirect)
+  useEffect(() => {
+    const check = () => setPremium(isSubscribed());
+    window.addEventListener("focus", check);
+    return () => window.removeEventListener("focus", check);
   }, []);
 
   if (!outcome) {
@@ -290,18 +308,42 @@ export function ResultDisplay() {
         Time limits are approximate. Verify with a legal professional.
       </div>
 
-      {/* Start journey CTA */}
-      <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
-        <Link
-          href={`/journey/${outcome.area}`}
-          className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
-        >
-          Start your guided journey
-          <span className="block text-sm font-normal opacity-90 mt-1">
-            Step-by-step guidance from here to resolution
-          </span>
-        </Link>
-      </div>
+      {/* Premium: Legal Case Review */}
+      {premium && outcome.answers && (
+        <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <CaseReview
+            analysis={generateSwot(outcome.area as PracticeArea, outcome.answers as Record<string, string | string[]>)}
+            area={outcome.area}
+          />
+        </div>
+      )}
+
+      {/* Premium: Start journey CTA */}
+      {premium ? (
+        <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <Link
+            href={`/journey/${outcome.area}`}
+            className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
+          >
+            Start your guided journey
+            <span className="block text-sm font-normal opacity-90 mt-1">
+              Step-by-step guidance from here to resolution
+            </span>
+          </Link>
+        </div>
+      ) : (
+        <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <button
+            onClick={() => setShowUpgrade(true)}
+            className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
+          >
+            Get your full Legal Case Review
+            <span className="block text-sm font-normal opacity-90 mt-1">
+              Detailed analysis, documents, and step-by-step guidance
+            </span>
+          </button>
+        </div>
+      )}
 
       {/* CTAs */}
       <div className="flex flex-col items-center gap-3 mt-6">
@@ -313,6 +355,13 @@ export function ResultDisplay() {
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
+
+      {/* Upgrade modal */}
+      {showUpgrade && (
+        <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
+          <UpgradeScreen area={outcome.area} onClose={() => setShowUpgrade(false)} />
+        </div>
+      )}
     </div>
   );
 }
