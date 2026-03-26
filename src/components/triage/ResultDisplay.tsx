@@ -6,6 +6,7 @@ import { ShieldCheck, AlertTriangle, XCircle, Clock, Phone, ArrowRight, External
 import type { TriageResult, Deadline, PracticeArea } from "@/lib/types";
 import { isSubscribed } from "@/lib/subscription";
 import { DownloadBadges } from "@/components/layout/DownloadBadges";
+import { ReviewPrompt } from "@/components/layout/ReviewPrompt";
 import { generateSwot, type SwotAnalysis } from "@/lib/swot";
 import { CaseReview } from "@/components/premium/CaseReview";
 import { UpgradeScreen } from "@/components/premium/UpgradeScreen";
@@ -548,6 +549,9 @@ export function ResultDisplay() {
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
+
+      {/* Review prompt - shows after quiz completion */}
+      <ReviewPrompt trigger={`triage_${outcome.area}`} delay={5000} />
 
       {/* Upgrade modal */}
       {showUpgrade && (
