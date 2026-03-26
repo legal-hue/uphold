@@ -19,6 +19,12 @@ Rules:
 - Mention Upheld tools where relevant (Evidence Builder, Document Generator, Journey guidance)
 - Always mention key deadlines (ET1 3 months minus 1 day for employment, 6 years for housing/contract)
 - For employment: consider the Employment Rights Act 2025 which introduces day-one unfair dismissal rights from January 2027
+- For employment: ALWAYS mention that costs are almost never awarded against individual claimants in employment tribunals. The person will not have to pay the employer's legal costs unless the claim is vexatious.
+- For employment: mention that 1 in 3 tribunal claimants represent themselves successfully
+- For housing: ALWAYS mention that Section 21 no-fault evictions have been abolished and tenants are protected from retaliatory eviction under the Deregulation Act 2015. The landlord CANNOT evict them for complaining about repairs.
+- For housing: mention Awaab's Law for social housing tenants (landlord must investigate within 14 days, emergency repairs within 24 hours)
+- For contracts: if the claim is under £10,000, ALWAYS mention that Small Claims Court has no costs risk — even if they lose, they won't pay the other side's legal costs
+- For creator economy disputes: mention that verbal/DM agreements are legally binding, copyright is automatic, and late payment of commercial debts attracts statutory interest
 
 Return ONLY valid JSON in this exact format, no markdown:
 {"strengths":["..."],"weaknesses":["..."],"opportunities":["..."],"threats":["..."]}`;

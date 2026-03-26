@@ -50,12 +50,86 @@ const resultConfig = {
   },
 };
 
-const nextSteps: Record<string, { text: string; link: string | null; external: boolean }[]> = {
+type ActionStep = { text: string; link: string | null; external: boolean };
+
+function getPersonalisedSteps(
+  area: string,
+  answers: Record<string, string | string[]> | undefined
+): ActionStep[] {
+  if (area === "employment") {
+    const steps: ActionStep[] = [];
+    const grievance = answers?.grievance as string | undefined;
+    const acas = answers?.acas as string | undefined;
+    const evidence = answers?.evidence;
+    const stillEmployed = answers?.still_employed as string | undefined;
+
+    if (grievance !== "yes_written") {
+      steps.push({ text: "Write a formal grievance letter to your employer", link: null, external: false });
+    }
+    if (acas !== "yes_certificate") {
+      steps.push({ text: "Contact ACAS for free early conciliation (you must do this before tribunal)", link: "https://www.acas.org.uk/early-conciliation", external: true });
+    }
+    if (stillEmployed === "yes" || stillEmployed === "notice") {
+      steps.push({ text: "Gather evidence now while you still have access (emails, contract, payslips)", link: null, external: false });
+    } else if (!Array.isArray(evidence) || evidence.length < 3) {
+      steps.push({ text: "Gather your evidence: emails, contract, payslips, texts, witness details", link: null, external: false });
+    }
+    steps.push({ text: "Write down everything that happened in date order while it's fresh", link: null, external: false });
+    steps.push({ text: "Note your 3-month deadline — missing it could mean losing your claim entirely", link: null, external: false });
+
+    return steps;
+  }
+
+  if (area === "housing") {
+    const steps: ActionStep[] = [];
+    const reported = answers?.reported_landlord as string | undefined;
+    const evidence = answers?.evidence;
+    const health = answers?.health_impact as string | undefined;
+
+    if (reported !== "yes_writing") {
+      steps.push({ text: "Write to your landlord about the repairs — you need this in writing", link: null, external: false });
+    }
+    steps.push({ text: "Take dated photos and videos of every affected area", link: null, external: false });
+    if (health === "yes") {
+      steps.push({ text: "Book a GP appointment — ask them to record that your housing is affecting your health", link: null, external: false });
+    }
+    if (!Array.isArray(evidence) || evidence.includes("none") || evidence.length === 0) {
+      steps.push({ text: "Start a diary: note every day the problem affects you", link: null, external: false });
+    }
+    steps.push({ text: "Report to your council's Environmental Health team (free inspection)", link: null, external: false });
+    steps.push({ text: "Don't stop paying rent — it can be used against you", link: null, external: false });
+
+    return steps;
+  }
+
+  // Contract
+  const steps: ActionStep[] = [];
+  const contractType = answers?.contract_type as string | undefined;
+  const contacted = answers?.contacted_other_party as string | undefined;
+  const creator = answers?.what_happened as string | undefined;
+
+  steps.push({ text: "Gather all contract documents, emails, messages, and invoices", link: null, external: false });
+  if (contractType === "verbal") {
+    steps.push({ text: "Collect any evidence of what was agreed: texts, emails, invoices, witness accounts", link: null, external: false });
+  }
+  if (contacted !== "yes_writing") {
+    steps.push({ text: "Write to the other party setting out the problem and what you want", link: null, external: false });
+  }
+  if (creator === "creator") {
+    steps.push({ text: "Screenshot all DMs, emails, and briefs before they can be deleted", link: null, external: false });
+  }
+  steps.push({ text: "Calculate your financial losses with receipts and records", link: null, external: false });
+  steps.push({ text: "Consider mediation — for claims under £10,000 it's free via the Small Claims Mediation Service", link: null, external: false });
+
+  return steps;
+}
+
+const defaultSteps: Record<string, ActionStep[]> = {
   employment: [
     { text: "Contact ACAS for free early conciliation", link: "https://www.acas.org.uk/early-conciliation", external: true },
     { text: "Gather your evidence (emails, contract, payslips)", link: null, external: false },
     { text: "Write down everything that happened with dates", link: null, external: false },
-    { text: "Consider speaking to a legal professional", link: null, external: false },
+    { text: "Note your 3-month deadline", link: null, external: false },
   ],
   housing: [
     { text: "Write to your landlord about the repairs needed", link: null, external: false },
@@ -99,7 +173,7 @@ function CountdownRing({ days, isUrgent }: { days: number; isUrgent: boolean }) 
   );
 }
 
-function InteractiveChecklist({ steps, area }: { steps: typeof nextSteps.employment; area: string }) {
+function InteractiveChecklist({ steps, area }: { steps: ActionStep[]; area: string }) {
   const storageKey = `uphold_checklist_${area}`;
   const [checked, setChecked] = useState<Record<number, boolean>>({});
 
@@ -260,7 +334,9 @@ export function ResultDisplay() {
 
   const config = resultConfig[outcome.result];
   const Icon = config.icon;
-  const steps = nextSteps[outcome.area as keyof typeof nextSteps] || nextSteps.employment;
+  const steps = outcome.answers
+    ? getPersonalisedSteps(outcome.area, outcome.answers)
+    : defaultSteps[outcome.area as keyof typeof defaultSteps] || defaultSteps.employment;
   const mainDeadline = outcome.deadlines.find((d) => d.ruleId === "et1" || d.ruleId === "limitation");
 
   return (
@@ -344,6 +420,67 @@ export function ResultDisplay() {
           </div>
         </div>
       </div>
+
+      {/* Fear-busting reassurance */}
+      {outcome.area === "employment" && (
+        <div className={`bg-blue-50 rounded-2xl p-6 mb-6 border border-blue-100 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <h2 className="font-bold text-uphold-neutral-800 mb-3">Things people worry about (but shouldn&apos;t)</h2>
+          <div className="space-y-3 text-sm text-uphold-neutral-700">
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>Costs are rarely awarded against individuals.</strong> Employment tribunals almost never order claimants to pay the employer&apos;s legal costs unless your claim is vexatious. This is not like going to court.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>You don&apos;t need a lawyer.</strong> 1 in 3 tribunal cases are brought by people representing themselves. The tribunal is designed to be accessible.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>ACAS is free and confidential.</strong> Nothing you say to ACAS can be used against you at tribunal. It&apos;s a safe first step.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {outcome.area === "housing" && (
+        <div className={`bg-blue-50 rounded-2xl p-6 mb-6 border border-blue-100 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <h2 className="font-bold text-uphold-neutral-800 mb-3">You are protected</h2>
+          <div className="space-y-3 text-sm text-uphold-neutral-700">
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>Your landlord cannot evict you for complaining.</strong> Section 21 &quot;no-fault&quot; evictions have been abolished. Your landlord needs a legal reason to evict you.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>Reporting disrepair is your right.</strong> The Deregulation Act 2015 already protects tenants from retaliatory eviction after reporting repairs.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>Council inspections are free.</strong> Environmental Health can inspect your property and force your landlord to act. It costs you nothing.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {outcome.area === "contract" && (
+        <div className={`bg-blue-50 rounded-2xl p-6 mb-6 border border-blue-100 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+          <h2 className="font-bold text-uphold-neutral-800 mb-3">Good news about small claims</h2>
+          <div className="space-y-3 text-sm text-uphold-neutral-700">
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>No costs risk for claims under £10,000.</strong> In the Small Claims Court, even if you lose, you won&apos;t have to pay the other side&apos;s legal costs.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>You don&apos;t need a solicitor.</strong> The Small Claims Court is designed for ordinary people. The judge guides the process.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+              <p><strong>A letter before action often settles things.</strong> Most people take a dispute seriously once they receive formal legal correspondence.</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Disclaimer */}
       <div className="text-xs text-uphold-neutral-400 text-center p-4 border-t border-uphold-neutral-200">

@@ -53,6 +53,7 @@ export const housingJourney: Journey = {
         "If you've already reported verbally, follow up in writing saying 'as discussed on [date]...'",
         "Keep taking photos regularly. It shows the problem is ongoing or getting worse.",
         "Don't stop paying rent because of disrepair. It can be used against you.",
+        "You cannot be evicted for reporting disrepair. Section 21 'no-fault' evictions have been abolished, and the Deregulation Act 2015 already protects you from retaliatory eviction.",
       ],
     },
     {
