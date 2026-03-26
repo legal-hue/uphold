@@ -14,6 +14,7 @@ import {
   Loader2,
 } from "lucide-react";
 import type { DocumentTemplate } from "@/lib/documents";
+import { SpeechToText } from "@/components/layout/SpeechToText";
 
 interface DocumentGeneratorProps {
   template: DocumentTemplate;
@@ -155,12 +156,20 @@ export function DocumentGenerator({
                 )}
               </label>
               {field.type === "textarea" ? (
-                <textarea
-                  value={values[field.id] || ""}
-                  onChange={(e) => updateField(field.id, e.target.value)}
-                  placeholder={field.placeholder}
-                  className="w-full p-3 border-2 border-uphold-neutral-200 rounded-xl text-sm focus:border-uphold-green-500 focus:outline-none transition-colors bg-white min-h-[120px] resize-none"
-                />
+                <div>
+                  <div className="flex justify-end mb-1.5">
+                    <SpeechToText
+                      currentValue={values[field.id] || ""}
+                      onResult={(text) => updateField(field.id, text)}
+                    />
+                  </div>
+                  <textarea
+                    value={values[field.id] || ""}
+                    onChange={(e) => updateField(field.id, e.target.value)}
+                    placeholder={field.placeholder}
+                    className="w-full p-3 border-2 border-uphold-neutral-200 rounded-xl text-sm focus:border-uphold-green-500 focus:outline-none transition-colors bg-white min-h-[120px] resize-none"
+                  />
+                </div>
               ) : field.type === "date" ? (
                 <input
                   type="date"
