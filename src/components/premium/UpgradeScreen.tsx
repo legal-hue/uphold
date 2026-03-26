@@ -126,13 +126,13 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
             </span>
             <div className="flex items-baseline gap-1">
               <span className="text-3xl font-bold text-uphold-neutral-800">
-                £40
+                £29.99
               </span>
               <span className="text-sm text-uphold-neutral-500">/month</span>
             </div>
           </div>
           <p className="text-xs text-uphold-neutral-500 mb-5">
-            7 days free, then £40/month. Cancel anytime.
+            7 days free, then £29.99/month. Cancel anytime.
           </p>
 
           <div className="space-y-2 mb-6">
