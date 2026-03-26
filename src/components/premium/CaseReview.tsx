@@ -63,7 +63,7 @@ export function CaseReview({ analysis, area }: CaseReviewProps) {
           Premium
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-uphold-neutral-800 mb-2">
-          Your Legal Case Review
+          Your Case Assessment
         </h2>
         <p className="text-sm text-uphold-neutral-600">
           {areaLabel} case review based on the information you provided

@@ -38,7 +38,7 @@ export function PremiumGate({ children, area = "employment" }: PremiumGateProps)
         This is a premium feature
       </h1>
       <p className="text-uphold-neutral-600 mb-8 leading-relaxed max-w-sm mx-auto">
-        Upgrade to Upheld Premium to access your full Legal Case Review, guided journey, document generator, and evidence builder.
+        Upgrade to Upheld Premium to access your full Case Assessment, guided journey, document generator, and evidence builder.
       </p>
       <button
         onClick={() => setShowUpgrade(true)}

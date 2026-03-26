@@ -12,7 +12,7 @@ interface UpgradeScreenProps {
 const features = [
   {
     icon: Shield,
-    title: "Legal Case Review",
+    title: "Case Assessment",
     desc: "A detailed review of your case highlighting what strengthens your position, what needs attention, and the key risks and opportunities ahead.",
   },
   {
@@ -53,7 +53,7 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
           </div>
 
           <h1 className="text-3xl md:text-4xl font-bold text-uphold-neutral-800 mb-4">
-            Get your full Legal Case Review
+            Get your full Case Assessment
           </h1>
           <p className="text-uphold-neutral-600 leading-relaxed max-w-md mx-auto">
             You have seen where you stand. Now get the detailed review, tools, and guidance to take your case forward with confidence.
@@ -82,6 +82,10 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
         </div>
 
         <div className="bg-white rounded-2xl border-2 border-uphold-green-500 p-6 mb-6">
+          <div className="bg-uphold-green-50 text-uphold-green-700 text-sm font-semibold text-center py-2 px-4 rounded-lg mb-4 border border-uphold-green-100">
+            Start with a 7-day free trial
+          </div>
+
           <div className="flex items-baseline justify-between mb-1">
             <span className="text-sm font-medium text-uphold-neutral-600">
               Upheld Premium
@@ -94,12 +98,12 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
             </div>
           </div>
           <p className="text-xs text-uphold-neutral-500 mb-5">
-            Cancel anytime. No long-term commitment.
+            7 days free, then £40/month. Cancel anytime.
           </p>
 
           <div className="space-y-2 mb-6">
             {[
-              "Full Legal Case Review of your situation",
+              "Full Case Assessment of your situation",
               "Pre-populated letters and legal documents",
               "Step-by-step journey through your entire case",
               "Evidence builder and case timeline",
@@ -117,9 +121,13 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
             onClick={handleSubscribe}
             className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg"
           >
-            Start my case
+            Start 7-day free trial
             <ArrowRight className="w-5 h-5" />
           </button>
+
+          <p className="text-xs text-uphold-neutral-400 text-center mt-3">
+            No charge for 7 days. Cancel before the trial ends and you won&apos;t pay a thing.
+          </p>
         </div>
 
         <p className="text-xs text-uphold-neutral-400 text-center leading-relaxed">
