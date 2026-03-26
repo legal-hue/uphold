@@ -1,7 +1,9 @@
 "use client";
 
-import { Shield, FileText, Map, FolderSearch, CheckCircle, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Shield, FileText, Map, FolderSearch, CheckCircle, ArrowRight, RotateCcw, Loader2 } from "lucide-react";
 import { activateSubscription } from "@/lib/subscription";
+import { purchasePremium, restorePurchases, isNativeApp } from "@/lib/purchases";
 import { useRouter } from "next/navigation";
 
 interface UpgradeScreenProps {
@@ -34,13 +36,45 @@ const features = [
 
 export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [restoring, setRestoring] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubscribe = () => {
-    // For now, activate directly. In production, this would go through
-    // Apple IAP (iOS) or Stripe (web) before calling activateSubscription().
-    activateSubscription();
-    router.push(`/triage/${area}/result?upgraded=true`);
-    router.refresh();
+  const handleSubscribe = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const success = await purchasePremium();
+      if (success) {
+        // Also set local subscription as fallback
+        activateSubscription();
+        router.push(`/triage/${area}/result?upgraded=true`);
+        router.refresh();
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRestore = async () => {
+    setRestoring(true);
+    setError("");
+    try {
+      const success = await restorePurchases();
+      if (success) {
+        activateSubscription();
+        router.push(`/triage/${area}/result?upgraded=true`);
+        router.refresh();
+      } else {
+        setError("No previous subscription found.");
+      }
+    } catch {
+      setError("Could not restore purchases. Please try again.");
+    } finally {
+      setRestoring(false);
+    }
   };
 
   return (
@@ -119,16 +153,41 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
 
           <button
             onClick={handleSubscribe}
-            className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg disabled:opacity-60"
           >
-            Start 7-day free trial
-            <ArrowRight className="w-5 h-5" />
+            {loading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                Start 7-day free trial
+                <ArrowRight className="w-5 h-5" />
+              </>
+            )}
           </button>
 
           <p className="text-xs text-uphold-neutral-400 text-center mt-3">
             No charge for 7 days. Cancel before the trial ends and you won&apos;t pay a thing.
           </p>
+
+          {error && (
+            <p className="text-xs text-uphold-red text-center mt-2">{error}</p>
+          )}
         </div>
+
+        {isNativeApp() && (
+          <button
+            onClick={handleRestore}
+            disabled={restoring}
+            className="w-full flex items-center justify-center gap-2 text-sm text-uphold-neutral-500 hover:text-uphold-neutral-700 py-2"
+          >
+            <RotateCcw className="w-4 h-4" />
+            {restoring ? "Restoring..." : "Restore previous purchase"}
+          </button>
+        )}
 
         <p className="text-xs text-uphold-neutral-400 text-center leading-relaxed">
           Upheld provides legal information to help you understand your rights and navigate the process. It does not provide personal legal advice and using the app does not create a solicitor-client or barrister-client relationship. For advice specific to your circumstances, we recommend consulting a qualified solicitor or barrister.
