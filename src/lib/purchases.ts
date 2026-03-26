@@ -17,7 +17,7 @@ export async function initPurchases(): Promise<void> {
 
   await Purchases.configure({
     // Replace with your actual RevenueCat API key after setup
-    apiKey: process.env.NEXT_PUBLIC_REVENUECAT_API_KEY || "REPLACE_WITH_REVENUECAT_API_KEY",
+    apiKey: process.env.NEXT_PUBLIC_REVENUECAT_API_KEY || "test_iqDwBuoFYfydpFkClWhKEQYBFwx",
   });
 }
 
