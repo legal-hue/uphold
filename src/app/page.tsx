@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Briefcase, Home, FileText, ArrowRight, Shield, Users, Clock, CheckCircle, MessageCircle } from "lucide-react";
+import { DownloadBadges } from "@/components/layout/DownloadBadges";
 import { useState, useEffect } from "react";
 
 
@@ -148,6 +149,10 @@ export default function HomePage() {
                 <ArrowRight className="w-5 h-5 text-uphold-neutral-400 group-hover:translate-x-1 transition-transform" />
               </Link>
             ))}
+          </div>
+
+          <div className="mt-10 animate-fade-in-up stagger-4">
+            <DownloadBadges />
           </div>
         </div>
       </section>
