@@ -80,14 +80,51 @@ export function DocumentGenerator({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownload = () => {
-    const blob = new Blob([generatedText], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${template.id}-${new Date().toISOString().split("T")[0]}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleDownload = async (format: "txt" | "docx" = "txt") => {
+    const filename = `${template.id}-${new Date().toISOString().split("T")[0]}`;
+
+    if (format === "docx") {
+      try {
+        const { Document, Packer, Paragraph, TextRun } = await import("docx");
+        const paragraphs = generatedText.split("\n").map((line) => {
+          const isHeading = line === line.toUpperCase() && line.trim().length > 3 && !line.startsWith(" ");
+          return new Paragraph({
+            children: [
+              new TextRun({
+                text: line,
+                bold: isHeading,
+                size: isHeading ? 28 : 24,
+                font: "Arial",
+              }),
+            ],
+            spacing: { after: line.trim() === "" ? 200 : 80 },
+          });
+        });
+
+        const doc = new Document({
+          sections: [{ children: paragraphs }],
+        });
+
+        const blob = await Packer.toBlob(doc);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${filename}.docx`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch {
+        // Fallback to txt if docx fails
+        handleDownload("txt");
+      }
+    } else {
+      const blob = new Blob([generatedText], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${filename}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   };
 
   return (
@@ -273,11 +310,18 @@ export function DocumentGenerator({
               )}
             </button>
             <button
-              onClick={handleDownload}
+              onClick={() => handleDownload("docx")}
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-uphold-neutral-100 text-uphold-neutral-600 hover:bg-uphold-neutral-200 transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
-              Download
+              Word (.docx)
+            </button>
+            <button
+              onClick={() => handleDownload("txt")}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-uphold-neutral-100 text-uphold-neutral-600 hover:bg-uphold-neutral-200 transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Text
             </button>
             {!aiDraft && (
               <button
