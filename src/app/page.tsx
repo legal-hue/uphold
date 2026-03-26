@@ -114,7 +114,7 @@ export default function HomePage() {
       <section className="blob-bg min-h-[80vh] flex items-center">
         <div className="max-w-4xl mx-auto px-4 py-20 md:py-28 text-center">
           <h1 className="text-5xl md:text-8xl font-bold text-uphold-neutral-800 leading-[1.05] mb-8 animate-fade-in-up tracking-tight">
-            KNOW WHERE YOU<br />STAND.
+            Know where you stand.
           </h1>
 
           <p className="text-lg md:text-xl text-uphold-neutral-600 max-w-xl mx-auto mb-12 leading-relaxed animate-fade-in-up stagger-1">
