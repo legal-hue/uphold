@@ -1,104 +1,116 @@
 import { Capacitor } from "@capacitor/core";
+import { activateSubscription, isSubscribed } from "./subscription";
 
-// RevenueCat product ID - must match what you create in App Store Connect
 export const PRODUCT_ID = "upheld_premium_monthly";
 export const ENTITLEMENT_ID = "premium";
 
-// Check if running as native app (not web)
 export function isNativeApp(): boolean {
   return Capacitor.isNativePlatform();
 }
 
-// Initialise RevenueCat - call this once on app startup
-export async function initPurchases(): Promise<void> {
-  if (!isNativeApp()) return;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let purchasesModule: any = null;
 
-  const { Purchases } = await import("@revenuecat/purchases-capacitor");
-
-  await Purchases.configure({
-    // Replace with your actual RevenueCat API key after setup
-    apiKey: process.env.NEXT_PUBLIC_REVENUECAT_API_KEY || "test_iqDwBuoFYfydpFkClWhKEQYBFwx",
-  });
-}
-
-// Check if user has active premium subscription
-export async function checkPremiumStatus(): Promise<boolean> {
-  if (!isNativeApp()) {
-    // On web, fall back to localStorage subscription
-    const { isSubscribed } = await import("./subscription");
-    return isSubscribed();
-  }
-
-  try {
-    const { Purchases } = await import("@revenuecat/purchases-capacitor");
-    const { customerInfo } = await Purchases.getCustomerInfo();
-    return customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
-  } catch {
-    return false;
-  }
-}
-
-// Get available subscription packages
-export async function getOfferings() {
+async function getPurchases() {
   if (!isNativeApp()) return null;
+  if (purchasesModule) return purchasesModule;
 
   try {
-    const { Purchases } = await import("@revenuecat/purchases-capacitor");
-    const offerings = await Purchases.getOfferings();
+    const moduleName = "@revenuecat/purchases-capacitor";
+    purchasesModule = await import(/* @vite-ignore */ moduleName);
+    return purchasesModule;
+  } catch {
+    return null;
+  }
+}
+
+export async function initPurchases(): Promise<void> {
+  const mod = await getPurchases();
+  if (!mod) return;
+
+  try {
+    await mod.Purchases.configure({
+      apiKey: process.env.NEXT_PUBLIC_REVENUECAT_API_KEY || "",
+      appUserID: null,
+    });
+  } catch (e) {
+    console.error("RevenueCat init error:", e);
+  }
+}
+
+export async function checkPremiumStatus(): Promise<boolean> {
+  const mod = await getPurchases();
+  if (!mod) return isSubscribed();
+
+  try {
+    const { customerInfo } = await mod.Purchases.getCustomerInfo();
+    const entitlement = customerInfo.entitlements.active[ENTITLEMENT_ID];
+    if (entitlement) {
+      activateSubscription();
+      return true;
+    }
+  } catch {
+    // Fall back to local check
+  }
+
+  return isSubscribed();
+}
+
+export async function getOfferings() {
+  const mod = await getPurchases();
+  if (!mod) return null;
+
+  try {
+    const { offerings } = await mod.Purchases.getOfferings();
     return offerings.current;
   } catch {
     return null;
   }
 }
 
-// Purchase the premium subscription
 export async function purchasePremium(): Promise<boolean> {
-  if (!isNativeApp()) {
-    // On web, activate local subscription (replace with Stripe later)
-    const { activateSubscription } = await import("./subscription");
-    activateSubscription();
-    return true;
+  const mod = await getPurchases();
+
+  if (mod) {
+    try {
+      const { offerings } = await mod.Purchases.getOfferings();
+      const pkg = offerings.current?.availablePackages?.[0];
+      if (pkg) {
+        const { customerInfo } = await mod.Purchases.purchasePackage({
+          aPackage: pkg,
+        });
+        if (customerInfo.entitlements.active[ENTITLEMENT_ID]) {
+          activateSubscription();
+          return true;
+        }
+      }
+    } catch (e: unknown) {
+      const err = e as { userCancelled?: boolean };
+      if (err.userCancelled) return false;
+      throw e;
+    }
   }
 
-  try {
-    const { Purchases } = await import("@revenuecat/purchases-capacitor");
-    const offerings = await Purchases.getOfferings();
-
-    if (!offerings.current?.availablePackages?.length) {
-      console.error("No packages available");
-      return false;
-    }
-
-    // Find the monthly package
-    const monthly = offerings.current.availablePackages.find(
-      (pkg) => pkg.packageType === "MONTHLY"
-    ) || offerings.current.availablePackages[0];
-
-    const { customerInfo } = await Purchases.purchasePackage({
-      aPackage: monthly,
-    });
-
-    return customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
-  } catch (error: unknown) {
-    const err = error as { code?: string };
-    if (err.code === "PURCHASE_CANCELLED") {
-      // User cancelled - not an error
-      return false;
-    }
-    console.error("Purchase failed:", error);
-    return false;
-  }
+  // Web fallback: activate localStorage subscription
+  activateSubscription();
+  return true;
 }
 
-// Restore previous purchases (required by Apple)
 export async function restorePurchases(): Promise<boolean> {
-  if (!isNativeApp()) return false;
+  const mod = await getPurchases();
 
-  try {
-    const { Purchases } = await import("@revenuecat/purchases-capacitor");
-    const { customerInfo } = await Purchases.restorePurchases();
-    return customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
-  } catch {
-    return false;
+  if (mod) {
+    try {
+      const { customerInfo } = await mod.Purchases.restorePurchases();
+      if (customerInfo.entitlements.active[ENTITLEMENT_ID]) {
+        activateSubscription();
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
   }
+
+  return isSubscribed();
 }

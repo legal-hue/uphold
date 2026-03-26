@@ -5,7 +5,8 @@ import Link from "next/link";
 import { ShieldCheck, AlertTriangle, XCircle, Clock, Phone, ArrowRight, ExternalLink, Heart, CheckCircle, Circle, Lock } from "lucide-react";
 import type { TriageResult, Deadline, PracticeArea } from "@/lib/types";
 import { isSubscribed } from "@/lib/subscription";
-import { generateSwot } from "@/lib/swot";
+import { DownloadBadges } from "@/components/layout/DownloadBadges";
+import { generateSwot, type SwotAnalysis } from "@/lib/swot";
 import { CaseReview } from "@/components/premium/CaseReview";
 import { UpgradeScreen } from "@/components/premium/UpgradeScreen";
 
@@ -183,6 +184,8 @@ export function ResultDisplay() {
   const [revealed, setRevealed] = useState(false);
   const [premium, setPremium] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState<SwotAnalysis | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   useEffect(() => {
     setPremium(isSubscribed());
@@ -205,6 +208,46 @@ export function ResultDisplay() {
     window.addEventListener("focus", check);
     return () => window.removeEventListener("focus", check);
   }, []);
+
+  // Fetch AI-powered case assessment for premium users
+  useEffect(() => {
+    if (!premium || !outcome || !outcome.answers || aiAnalysis) return;
+
+    setAiLoading(true);
+    fetch("/api/ai/assessment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        area: outcome.area,
+        answers: outcome.answers,
+        result: outcome.result,
+      }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && data.strengths) {
+          setAiAnalysis(data);
+        } else {
+          // Fallback to rule-based analysis
+          setAiAnalysis(
+            generateSwot(
+              outcome.area as PracticeArea,
+              outcome.answers as Record<string, string | string[]>
+            )
+          );
+        }
+      })
+      .catch(() => {
+        // Fallback to rule-based analysis
+        setAiAnalysis(
+          generateSwot(
+            outcome.area as PracticeArea,
+            outcome.answers as Record<string, string | string[]>
+          )
+        );
+      })
+      .finally(() => setAiLoading(false));
+  }, [premium, outcome, aiAnalysis]);
 
   if (!outcome) {
     return (
@@ -308,13 +351,21 @@ export function ResultDisplay() {
         Time limits are approximate. Verify with a legal professional.
       </div>
 
-      {/* Premium: Case Assessment */}
+      {/* Premium: AI Case Assessment */}
       {premium && outcome.answers && (
         <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
-          <CaseReview
-            analysis={generateSwot(outcome.area as PracticeArea, outcome.answers as Record<string, string | string[]>)}
-            area={outcome.area}
-          />
+          {aiLoading ? (
+            <div className="text-center py-12">
+              <div className="w-10 h-10 border-4 border-uphold-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-uphold-neutral-600 font-medium">Analysing your case...</p>
+              <p className="text-sm text-uphold-neutral-400 mt-1">Our AI is reviewing your specific situation</p>
+            </div>
+          ) : aiAnalysis ? (
+            <CaseReview
+              analysis={aiAnalysis}
+              area={outcome.area}
+            />
+          ) : null}
         </div>
       )}
 
@@ -344,6 +395,11 @@ export function ResultDisplay() {
           </button>
         </div>
       )}
+
+      {/* Download badges */}
+      <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+        <DownloadBadges />
+      </div>
 
       {/* CTAs */}
       <div className="flex flex-col items-center gap-3 mt-6">

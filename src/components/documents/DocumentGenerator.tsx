@@ -10,6 +10,8 @@ import {
   Download,
   Eye,
   Pencil,
+  Sparkles,
+  Loader2,
 } from "lucide-react";
 import type { DocumentTemplate } from "@/lib/documents";
 
@@ -25,16 +27,51 @@ export function DocumentGenerator({
   const [values, setValues] = useState<Record<string, string>>({});
   const [view, setView] = useState<"form" | "preview">("form");
   const [copied, setCopied] = useState(false);
+  const [aiDraft, setAiDraft] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [useAi, setUseAi] = useState(false);
 
   const updateField = (id: string, value: string) => {
     setValues((prev) => ({ ...prev, [id]: value }));
+    // Reset AI draft if user changes fields
+    if (aiDraft) {
+      setAiDraft(null);
+      setUseAi(false);
+    }
   };
 
   const allRequiredFilled = template.fields
     .filter((f) => f.required)
     .every((f) => values[f.id]?.trim());
 
-  const generatedText = allRequiredFilled ? template.generate(values) : "";
+  const templateText = allRequiredFilled ? template.generate(values) : "";
+  const generatedText = useAi && aiDraft ? aiDraft : templateText;
+
+  const handleAiDraft = async () => {
+    setAiLoading(true);
+    try {
+      const res = await fetch("/api/ai/document", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          templateId: template.id,
+          values,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.document) {
+          setAiDraft(data.document);
+          setUseAi(true);
+          setView("preview");
+        }
+      }
+    } catch {
+      // Silently fall back to template version
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(generatedText);
@@ -144,13 +181,36 @@ export function DocumentGenerator({
           ))}
 
           {allRequiredFilled && (
-            <button
-              onClick={() => setView("preview")}
-              className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3 px-6 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-md animate-scale-in"
-            >
-              <Eye className="w-4 h-4" />
-              Preview your document
-            </button>
+            <div className="space-y-3">
+              <button
+                onClick={() => setView("preview")}
+                className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3 px-6 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-md animate-scale-in"
+              >
+                <Eye className="w-4 h-4" />
+                Preview your document
+              </button>
+
+              <button
+                onClick={handleAiDraft}
+                disabled={aiLoading}
+                className="w-full flex items-center justify-center gap-2 bg-uphold-neutral-800 text-white font-semibold py-3 px-6 rounded-xl hover:bg-uphold-neutral-600 transition-colors shadow-md animate-scale-in"
+              >
+                {aiLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Drafting with AI...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4" />
+                    Enhance with AI
+                  </>
+                )}
+              </button>
+              <p className="text-xs text-uphold-neutral-400 text-center">
+                AI drafts a more detailed, professionally worded version using your details
+              </p>
+            </div>
           )}
         </div>
       )}
@@ -158,6 +218,33 @@ export function DocumentGenerator({
       {/* Preview view */}
       {view === "preview" && allRequiredFilled && (
         <div className="animate-fade-in">
+          {/* AI / Template toggle */}
+          {aiDraft && (
+            <div className="flex items-center gap-2 mb-4 p-3 bg-uphold-neutral-50 rounded-xl border border-uphold-neutral-200">
+              <button
+                onClick={() => setUseAi(false)}
+                className={`flex-1 text-center py-2 rounded-lg text-sm font-semibold transition-colors ${
+                  !useAi
+                    ? "bg-white shadow text-uphold-neutral-800"
+                    : "text-uphold-neutral-500"
+                }`}
+              >
+                Standard
+              </button>
+              <button
+                onClick={() => setUseAi(true)}
+                className={`flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-sm font-semibold transition-colors ${
+                  useAi
+                    ? "bg-white shadow text-uphold-neutral-800"
+                    : "text-uphold-neutral-500"
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                AI Enhanced
+              </button>
+            </div>
+          )}
+
           {/* Action buttons */}
           <div className="flex gap-2 mb-4">
             <button
@@ -183,6 +270,20 @@ export function DocumentGenerator({
               <Download className="w-3.5 h-3.5" />
               Download
             </button>
+            {!aiDraft && (
+              <button
+                onClick={handleAiDraft}
+                disabled={aiLoading}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-uphold-neutral-100 text-uphold-neutral-600 hover:bg-uphold-neutral-200 transition-colors"
+              >
+                {aiLoading ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="w-3.5 h-3.5" />
+                )}
+                {aiLoading ? "Drafting..." : "Enhance with AI"}
+              </button>
+            )}
           </div>
 
           {/* Document preview */}
@@ -195,10 +296,9 @@ export function DocumentGenerator({
           {/* Disclaimer */}
           <div className="mt-4 p-4 bg-uphold-warm-50 border border-uphold-warm-200 rounded-xl">
             <p className="text-xs text-uphold-neutral-600">
-              This document is generated as a starting point based on general
-              legal principles. Review it carefully and adapt it to your specific
-              situation. It does not constitute legal advice. Consider having it
-              reviewed by a legal professional before sending.
+              {useAi
+                ? "This document was drafted by AI based on the details you provided and general UK legal principles. Review it carefully and adapt it to your specific situation. It does not constitute legal advice. Consider having it reviewed by a legal professional before sending."
+                : "This document is generated as a starting point based on general legal principles. Review it carefully and adapt it to your specific situation. It does not constitute legal advice. Consider having it reviewed by a legal professional before sending."}
             </p>
           </div>
 

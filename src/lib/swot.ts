@@ -267,6 +267,49 @@ function generateContractSwot(
     );
   }
 
+  // Creator economy disputes
+  const situation = answers.what_happened as string;
+  const creatorIssue = answers.creator_issue as string;
+  if (situation === "creator") {
+    strengths.push(
+      "Creator agreements — whether written or agreed over email and DMs — are legally binding contracts. You have the same rights as any other contracting party"
+    );
+    if (creatorIssue === "brand_non_payment") {
+      strengths.push(
+        "Non-payment for delivered content is a straightforward breach of contract. If you can show the content was delivered as agreed, you have strong grounds"
+      );
+      opportunities.push(
+        "Many brand disputes settle quickly with a formal letter before action, as brands want to protect their reputation in the creator community"
+      );
+    }
+    if (creatorIssue === "brand_scope") {
+      strengths.push(
+        "If a brand used your content beyond the agreed scope (e.g. in paid ads when you agreed to organic only), this is a clear breach of your licensing terms"
+      );
+      opportunities.push(
+        "You may be entitled to additional licensing fees for the unauthorised use, not just the original fee"
+      );
+    }
+    if (creatorIssue === "agency_dispute") {
+      threats.push(
+        "Management and agency contracts often contain restrictive clauses (exclusivity, notice periods, commission on future deals). Review the contract carefully before taking action"
+      );
+    }
+    if (creatorIssue === "ip_theft") {
+      strengths.push(
+        "As the creator, you automatically own the copyright in your content. You do not need to have registered it. Unauthorised use is copyright infringement"
+      );
+      opportunities.push(
+        "Copyright infringement claims can include damages for lost licensing fees and any profits the infringer made from your content"
+      );
+    }
+    if (creatorIssue === "platform_removal") {
+      weaknesses.push(
+        "Platform terms of service often give platforms broad discretion to remove content or restrict accounts, which can make these disputes harder to challenge"
+      );
+    }
+  }
+
   const issue = answers.what_issue as string;
   if (issue === "non_payment") {
     strengths.push(

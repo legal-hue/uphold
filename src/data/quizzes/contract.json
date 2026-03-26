@@ -15,7 +15,24 @@
         { "value": "faulty_goods", "label": "I bought goods that were faulty or not as described", "score": 2 },
         { "value": "review", "label": "I need a contract reviewed before signing", "score": 1 },
         { "value": "termination", "label": "Someone ended our contract unfairly", "score": 2 },
+        { "value": "creator", "label": "I'm a content creator with a brand, agency, or platform dispute", "score": 3 },
         { "value": "other", "label": "Something else", "score": 1 }
+      ]
+    },
+    {
+      "id": "creator_issue",
+      "text": "What best describes your creator dispute?",
+      "helpText": "This helps us tailor the guidance to your specific situation.",
+      "type": "single",
+      "required": true,
+      "conditionalOn": { "questionId": "what_happened", "value": "creator" },
+      "options": [
+        { "value": "brand_non_payment", "label": "A brand or sponsor hasn't paid me for content I created", "score": 3 },
+        { "value": "brand_scope", "label": "A brand used my content beyond what we agreed", "score": 3 },
+        { "value": "agency_dispute", "label": "My management or agency isn't honouring our agreement", "score": 2 },
+        { "value": "platform_removal", "label": "A platform removed my content or restricted my account", "score": 1 },
+        { "value": "collab_dispute", "label": "A collaboration partner didn't deliver on their side", "score": 2 },
+        { "value": "ip_theft", "label": "Someone used my content without permission", "score": 3 }
       ]
     },
     {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Briefcase, Home, FileText, ArrowRight, Shield, Users, Clock, CheckCircle, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import { DownloadBadges } from "@/components/layout/DownloadBadges";
+
 
 const areas = [
   {
@@ -133,10 +133,6 @@ export default function HomePage() {
           <p className="text-sm text-uphold-neutral-500 mt-6 mb-10 animate-fade-in-up stagger-3">
             Free. No sign-up required. Takes 2 minutes.
           </p>
-
-          <div className="animate-fade-in-up stagger-3">
-            <DownloadBadges />
-          </div>
 
           <div id="situations" className="mt-16 space-y-4 max-w-md mx-auto animate-fade-in-up stagger-3">
             {areas.map((area) => (

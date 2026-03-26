@@ -12,11 +12,11 @@
     "cap:android": "npm run build:mobile && npx cap sync android && npx cap open android"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
     "@capacitor/android": "^8.2.0",
     "@capacitor/cli": "^8.2.0",
     "@capacitor/core": "^8.2.0",
     "@capacitor/ios": "^8.2.0",
-    "@revenuecat/purchases-capacitor": "^12.3.0",
     "lucide-react": "^1.0.1",
     "next": "16.2.1",
     "react": "19.2.4",
