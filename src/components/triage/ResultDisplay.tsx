@@ -515,7 +515,7 @@ export function ResultDisplay() {
         >
           Start your guided journey
           <span className="block text-sm font-normal opacity-90 mt-1">
-            Step-by-step guidance from here to resolution
+            First step free — 7-day trial for full access
           </span>
         </Link>
       </div>
