@@ -8,7 +8,6 @@ import { JourneyMap } from "@/components/journey/JourneyMap";
 import { housingJourney } from "@/data/journeys/housing";
 import { loadCase, createCase, saveCase } from "@/lib/case";
 import type { UserCase, TriageOutcome } from "@/lib/types";
-import { PremiumGate } from "@/components/premium/PremiumGate";
 
 export default function HousingJourneyPage() {
   const router = useRouter();
@@ -77,8 +76,7 @@ export default function HousingJourneyPage() {
   const allDone = completedCount === housingJourney.stages.length;
 
   return (
-    <PremiumGate area="housing">
-      <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
+    <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-uphold-neutral-600 hover:text-uphold-neutral-800 text-sm mb-6 transition-colors"
@@ -116,6 +114,5 @@ export default function HousingJourneyPage() {
           constitute legal advice.
         </div>
       </div>
-    </PremiumGate>
   );
 }

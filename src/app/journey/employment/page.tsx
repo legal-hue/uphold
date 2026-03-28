@@ -8,7 +8,6 @@ import { JourneyMap } from "@/components/journey/JourneyMap";
 import { employmentJourney } from "@/data/journeys/employment";
 import { loadCase, createCase, saveCase } from "@/lib/case";
 import type { UserCase, TriageOutcome } from "@/lib/types";
-import { PremiumGate } from "@/components/premium/PremiumGate";
 
 export default function EmploymentJourneyPage() {
   const router = useRouter();
@@ -82,7 +81,6 @@ export default function EmploymentJourneyPage() {
   const allDone = completedCount === employmentJourney.stages.length;
 
   return (
-    <PremiumGate area="employment">
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
       {/* Back link */}
       <Link
@@ -128,6 +126,5 @@ export default function EmploymentJourneyPage() {
         specific situation.
       </div>
     </div>
-    </PremiumGate>
   );
 }

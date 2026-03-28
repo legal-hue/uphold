@@ -507,32 +507,18 @@ export function ResultDisplay() {
         </div>
       )}
 
-      {/* Premium: Start journey CTA */}
-      {premium ? (
-        <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
-          <Link
-            href={`/journey/${outcome.area}`}
-            className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
-          >
-            Start your guided journey
-            <span className="block text-sm font-normal opacity-90 mt-1">
-              Step-by-step guidance from here to resolution
-            </span>
-          </Link>
-        </div>
-      ) : (
-        <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
-          <button
-            onClick={() => setShowUpgrade(true)}
-            className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
-          >
-            Get your full Case Assessment
-            <span className="block text-sm font-normal opacity-90 mt-1">
-              7-day free trial. Detailed analysis, documents, and guidance.
-            </span>
-          </button>
-        </div>
-      )}
+      {/* Start journey CTA */}
+      <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+        <Link
+          href={`/journey/${outcome.area}`}
+          className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
+        >
+          Start your guided journey
+          <span className="block text-sm font-normal opacity-90 mt-1">
+            Step-by-step guidance from here to resolution
+          </span>
+        </Link>
+      </div>
 
       {/* Download badges */}
       <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>

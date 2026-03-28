@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Shield } from "lucide-react";
 import { StageDetail } from "@/components/journey/StageDetail";
+import { PremiumGate } from "@/components/premium/PremiumGate";
 import { housingJourney } from "@/data/journeys/housing";
 import { loadCase, saveCase, completeStage } from "@/lib/case";
 import type { UserCase } from "@/lib/types";
@@ -78,6 +79,23 @@ export default function HousingStagePage() {
   }
 
   const status = userCase.stageStatuses[stage.id] || "locked";
+
+  if (stageIndex > 0) {
+    return (
+      <PremiumGate area="housing">
+        <StageDetail
+          stage={stage}
+          status={status}
+          nextStage={nextStage}
+          prevStage={prevStage}
+          area="housing"
+          caseId={userCase.id}
+          deadlines={userCase.deadlines}
+          onComplete={handleComplete}
+        />
+      </PremiumGate>
+    );
+  }
 
   return (
     <StageDetail
