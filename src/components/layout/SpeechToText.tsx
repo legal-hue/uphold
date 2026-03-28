@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Mic, MicOff } from "lucide-react";
 
 interface SpeechToTextProps {
@@ -9,8 +9,14 @@ interface SpeechToTextProps {
 }
 
 export function SpeechToText({ onResult, currentValue = "" }: SpeechToTextProps) {
+  const [supported, setSupported] = useState(false);
   const [listening, setListening] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+
+  useEffect(() => {
+    setSupported(!!(window.SpeechRecognition || window.webkitSpeechRecognition));
+  }, []);
 
   const toggleListening = useCallback(() => {
     if (listening) {
@@ -24,6 +30,7 @@ export function SpeechToText({ onResult, currentValue = "" }: SpeechToTextProps)
 
     if (!SpeechRecognition) return;
 
+    setError(null);
     const recognition = new SpeechRecognition();
     recognition.lang = "en-GB";
     recognition.continuous = true;
@@ -41,8 +48,15 @@ export function SpeechToText({ onResult, currentValue = "" }: SpeechToTextProps)
       onResult(combined);
     };
 
-    recognition.onerror = () => {
+    recognition.onerror = (event: Event & { error?: string }) => {
       setListening(false);
+      if (event.error === "not-allowed") {
+        setError("Microphone access denied. Please allow microphone in your browser settings.");
+      } else if (event.error === "network") {
+        setError("Network error. Speech recognition requires an internet connection.");
+      } else {
+        setError("Could not start recording. Please try again.");
+      }
     };
 
     recognition.onend = () => {
@@ -54,15 +68,13 @@ export function SpeechToText({ onResult, currentValue = "" }: SpeechToTextProps)
     setListening(true);
   }, [listening, currentValue, onResult]);
 
-  // Check if speech recognition is supported
-  if (
-    typeof window === "undefined" ||
-    (!window.SpeechRecognition && !window.webkitSpeechRecognition)
-  ) {
-    return null;
-  }
+  if (!supported) return null;
 
   return (
+    <div>
+    {error && (
+      <p className="text-xs text-red-500 mb-1 text-right">{error}</p>
+    )}
     <button
       type="button"
       onClick={toggleListening}
@@ -85,5 +97,6 @@ export function SpeechToText({ onResult, currentValue = "" }: SpeechToTextProps)
         </>
       )}
     </button>
+    </div>
   );
 }
