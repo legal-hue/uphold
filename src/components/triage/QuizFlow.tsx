@@ -397,7 +397,11 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
     );
   }
 
-  if (!question) return null;
+  if (!question) {
+    return showEmailGate ? (
+      <EmailGate area={quiz.area} onContinue={handleEmailContinue} />
+    ) : null;
+  }
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
