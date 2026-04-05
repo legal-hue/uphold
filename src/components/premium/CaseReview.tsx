@@ -11,7 +11,7 @@ interface CaseReviewProps {
 const sections = [
   {
     key: "strengths" as const,
-    title: "What strengthens your case",
+    title: "Factors that typically support cases like this",
     icon: Shield,
     colour: "text-uphold-green-500",
     bg: "bg-uphold-green-50",
@@ -29,7 +29,7 @@ const sections = [
   },
   {
     key: "opportunities" as const,
-    title: "Opportunities available to you",
+    title: "Options typically available in cases like this",
     icon: Lightbulb,
     colour: "text-blue-500",
     bg: "bg-blue-50",
@@ -57,17 +57,21 @@ export function CaseReview({ analysis, area }: CaseReviewProps) {
 
   return (
     <div className="space-y-6">
-      <div className="text-center mb-8">
+      <div className="text-center mb-6">
         <div className="inline-flex items-center gap-2 bg-uphold-green-50 text-uphold-green-700 text-sm font-medium px-4 py-2 rounded-full mb-4 border border-uphold-green-100">
           <Shield className="w-4 h-4" />
           Premium
         </div>
         <h2 className="text-2xl md:text-3xl font-bold text-uphold-neutral-800 mb-2">
-          Your Case Assessment
+          Legal Factors Review
         </h2>
         <p className="text-sm text-uphold-neutral-600">
-          {areaLabel} case review based on the information you provided
+          {areaLabel} — the legal factors courts typically consider in cases with these characteristics
         </p>
+      </div>
+
+      <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800 leading-relaxed">
+        <strong>This is legal information, not legal advice.</strong> It explains what courts and tribunals generally consider in cases like this. Every case is different. For advice specific to your situation, consult a qualified solicitor or barrister.
       </div>
 
       {sections.map((section) => {
@@ -102,10 +106,7 @@ export function CaseReview({ analysis, area }: CaseReviewProps) {
       })}
 
       <p className="text-xs text-uphold-neutral-400 text-center leading-relaxed mt-6">
-        This review is based on the information you provided and general legal
-        principles. It is not personal legal advice. Every case has its own
-        circumstances and for advice tailored to your specific situation, we
-        recommend consulting a qualified solicitor or barrister.
+        For advice specific to your situation, consult a qualified solicitor or barrister.
       </p>
     </div>
   );

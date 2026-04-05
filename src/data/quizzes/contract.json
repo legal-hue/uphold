@@ -128,8 +128,8 @@
     }
   ],
   "scoring": {
-    "strong": { "min": 12, "message": "Based on what you've told us, you may have strong grounds to take action. Here's what to do next." },
-    "maybe": { "min": 6, "message": "You may have a claim. The strength depends on your evidence and whether the other party was clearly in breach." },
-    "difficult": { "min": 0, "message": "This may be harder to pursue, but there are still steps you can take. Here's where to start." }
+    "strong": { "min": 12, "message": "The facts described suggest there may be grounds for a claim. Here is what to do next." },
+    "maybe": { "min": 6, "message": "There may be a claim here. The strength will depend on the evidence and whether the breach can be demonstrated." },
+    "difficult": { "min": 0, "message": "This may be harder to pursue on current evidence, but steps can still be taken. Here is where to start." }
   }
 }

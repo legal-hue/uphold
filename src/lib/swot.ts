@@ -46,7 +46,7 @@ function generateEmploymentSwot(
   const service = answers.length_of_service as string;
   if (service === "over_2_years") {
     strengths.push(
-      "With over 2 years' service, you have full unfair dismissal protection under current law"
+      "Employees with over 2 years' service generally have full unfair dismissal protection under current law"
     );
   } else if (service === "6_to_2_years") {
     weaknesses.push(
@@ -80,7 +80,7 @@ function generateEmploymentSwot(
   const grievance = answers.grievance as string;
   if (grievance === "yes_written") {
     strengths.push(
-      "You have raised a formal written grievance, which demonstrates you gave your employer the opportunity to resolve the matter"
+      "A formal written grievance has been raised, which demonstrates the employer was given the opportunity to resolve the matter"
     );
   } else if (grievance === "no" || grievance === "not_sure") {
     weaknesses.push(
@@ -122,7 +122,7 @@ function generateEmploymentSwot(
   const acas = answers.acas as string;
   if (acas === "yes_certificate") {
     strengths.push(
-      "You have completed ACAS early conciliation and have your certificate, which means you are ready to file a tribunal claim if needed"
+      "ACAS early conciliation has been completed and a certificate obtained. A tribunal claim can be filed if needed"
     );
   } else if (acas === "yes_ongoing") {
     opportunities.push(
@@ -141,7 +141,7 @@ function generateEmploymentSwot(
   const stillEmployed = answers.still_employed as string;
   if (stillEmployed === "yes" || stillEmployed === "notice") {
     opportunities.push(
-      "You are still employed, which means you may have access to workplace documents, systems, and potential witnesses. Gather evidence carefully while you can"
+      "Still being employed may mean access to workplace documents, systems, and potential witnesses while evidence is still available. Gathering evidence carefully at this stage is worthwhile"
     );
     threats.push(
       "Be cautious about what you access or copy from work systems. Take photos or notes rather than removing original documents"
@@ -187,7 +187,7 @@ function generateHousingSwot(
   const reported = answers.reported_landlord as string;
   if (reported === "yes_writing") {
     strengths.push(
-      "You have notified your landlord in writing, which is crucial. Your landlord's obligation to repair typically only arises once they have been made aware of the problem"
+      "Written notification has been given to the landlord, which is crucial. A landlord's obligation to repair generally only arises once they have been made aware of the problem in writing"
     );
   } else if (reported === "yes_verbal") {
     weaknesses.push(
@@ -198,7 +198,7 @@ function generateHousingSwot(
     );
   } else {
     weaknesses.push(
-      "You have not yet reported the issue to your landlord. They cannot be held liable for repairs they do not know about"
+      "The issue has not yet been reported to the landlord in writing. Landlords generally cannot be held liable for repairs they have not been properly notified about"
     );
     opportunities.push(
       "Upheld can generate a formal repair request notice for you to send immediately, creating the paper trail you need"
@@ -256,7 +256,7 @@ function generateContractSwot(
   const contractType = answers.contract_type as string;
   if (contractType === "written") {
     strengths.push(
-      "You have a written contract, which clearly sets out the terms and obligations of both parties. This makes it easier to demonstrate a breach"
+      "A written contract is in place, which clearly sets out the terms and obligations of both parties. This makes it easier to demonstrate a breach"
     );
   } else if (contractType === "verbal") {
     weaknesses.push(
@@ -297,7 +297,7 @@ function generateContractSwot(
     }
     if (creatorIssue === "ip_theft") {
       strengths.push(
-        "As the creator, you automatically own the copyright in your content. You do not need to have registered it. Unauthorised use is copyright infringement"
+        "UK law automatically grants copyright to the original creator without any need for registration. Unauthorised use of protected creative work constitutes copyright infringement"
       );
       opportunities.push(
         "Copyright infringement claims can include damages for lost licensing fees and any profits the infringer made from your content"
@@ -341,11 +341,11 @@ function generateContractSwot(
   const attempted = answers.attempted_resolution as string;
   if (attempted === "yes") {
     strengths.push(
-      "You have already attempted to resolve the matter directly, which courts view favourably and is expected under the Pre-Action Protocol"
+      "Attempts have already been made to resolve the matter directly, which courts view favourably and is expected under the Pre-Action Protocol"
     );
   } else {
     weaknesses.push(
-      "You have not yet attempted to resolve the dispute directly. Courts expect parties to try to settle before issuing proceedings"
+      "No attempt has yet been made to resolve the dispute directly. Courts expect parties to try to settle before issuing proceedings"
     );
     opportunities.push(
       "Upheld can generate a pre-action letter setting out your claim and giving the other party a reasonable time to respond before you consider court action"

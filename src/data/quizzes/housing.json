@@ -130,8 +130,8 @@
     }
   ],
   "scoring": {
-    "strong": { "min": 12, "message": "Based on what you've told us, your landlord may be in breach of their legal obligations. Here's what to do next." },
-    "maybe": { "min": 6, "message": "You may have grounds to take action. The key is making sure your landlord has been properly notified in writing." },
-    "difficult": { "min": 0, "message": "Your case may need more evidence before you can take formal action. Here are the steps to strengthen your position." }
+    "strong": { "min": 12, "message": "The circumstances described are consistent with potential obligations that landlords must meet under housing law. Here is what to do next." },
+    "maybe": { "min": 6, "message": "There may be grounds to take action. Written notification to the landlord is the key next step." },
+    "difficult": { "min": 0, "message": "More evidence may be needed before formal action is possible. Here are steps to strengthen the position." }
   }
 }

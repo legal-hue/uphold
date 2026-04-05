@@ -24,7 +24,7 @@ interface TriageOutcomeData {
 const resultConfig = {
   strong: {
     icon: ShieldCheck,
-    title: "You may have a strong case",
+    title: "The factors here are ones courts take seriously",
     colour: "text-uphold-success",
     bg: "bg-green-50",
     border: "border-green-200",
@@ -33,7 +33,7 @@ const resultConfig = {
   },
   maybe: {
     icon: AlertTriangle,
-    title: "You may have a claim",
+    title: "There may be grounds worth exploring",
     colour: "text-uphold-amber",
     bg: "bg-amber-50",
     border: "border-amber-200",
@@ -42,12 +42,12 @@ const resultConfig = {
   },
   difficult: {
     icon: XCircle,
-    title: "This may be challenging",
+    title: "This may be harder to pursue",
     colour: "text-uphold-red",
     bg: "bg-red-50",
     border: "border-red-200",
     dotColour: "bg-red-500",
-    encouragement: "Even if this route is difficult, you still have options. Don't give up.",
+    encouragement: "Even if this route is difficult, options remain. Don't give up.",
   },
 };
 
@@ -75,8 +75,8 @@ function getPersonalisedSteps(
     } else if (!Array.isArray(evidence) || evidence.length < 3) {
       steps.push({ text: "Gather your evidence: emails, contract, payslips, texts, witness details", link: null, external: false });
     }
-    steps.push({ text: "Write down everything that happened in date order while it's fresh", link: null, external: false });
-    steps.push({ text: "Note your 3-month deadline, missing it could mean losing your claim entirely", link: null, external: false });
+    steps.push({ text: "Write down everything that happened in date order while it is fresh", link: null, external: false });
+    steps.push({ text: "The standard tribunal deadline is 3 months minus 1 day from the act complained of. Missing it can mean losing the right to bring a claim", link: null, external: false });
 
     return steps;
   }
@@ -88,17 +88,17 @@ function getPersonalisedSteps(
     const health = answers?.health_impact as string | undefined;
 
     if (reported !== "yes_writing") {
-      steps.push({ text: "Write to your landlord about the repairs, you need this in writing", link: null, external: false });
+      steps.push({ text: "Writing to the landlord about the repairs and keeping a record of that notification is important at this stage", link: null, external: false });
     }
     steps.push({ text: "Take dated photos and videos of every affected area", link: null, external: false });
     if (health === "yes") {
-      steps.push({ text: "Book a GP appointment, ask them to record that your housing is affecting your health", link: null, external: false });
+      steps.push({ text: "Seeing a GP who can record the health impact of the housing conditions can significantly strengthen a claim", link: null, external: false });
     }
     if (!Array.isArray(evidence) || evidence.includes("none") || evidence.length === 0) {
-      steps.push({ text: "Start a diary: note every day the problem affects you", link: null, external: false });
+      steps.push({ text: "Start a diary: note every day the problem affects daily life", link: null, external: false });
     }
     steps.push({ text: "Report to your council's Environmental Health team (free inspection)", link: null, external: false });
-    steps.push({ text: "Don't stop paying rent, it can be used against you", link: null, external: false });
+    steps.push({ text: "Continuing to pay rent is important. Stopping payments can be used against a tenant in proceedings", link: null, external: false });
 
     return steps;
   }

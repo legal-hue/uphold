@@ -120,8 +120,8 @@
     }
   ],
   "scoring": {
-    "strong": { "min": 14, "message": "Based on what you've told us, you have strong grounds to pursue this. Here's how to take it forward." },
-    "maybe": { "min": 7, "message": "You have a case worth pursuing. The key step is getting your evidence together and sending a proper letter before action." },
-    "difficult": { "min": 0, "message": "Your position needs strengthening. Here's what to do to build your case before taking formal action." }
+    "strong": { "min": 14, "message": "The facts described suggest there may be strong grounds to pursue this. Here is how to take it forward." },
+    "maybe": { "min": 7, "message": "There may be a case worth pursuing here. Getting evidence together and sending a Letter Before Action are the key next steps." },
+    "difficult": { "min": 0, "message": "The position may need strengthening before formal action. Here is what to do to build the case." }
   }
 }

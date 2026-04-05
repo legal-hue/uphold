@@ -114,8 +114,8 @@
     }
   ],
   "scoring": {
-    "strong": { "min": 12, "message": "Based on what you've told us, you may have a strong case. Here's what to do next." },
-    "maybe": { "min": 6, "message": "You may have a claim, but we need to look at the details. Here are your options." },
-    "difficult": { "min": 0, "message": "This may be a difficult case to pursue, but you still have options. Here's what we suggest." }
+    "strong": { "min": 12, "message": "The factors described are ones employment tribunals regularly consider in strong claims. Here is what to do next." },
+    "maybe": { "min": 6, "message": "There may be grounds for a claim here. The key factors will depend on the details and evidence available." },
+    "difficult": { "min": 0, "message": "This may be harder to pursue on these facts, but options remain. Here is where to start." }
   }
 }
