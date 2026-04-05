@@ -109,7 +109,7 @@ export function CaseReview({ analysis, area }: CaseReviewProps) {
       <div className="mt-6 bg-uphold-neutral-50 border border-uphold-neutral-200 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex-1">
           <p className="text-sm font-semibold text-uphold-neutral-800">Need more than a guided journey?</p>
-          <p className="text-sm text-uphold-neutral-600 mt-0.5">Book a strategy call, document review, or hearing preparation with a qualified barrister.</p>
+          <p className="text-sm text-uphold-neutral-600 mt-0.5">Book a strategy call, document review, or hearing preparation with a qualified legal adviser.</p>
         </div>
         <Link
           href="/expert"

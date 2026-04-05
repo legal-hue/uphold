@@ -515,7 +515,7 @@ export function ResultDisplay() {
         >
           Start your guided journey
           <span className="block text-sm font-normal opacity-90 mt-1">
-            7-day free trial, then £29.99/month
+            7-day free trial, then £29.99/month thereafter
           </span>
         </Link>
       </div>

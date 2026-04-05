@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, ArrowRight, Send } from "lucide-react";
+import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, ArrowRight, Send, AlertTriangle } from "lucide-react";
+
+// Update this when the company is incorporated
+const COMPANY_NAME = "[Company Name]";
 
 const services = [
   {
@@ -9,7 +12,7 @@ const services = [
     title: "Strategy call",
     duration: "30 minutes",
     price: "£75",
-    description: "Talk through your situation with a qualified barrister. Get a clear picture of where you stand, what your options are, and what to do next.",
+    description: "Talk through your situation with an experienced legal adviser. Get a clear picture of where you stand, what your options are, and what to do next.",
     includes: [
       "Review of your triage results before the call",
       "Plain-English assessment of your position",
@@ -24,7 +27,7 @@ const services = [
     title: "Document review",
     duration: "48-hour turnaround",
     price: "£150",
-    description: "Send one document — a grievance letter, letter before action, or witness statement — and receive detailed written feedback from a barrister.",
+    description: "Send one document — a grievance letter, letter before action, or witness statement — and receive detailed written feedback.",
     includes: [
       "Line-by-line review of your document",
       "Written feedback on legal accuracy and tone",
@@ -39,7 +42,7 @@ const services = [
     title: "Case review",
     duration: "Written report",
     price: "£250",
-    description: "A thorough review of your case. We assess your position, identify strengths and risks, and give you a written action plan with recommended steps.",
+    description: "A thorough review of your case. We assess your position, identify strengths and risks, and give you a written action plan with recommended next steps.",
     includes: [
       "Review of all documents and evidence provided",
       "Written case assessment (strengths, risks, deadlines)",
@@ -74,16 +77,32 @@ const areas = [
   { value: "other", label: "Other" },
 ];
 
+const CLIENT_NOTICE = `Client Information Notice — ${COMPANY_NAME}
+
+1. Status. ${COMPANY_NAME} is not a regulated law firm. It is not authorised by the Bar Standards Board as a legal practice or by the Solicitors Regulation Authority. Legal services are provided by a qualified lawyer who does not hold a current practising certificate issued by the Bar Standards Board and is therefore an unregistered barrister within the meaning of the Legal Services Act 2007. In providing services to you, they are not acting as a practising barrister.
+
+2. Regulatory protections. Because ${COMPANY_NAME} is not a regulated legal services provider, you are not subject to the same regulatory safeguards as you would be if instructing a regulated law firm. In particular, the Legal Ombudsman, which can adjudicate on complaints about poor service by practising barristers and solicitors, cannot consider any complaint against ${COMPANY_NAME} or the lawyer providing services to you. If you have a complaint that cannot be resolved internally, you may contact the Bar Standards Board, which can investigate whether the lawyer has failed to comply with the conduct rules that apply to unregistered barristers.
+
+3. Professional indemnity insurance. Please confirm with us before instructing whether professional indemnity insurance is held in respect of the services to be provided.
+
+4. Legal advice privilege. There is a substantial risk that you will not be able to rely on legal advice privilege in respect of any legal advice provided by ${COMPANY_NAME}. This means that advice given may not be protected from disclosure in legal proceedings in the way that advice from a regulated law firm would be.
+
+5. Scope of services. ${COMPANY_NAME} can provide legal advice and assist with document preparation. It cannot exercise rights of audience in court on your behalf.
+
+By submitting an enquiry and proceeding to instruct ${COMPANY_NAME}, you confirm that you have read and understood this notice.`;
+
 export default function ExpertPage() {
   const [selected, setSelected] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", email: "", area: "", message: "" });
+  const [noticeAccepted, setNoticeAccepted] = useState(false);
+  const [showNotice, setShowNotice] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selected || !form.name || !form.email || !form.area) return;
+    if (!selected || !form.name || !form.email || !form.area || !noticeAccepted) return;
     setSubmitting(true);
     setError("");
     try {
@@ -109,20 +128,35 @@ export default function ExpertPage() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-uphold-green-50 text-uphold-green-700 text-sm font-medium px-4 py-2 rounded-full mb-6 border border-uphold-green-100">
             <Shield className="w-4 h-4" />
-            Expert support
+            Expert legal support
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-uphold-neutral-800 mb-4">
-            Get barrister-level guidance
+            Get expert legal guidance
           </h1>
           <p className="text-uphold-neutral-600 leading-relaxed max-w-xl mx-auto">
-            Upheld is built by a qualified barrister. When you need more than a guided journey, you can book direct support, a document review, or hearing preparation.
+            When you need more than a guided journey, {COMPANY_NAME} offers direct legal support — document review, strategy calls, and hearing preparation.
+          </p>
+        </div>
+
+        {/* Regulatory notice banner */}
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-10 flex items-start gap-3">
+          <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-800 leading-relaxed">
+            <strong>{COMPANY_NAME} is not a regulated law firm</strong> and is not authorised by the Bar Standards Board or the Solicitors Regulation Authority. The Legal Ombudsman cannot consider complaints about these services. Please read the{" "}
+            <button
+              onClick={() => setShowNotice(true)}
+              className="underline font-medium hover:text-amber-900"
+            >
+              Client Information Notice
+            </button>{" "}
+            before instructing.
           </p>
         </div>
 
         {/* Trust signals */}
         <div className="grid grid-cols-3 gap-4 mb-12 text-center">
           {[
-            { label: "Qualified barrister", sub: "Called to the Bar" },
+            { label: "Qualified lawyer", sub: "Legally trained adviser" },
             { label: "Employment, housing", sub: "and contract law" },
             { label: "Plain English", sub: "No jargon" },
           ].map((t) => (
@@ -187,7 +221,7 @@ export default function ExpertPage() {
             </div>
             <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2">Enquiry received</h3>
             <p className="text-sm text-uphold-neutral-600">
-              We will be in touch within one working day to confirm your booking and payment details.
+              We will be in touch within one working day to confirm your booking and payment details. A copy of the Client Information Notice will be sent to your email.
             </p>
           </div>
         ) : (
@@ -257,11 +291,32 @@ export default function ExpertPage() {
                 />
               </div>
 
+              {/* Client notice checkbox */}
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={noticeAccepted}
+                  onChange={(e) => setNoticeAccepted(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 accent-uphold-green-500 flex-shrink-0"
+                />
+                <span className="text-sm text-uphold-neutral-600">
+                  I have read and understood the{" "}
+                  <button
+                    type="button"
+                    onClick={() => setShowNotice(true)}
+                    className="text-uphold-green-600 underline hover:text-uphold-green-800"
+                  >
+                    Client Information Notice
+                  </button>
+                  , including that {COMPANY_NAME} is not a regulated law firm and the Legal Ombudsman cannot consider complaints about these services.
+                </span>
+              </label>
+
               {error && <p className="text-sm text-red-500">{error}</p>}
 
               <button
                 type="submit"
-                disabled={submitting || !selected}
+                disabled={submitting || !selected || !noticeAccepted}
                 className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3.5 rounded-xl hover:bg-uphold-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? "Sending…" : "Send enquiry"}
@@ -274,13 +329,32 @@ export default function ExpertPage() {
             </form>
           </div>
         )}
-
-        {/* Disclaimer */}
-        <p className="text-xs text-uphold-neutral-400 text-center mt-8 leading-relaxed">
-          Expert guidance is provided by a qualified barrister on a self-employed basis. It is not a regulated legal services engagement and does not constitute formal legal advice within the meaning of the Legal Services Act 2007. For regulated legal advice, consult an SRA-authorised solicitor or a barrister with a full practising certificate.
-        </p>
-
       </div>
+
+      {/* Client Information Notice modal */}
+      {showNotice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[80vh] flex flex-col">
+            <div className="p-6 border-b border-uphold-neutral-200">
+              <h3 className="font-bold text-uphold-neutral-800">Client Information Notice</h3>
+              <p className="text-xs text-uphold-neutral-500 mt-1">{COMPANY_NAME}</p>
+            </div>
+            <div className="p-6 overflow-y-auto flex-1">
+              <pre className="text-xs text-uphold-neutral-700 leading-relaxed whitespace-pre-wrap font-sans">
+                {CLIENT_NOTICE}
+              </pre>
+            </div>
+            <div className="p-6 border-t border-uphold-neutral-200">
+              <button
+                onClick={() => { setShowNotice(false); setNoticeAccepted(true); }}
+                className="w-full bg-uphold-green-500 text-white font-semibold py-3 rounded-xl hover:bg-uphold-green-700 transition-colors"
+              >
+                I have read and understood this notice
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

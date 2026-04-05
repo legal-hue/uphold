@@ -176,7 +176,7 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
               <span className="text-sm text-uphold-neutral-500">/month</span>
             </div>
           </div>
-          <p className="text-xs text-uphold-neutral-500 mb-5">7 days free, then £29.99/month. Cancel anytime.</p>
+          <p className="text-xs text-uphold-neutral-500 mb-5">7 days free, then £29.99/month thereafter. Cancel anytime.</p>
 
           <button
             onClick={handleSubscribe}
