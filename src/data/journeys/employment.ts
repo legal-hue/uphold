@@ -202,7 +202,7 @@ export const employmentJourney: Journey = {
       guidance: [
         "Before you can submit a claim to the employment tribunal, you must contact ACAS for early conciliation. This is a legal requirement. You cannot skip it.",
         "Early conciliation is free. An ACAS conciliator will contact both you and your employer to see if the dispute can be settled without going to tribunal. The process usually takes up to 6 weeks, and your tribunal deadline is paused during this time.",
-        "Be realistic about what ACAS does. They are a go-between, not your advocate. They pass messages between you and your employer and try to find common ground. They won't tell you whether your case is strong or give you legal advice. Don't expect them to take your side — that's not their role.",
+        "Be realistic about what ACAS does. They are a go-between, not your advocate. They pass messages between you and your employer and try to find common ground. They won't tell you whether your case is strong or give you legal advice. Don't expect them to take your side, that's not their role.",
         "Many people find ACAS frustrating. Contact can be minimal, and your conciliator may have a heavy caseload. Don't let this discourage you. The real value of ACAS is that it pauses your deadline, gives you a chance to settle, and gets you the certificate you need to proceed to tribunal.",
         "If conciliation doesn't work, ACAS will issue you an Early Conciliation Certificate. You need this reference number to file your tribunal claim. Once you receive it, you usually have at least 1 month to file.",
       ],
@@ -341,10 +341,10 @@ export const employmentJourney: Journey = {
       description:
         "Prepare for your day in court. Know what to expect and how to present your case clearly.",
       guidance: [
-        "A tribunal hearing can feel daunting, but preparation is everything. Many self-represented claimants who prepare well perform better than those with lawyers who don't. The tribunal expects people to represent themselves — 1 in 3 claimants do.",
-        "Before the hearing, you'll need to prepare: a bundle of documents (all evidence both sides will refer to, paginated and indexed), your witness statement (your written evidence — the tribunal reads this instead of you telling your story from scratch), and a chronology or cast list if the judge asks for one.",
-        "At the hearing, the judge will read your witness statement first. You'll be asked to confirm it's true. Then the employer's representative will cross-examine you — this means they ask questions to test your account. Stay calm. Listen carefully. If you don't understand a question, say so. If you don't remember, say 'I don't recall.' Never guess.",
-        "You will also get to cross-examine the employer's witnesses. Prepare specific questions in advance. The best questions point to documents in the bundle that contradict what they're saying. Don't argue or make speeches — just ask clear questions.",
+        "A tribunal hearing can feel daunting, but preparation is everything. Many self-represented claimants who prepare well perform better than those with lawyers who don't. The tribunal expects people to represent themselves, 1 in 3 claimants do.",
+        "Before the hearing, you'll need to prepare: a bundle of documents (all evidence both sides will refer to, paginated and indexed), your witness statement (your written evidence, the tribunal reads this instead of you telling your story from scratch), and a chronology or cast list if the judge asks for one.",
+        "At the hearing, the judge will read your witness statement first. You'll be asked to confirm it's true. Then the employer's representative will cross-examine you, this means they ask questions to test your account. Stay calm. Listen carefully. If you don't understand a question, say so. If you don't remember, say 'I don't recall.' Never guess.",
+        "You will also get to cross-examine the employer's witnesses. Prepare specific questions in advance. The best questions point to documents in the bundle that contradict what they're saying. Don't argue or make speeches, just ask clear questions.",
         "Costs are almost never awarded against individuals in employment tribunals. Even if you lose, you normally walk away owing nothing. The only exception is if your claim was vexatious or had no reasonable prospect of success, which is rare. Don't let fear of costs stop you.",
         "Dress smartly but comfortably. Arrive 30 minutes early. Bring water, snacks, and your own copy of the bundle. Address the judge as 'Sir' or 'Madam'. Take notes. Hearings can last a full day. The tribunal staff at the reception desk are there to help you and will show you where to go.",
       ],
@@ -405,7 +405,7 @@ export const employmentJourney: Journey = {
         "Take notes during the hearing. You may need to refer back to what was said.",
       ],
       resources: [
-        { label: "Personal Support Unit (PSU) — support at tribunal", url: "https://www.thepsu.org" },
+        { label: "Personal Support Unit (PSU), support at tribunal", url: "https://www.thepsu.org" },
         { label: "ACAS: Going to a tribunal hearing", url: "https://www.acas.org.uk/employment-tribunal-hearing" },
         { label: "Citizens Advice: Representing yourself at tribunal", url: "https://www.citizensadvice.org.uk/work/problems-at-work/employment-tribunals/the-tribunal-hearing/" },
       ],

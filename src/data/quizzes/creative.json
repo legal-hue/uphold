@@ -55,14 +55,14 @@
       "options": [
         { "value": "yes_written", "label": "Yes, a written contract or email chain", "score": 3 },
         { "value": "yes_verbal", "label": "Yes, but it was verbal only", "score": 1 },
-        { "value": "partial", "label": "Partial — some things were agreed in writing", "score": 2 },
+        { "value": "partial", "label": "Partial, some things were agreed in writing", "score": 2 },
         { "value": "no", "label": "No agreement at all", "score": 0 }
       ]
     },
     {
       "id": "amount",
       "text": "How much is in dispute?",
-      "helpText": "Claims under £10,000 can go through the Small Claims Court — it's cheap, fast, and designed for individuals.",
+      "helpText": "Claims under £10,000 can go through the Small Claims Court, it's cheap, fast, and designed for individuals.",
       "type": "single",
       "required": true,
       "options": [
@@ -88,7 +88,7 @@
     {
       "id": "response",
       "text": "How did they respond?",
-      "helpText": "No response to a letter before action is itself evidence — it shows the court you tried to resolve things first.",
+      "helpText": "No response to a letter before action is itself evidence, it shows the court you tried to resolve things first.",
       "type": "single",
       "required": false,
       "conditionalOn": {

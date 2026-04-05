@@ -133,7 +133,7 @@ export default function HomePage() {
               href="/triage"
               className="inline-flex items-center gap-3 bg-uphold-green-500 text-white font-semibold text-lg px-10 py-5 rounded-2xl hover:bg-uphold-green-700 transition-all duration-300 hover:scale-105"
             >
-              Check your rights — it&apos;s free
+              Check your rights, it&apos;s free
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -241,7 +241,7 @@ export default function HomePage() {
           </div>
 
           <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-8">
-            &ldquo;I built Upheld because I kept seeing the same thing: people with valid claims who gave up before they started — not because they had a weak case, but because they didn&apos;t know what they had.&rdquo;
+            &ldquo;I built Upheld because I kept seeing the same thing: people with valid claims who gave up before they started, not because they had a weak case, but because they didn&apos;t know what they had.&rdquo;
           </blockquote>
 
           <div className="flex items-start gap-4 pt-6 border-t border-uphold-neutral-600">
@@ -252,7 +252,7 @@ export default function HomePage() {
               <p className="font-semibold text-white">Practising Barrister</p>
               <p className="text-sm text-uphold-neutral-400 mt-0.5">Employment &amp; Civil Law · Human Rights</p>
               <p className="text-sm text-uphold-neutral-400 mt-2 leading-relaxed max-w-lg">
-                Upheld is built on real legal knowledge, not generic advice. Every question, every deadline, every document template is grounded in current UK law — because you deserve tools that actually work.
+                Upheld is built on real legal knowledge, not generic advice. Every question, every deadline, every document template is grounded in current UK law, because you deserve tools that actually work.
               </p>
             </div>
           </div>
@@ -297,7 +297,7 @@ export default function HomePage() {
             href="/triage"
             className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold text-lg px-8 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors"
           >
-            Check your rights — it&apos;s free
+            Check your rights, it&apos;s free
             <ArrowRight className="w-5 h-5" />
           </Link>
           <p className="text-uphold-neutral-500 text-xs mt-4">

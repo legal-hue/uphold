@@ -76,7 +76,7 @@ function getPersonalisedSteps(
       steps.push({ text: "Gather your evidence: emails, contract, payslips, texts, witness details", link: null, external: false });
     }
     steps.push({ text: "Write down everything that happened in date order while it's fresh", link: null, external: false });
-    steps.push({ text: "Note your 3-month deadline — missing it could mean losing your claim entirely", link: null, external: false });
+    steps.push({ text: "Note your 3-month deadline, missing it could mean losing your claim entirely", link: null, external: false });
 
     return steps;
   }
@@ -88,17 +88,17 @@ function getPersonalisedSteps(
     const health = answers?.health_impact as string | undefined;
 
     if (reported !== "yes_writing") {
-      steps.push({ text: "Write to your landlord about the repairs — you need this in writing", link: null, external: false });
+      steps.push({ text: "Write to your landlord about the repairs, you need this in writing", link: null, external: false });
     }
     steps.push({ text: "Take dated photos and videos of every affected area", link: null, external: false });
     if (health === "yes") {
-      steps.push({ text: "Book a GP appointment — ask them to record that your housing is affecting your health", link: null, external: false });
+      steps.push({ text: "Book a GP appointment, ask them to record that your housing is affecting your health", link: null, external: false });
     }
     if (!Array.isArray(evidence) || evidence.includes("none") || evidence.length === 0) {
       steps.push({ text: "Start a diary: note every day the problem affects you", link: null, external: false });
     }
     steps.push({ text: "Report to your council's Environmental Health team (free inspection)", link: null, external: false });
-    steps.push({ text: "Don't stop paying rent — it can be used against you", link: null, external: false });
+    steps.push({ text: "Don't stop paying rent, it can be used against you", link: null, external: false });
 
     return steps;
   }
@@ -120,7 +120,7 @@ function getPersonalisedSteps(
     steps.push({ text: "Screenshot all DMs, emails, and briefs before they can be deleted", link: null, external: false });
   }
   steps.push({ text: "Calculate your financial losses with receipts and records", link: null, external: false });
-  steps.push({ text: "Consider mediation — for claims under £10,000 it's free via the Small Claims Mediation Service", link: null, external: false });
+  steps.push({ text: "Consider mediation, for claims under £10,000 it's free via the Small Claims Mediation Service", link: null, external: false });
 
   return steps;
 }

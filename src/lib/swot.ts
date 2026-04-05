@@ -272,7 +272,7 @@ function generateContractSwot(
   const creatorIssue = answers.creator_issue as string;
   if (situation === "creator") {
     strengths.push(
-      "Creator agreements — whether written or agreed over email and DMs — are legally binding contracts. You have the same rights as any other contracting party"
+      "Creator agreements, whether written or agreed over email and DMs, are legally binding contracts. You have the same rights as any other contracting party"
     );
     if (creatorIssue === "brand_non_payment") {
       strengths.push(

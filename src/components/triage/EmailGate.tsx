@@ -34,7 +34,7 @@ export function EmailGate({ area, onContinue }: EmailGateProps) {
         body: JSON.stringify({ email: email.trim(), area }),
       });
     } catch {
-      // Non-blocking — don't stop the user seeing their result
+      // Non-blocking, don't stop the user seeing their result
     } finally {
       onContinue();
     }
@@ -96,7 +96,7 @@ export function EmailGate({ area, onContinue }: EmailGateProps) {
           onClick={handleSkip}
           className="mt-3 w-full text-sm text-uphold-neutral-400 hover:text-uphold-neutral-600 transition-colors"
         >
-          Skip — just show my result
+          Skip, just show my result
         </button>
 
         <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-uphold-neutral-400">

@@ -8,12 +8,12 @@ Rules:
 - Write in formal but accessible English
 - Use proper legal formatting (headings, numbered lists, clear paragraphs)
 - Reference relevant UK legislation accurately
-- Be firm but not aggressive — professional and measured
+- Be firm but not aggressive, professional and measured
 - Include all the details the user has provided
 - Add standard legal closing language appropriate to the document type
 - Use "without prejudice" only where genuinely appropriate
 - Date the letter with today's date
-- Do NOT add placeholder text like [insert X] — only use the information provided
+- Do NOT add placeholder text like [insert X], only use the information provided
 - Return ONLY the document text, no markdown code blocks or commentary`;
 
 const TEMPLATE_CONTEXT: Record<string, string> = {

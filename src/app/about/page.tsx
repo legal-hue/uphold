@@ -29,12 +29,12 @@ export default function AboutPage() {
             {
               icon: Shield,
               title: "Built on actual law, not just general guidance",
-              text: "Every assessment is based on current UK legislation and case law — not generic advice. The questions are designed by a barrister who works in these areas.",
+              text: "Every assessment is based on current UK legislation and case law, not generic advice. The questions are designed by a barrister who works in these areas.",
             },
             {
               icon: Scale,
               title: "We tell you the difficult truth",
-              text: "If your case is weak, we will tell you — and explain what would strengthen it. We do not give false hope or bury important information.",
+              text: "If your case is weak, we will tell you, and explain what would strengthen it. We do not give false hope or bury important information.",
             },
             {
               icon: Lock,
@@ -96,7 +96,7 @@ export default function AboutPage() {
           href="/triage"
           className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold px-8 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors"
         >
-          Check your rights — it&apos;s free
+          Check your rights, it&apos;s free
           <ArrowRight className="w-4 h-4" />
         </Link>
         <p className="text-xs text-uphold-neutral-400 mt-3">No sign-up. No data stored. Takes 2 minutes.</p>

@@ -11,10 +11,10 @@ export const creativeJourney: Journey = {
       description:
         "Get clear on exactly what happened, what you're owed, and what legal protections apply to you as a creative professional.",
       guidance: [
-        "You create things of value. That value deserves to be protected. The law is on your side — but you need to know what you have before you can enforce it.",
+        "You create things of value. That value deserves to be protected. The law is on your side, but you need to know what you have before you can enforce it.",
         "Start by writing down exactly what was agreed: the brief, the deliverables, the fee, the payment terms, and any deadlines. What did you deliver? What did they receive? When was payment due?",
-        "As a creator, you automatically own the copyright in your work from the moment it's created — you don't need to register it. If a client wants to own it, they need an assignment in writing. Licences (permission to use) are different from ownership.",
-        "For unpaid invoices, the Late Payment of Commercial Debts (Interest) Act 1998 entitles you to claim 8% above the Bank of England base rate on overdue payments from businesses — plus a fixed compensation charge of £40–£100 depending on the debt size.",
+        "As a creator, you automatically own the copyright in your work from the moment it's created, you don't need to register it. If a client wants to own it, they need an assignment in writing. Licences (permission to use) are different from ownership.",
+        "For unpaid invoices, the Late Payment of Commercial Debts (Interest) Act 1998 entitles you to claim 8% above the Bank of England base rate on overdue payments from businesses, plus a fixed compensation charge of £40–£100 depending on the debt size.",
       ],
       checklist: [
         {
@@ -25,7 +25,7 @@ export const creativeJourney: Journey = {
         },
         {
           id: "assess-2",
-          text: "Gather all written agreements — contracts, emails, DMs, WhatsApp",
+          text: "Gather all written agreements, contracts, emails, DMs, WhatsApp",
           helpText: "Screenshots of messages count. Even informal agreements in writing are evidence.",
           required: true,
         },
@@ -44,7 +44,7 @@ export const creativeJourney: Journey = {
         {
           id: "assess-5",
           text: "Check who owns the copyright in your work",
-          helpText: "If no written assignment exists, you likely still own it — even if they've been using it.",
+          helpText: "If no written assignment exists, you likely still own it, even if they've been using it.",
           required: false,
         },
       ],
@@ -52,8 +52,8 @@ export const creativeJourney: Journey = {
       estimatedDuration: "1–2 hours",
       tips: [
         "Save everything in two places. Clients sometimes delete messages or block creators.",
-        "If they've been using your work without paying you, document the usage now — screenshots, URLs, dates.",
-        "You can claim late payment interest automatically — you don't need to have mentioned it in your original contract.",
+        "If they've been using your work without paying you, document the usage now, screenshots, URLs, dates.",
+        "You can claim late payment interest automatically, you don't need to have mentioned it in your original contract.",
         "If the client is a business, you have stronger statutory rights than if they're an individual.",
       ],
       resources: [
@@ -69,12 +69,12 @@ export const creativeJourney: Journey = {
       name: "Build your evidence",
       shortName: "Evidence",
       description:
-        "Organise what you have. Courts and mediators decide on evidence — yours needs to be clear and complete.",
+        "Organise what you have. Courts and mediators decide on evidence, yours needs to be clear and complete.",
       guidance: [
         "Your evidence needs to show two things: (1) what was agreed, and (2) that you held up your end of it. If you can show both, you're in a strong position.",
-        "Written evidence is strongest. Emails, contracts, signed terms and conditions, WhatsApp messages, DMs — all of these can be used. Take screenshots and back them up.",
+        "Written evidence is strongest. Emails, contracts, signed terms and conditions, WhatsApp messages, DMs, all of these can be used. Take screenshots and back them up.",
         "Proof of delivery is critical for unpaid work claims. This could be a delivery email, a download confirmation, a signed-off file, or even just the client using your work publicly.",
-        "For copyright cases, you need to show you created the work first. Timestamps on files, draft versions, original source files, metadata — all of this establishes your authorship and the timeline.",
+        "For copyright cases, you need to show you created the work first. Timestamps on files, draft versions, original source files, metadata, all of this establishes your authorship and the timeline.",
       ],
       checklist: [
         {
@@ -104,7 +104,7 @@ export const creativeJourney: Journey = {
         {
           id: "evidence-5",
           text: "Document any unauthorised use of your work",
-          helpText: "Screenshots of their website, posts, print materials — with the URL and date captured.",
+          helpText: "Screenshots of their website, posts, print materials, with the URL and date captured.",
           required: false,
         },
       ],
@@ -112,9 +112,9 @@ export const creativeJourney: Journey = {
       estimatedDuration: "1–3 days",
       tips: [
         "If a client is ignoring you, check if they're still publicly using your work. Screenshot it now.",
-        "Original files (RAW, PSD, etc.) are strong evidence of authorship — back them up somewhere safe.",
+        "Original files (RAW, PSD, etc.) are strong evidence of authorship, back them up somewhere safe.",
         "Bank statements showing no payment received are evidence too.",
-        "Don't confront or threaten — just document quietly while you build your case.",
+        "Don't confront or threaten, just document quietly while you build your case.",
       ],
       resources: [
         { label: "UK Copyright Service: guidance for creators", url: "https://www.copyrightservice.co.uk" },
@@ -128,18 +128,18 @@ export const creativeJourney: Journey = {
       name: "Send a Letter Before Action",
       shortName: "Letter",
       description:
-        "A formal letter giving the other party a final chance to pay or resolve things — required before court action.",
+        "A formal letter giving the other party a final chance to pay or resolve things, required before court action.",
       guidance: [
-        "A Letter Before Action (LBA) is a formal written notice that you intend to take legal action if the matter is not resolved. It is required by the courts — you cannot skip this step.",
+        "A Letter Before Action (LBA) is a formal written notice that you intend to take legal action if the matter is not resolved. It is required by the courts, you cannot skip this step.",
         "An LBA does several things at once: it puts the other party on notice, it demonstrates to the court that you tried to resolve things, and it often works on its own. Many disputes are settled at this stage.",
-        "Your letter should set out: what was agreed, what you delivered, what you're owed (including late payment interest), and a deadline to respond — usually 7–14 days. State clearly that you will proceed to court if not resolved.",
+        "Your letter should set out: what was agreed, what you delivered, what you're owed (including late payment interest), and a deadline to respond, usually 7–14 days. State clearly that you will proceed to court if not resolved.",
         "Send it by email and by recorded post if you have their address. Keep copies of everything.",
       ],
       checklist: [
         {
           id: "letter-1",
           text: "Draft your Letter Before Action",
-          helpText: "Use the template — set out what was agreed, what you delivered, what you're owed, and the deadline to respond.",
+          helpText: "Use the template, set out what was agreed, what you delivered, what you're owed, and the deadline to respond.",
           required: true,
         },
         {
@@ -170,9 +170,9 @@ export const creativeJourney: Journey = {
       documentsAvailable: ["Letter Before Action", "Pre-action Letter"],
       estimatedDuration: "1–3 days",
       tips: [
-        "Keep the tone professional and factual — not emotional or threatening.",
+        "Keep the tone professional and factual, not emotional or threatening.",
         "If they respond with a dispute, acknowledge it calmly and state your position. Don't escalate.",
-        "If they ignore you, that works in your favour at court — it shows you gave them every opportunity.",
+        "If they ignore you, that works in your favour at court, it shows you gave them every opportunity.",
         "AI can help you draft a professional version using your specific facts.",
       ],
       resources: [
@@ -189,11 +189,11 @@ export const creativeJourney: Journey = {
       description:
         "For disputes up to £10,000. Cheap, designed for individuals, and no lawyers required.",
       guidance: [
-        "The Small Claims Court is specifically designed for disputes like yours — it's cheap, relatively fast, and you don't need a lawyer. Judges are used to hearing from individuals representing themselves.",
-        "You file online at gov.uk. The fee depends on the claim amount: from £35 for claims under £300 up to £455 for claims up to £10,000. You can include the court fee in your claim — if you win, they pay it.",
+        "The Small Claims Court is specifically designed for disputes like yours, it's cheap, relatively fast, and you don't need a lawyer. Judges are used to hearing from individuals representing themselves.",
+        "You file online at gov.uk. The fee depends on the claim amount: from £35 for claims under £300 up to £455 for claims up to £10,000. You can include the court fee in your claim, if you win, they pay it.",
         "Once you file, the court sends the claim form to the defendant. They have 14 days to acknowledge it and 28 days to file a defence. If they don't respond, you can apply for a default judgment.",
         "If the case goes to a hearing, it will usually be a short, informal appointment. You present your evidence, they present theirs, and the judge decides. Come prepared with a clear, organised file of documents.",
-        "Winning a judgment is one thing — enforcing it is another. If they still don't pay after judgment, you can apply for an attachment of earnings, a charging order on property, or a High Court Enforcement Officer. This is straightforward but takes time.",
+        "Winning a judgment is one thing, enforcing it is another. If they still don't pay after judgment, you can apply for an attachment of earnings, a charging order on property, or a High Court Enforcement Officer. This is straightforward but takes time.",
       ],
       checklist: [
         {
@@ -232,7 +232,7 @@ export const creativeJourney: Journey = {
       tips: [
         "You can claim the court fee, travel costs, and any loss of earnings in your claim.",
         "A default judgment (when they don't respond) is quick and you can immediately seek enforcement.",
-        "If the dispute is over copyright rather than money, the Intellectual Property Enterprise Court (IPEC) is the right forum — it handles IP claims up to £500,000.",
+        "If the dispute is over copyright rather than money, the Intellectual Property Enterprise Court (IPEC) is the right forum, it handles IP claims up to £500,000.",
         "For amounts under £600, consider the Free Debt Recovery service from some local councils.",
       ],
       resources: [
@@ -241,7 +241,7 @@ export const creativeJourney: Journey = {
         { label: "IPEC: Copyright and IP claims", url: "https://www.gov.uk/guidance/intellectual-property-enterprise-court-ipec" },
         { label: "Citizens Advice: Small claims", url: "https://www.citizensadvice.org.uk/law-and-courts/legal-system/small-claims/" },
       ],
-      transitionMessage: "Whether you settle or win at court — your rights have been upheld.",
+      transitionMessage: "Whether you settle or win at court, your rights have been upheld.",
     },
   ],
 };

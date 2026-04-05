@@ -120,10 +120,10 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
             Your assessment is complete
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-uphold-neutral-800 mb-4">
-            Now take action — with everything you need
+            Now take action, with everything you need
           </h1>
           <p className="text-uphold-neutral-600 leading-relaxed max-w-md mx-auto">
-            Most people who know their rights get better outcomes. Upheld gives you the tools solicitors use — in plain English, on your phone.
+            Most people who know their rights get better outcomes. Upheld gives you the tools solicitors use, in plain English, on your phone.
           </p>
         </div>
 
@@ -158,7 +158,7 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
         <div className="bg-uphold-green-50 border border-uphold-green-100 rounded-xl p-4 mb-6 flex items-start gap-3">
           <Shield className="w-5 h-5 text-uphold-green-500 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-uphold-neutral-800">Try it free for 7 days — no risk</p>
+            <p className="text-sm font-semibold text-uphold-neutral-800">Try it free for 7 days, no risk</p>
             <p className="text-xs text-uphold-neutral-600 mt-1">Cancel before your trial ends and you will not be charged. No questions asked. Your case information stays on your device.</p>
           </div>
         </div>

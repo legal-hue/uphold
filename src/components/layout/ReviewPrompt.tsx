@@ -54,11 +54,11 @@ export function ReviewPrompt({ trigger, delay = 3000 }: ReviewPromptProps) {
     const state = getReviewState();
 
     if (stars >= 4) {
-      // Good rating — mark as reviewed, show thanks
+      // Good rating, mark as reviewed, show thanks
       saveReviewState({ ...state, reviewed: true, promptCount: state.promptCount + 1, lastPrompt: trigger });
       setStep("thanks");
     } else {
-      // Lower rating — ask for feedback
+      // Lower rating, ask for feedback
       saveReviewState({ ...state, promptCount: state.promptCount + 1, lastPrompt: trigger });
       setStep("feedback");
     }

@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 const faqs = [
   {
     q: "Is Upheld a law firm?",
-    a: "No. Upheld is a legal information tool, not a law firm. We help you understand your rights, organise your case, and navigate the process — but we cannot give you personal legal advice or represent you. For advice specific to your situation, consult a qualified solicitor or barrister.",
+    a: "No. Upheld is a legal information tool, not a law firm. We help you understand your rights, organise your case, and navigate the process, but we cannot give you personal legal advice or represent you. For advice specific to your situation, consult a qualified solicitor or barrister.",
   },
   {
     q: "Who built Upheld?",
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: "Is my information private?",
-    a: "Yes. Your answers and case information are stored on your device only — we do not collect, store, or share them. There are no accounts and no sign-up required.",
+    a: "Yes. Your answers and case information are stored on your device only, we do not collect, store, or share them. There are no accounts and no sign-up required.",
   },
   {
     q: "Can I use Upheld if I am still employed?",
@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     q: "Are the deadline calculations accurate?",
-    a: "We calculate deadlines based on the standard rules for each type of claim. Individual circumstances — such as ACAS early conciliation — can extend them. Always verify your specific deadline with a legal professional.",
+    a: "We calculate deadlines based on the standard rules for each type of claim. Individual circumstances, such as ACAS early conciliation, can extend them. Always verify your specific deadline with a legal professional.",
   },
   {
     q: "What happens after the 7-day trial?",

@@ -290,7 +290,7 @@ export function DocumentGenerator({
                 )}
               </button>
               <p className="text-xs text-uphold-neutral-400 text-center">
-                Our AI rewrites this letter using your details — stronger language, more specific facts, more likely to get a response
+                Our AI rewrites this letter using your details, stronger language, more specific facts, more likely to get a response
               </p>
             </div>
           )}
