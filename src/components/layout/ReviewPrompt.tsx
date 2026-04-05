@@ -33,7 +33,9 @@ export function ReviewPrompt({ trigger, delay = 3000 }: ReviewPromptProps) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(0);
   const [hovering, setHovering] = useState(0);
-  const [step, setStep] = useState<"rate" | "thanks" | "feedback">("rate");
+  const [step, setStep] = useState<"rate" | "thanks" | "feedback" | "sent">("rate");
+  const [feedbackText, setFeedbackText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const state = getReviewState();
@@ -69,6 +71,20 @@ export function ReviewPrompt({ trigger, delay = 3000 }: ReviewPromptProps) {
   };
 
   const handleClose = () => setShow(false);
+
+  const handleFeedbackSubmit = async () => {
+    if (!feedbackText.trim()) return;
+    setSubmitting(true);
+    try {
+      await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rating, text: feedbackText, trigger }),
+      });
+    } catch { /* non-blocking */ }
+    setStep("sent");
+    setSubmitting(false);
+  };
 
   if (!show) return null;
 
@@ -148,27 +164,55 @@ export function ReviewPrompt({ trigger, delay = 3000 }: ReviewPromptProps) {
         )}
 
         {step === "feedback" && (
-          <div className="text-center">
+          <div>
             <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageCircle className="w-6 h-6 text-amber-500" />
             </div>
-            <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2">
+            <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2 text-center">
               How can we do better?
             </h3>
-            <p className="text-sm text-uphold-neutral-600 mb-5">
-              We are sorry the experience has not been great. Your feedback helps us improve.
+            <p className="text-sm text-uphold-neutral-600 mb-4 text-center">
+              We are sorry the experience has not been great. Tell us what happened and we will improve it.
             </p>
-            <a
-              href="mailto:support@upheld.app?subject=App Feedback"
-              className="block w-full bg-uphold-neutral-800 text-white font-semibold py-3 rounded-xl hover:bg-uphold-neutral-600 transition-colors text-center"
+            <textarea
+              value={feedbackText}
+              onChange={(e) => setFeedbackText(e.target.value)}
+              placeholder="What could we do better?"
+              className="w-full border-2 border-uphold-neutral-200 rounded-xl px-4 py-3 text-sm text-uphold-neutral-800 placeholder:text-uphold-neutral-400 resize-none focus:border-uphold-green-500 focus:outline-none transition-colors min-h-[100px]"
+              autoFocus
+            />
+            <button
+              onClick={handleFeedbackSubmit}
+              disabled={!feedbackText.trim() || submitting}
+              className="mt-3 w-full bg-uphold-neutral-800 text-white font-semibold py-3 rounded-xl hover:bg-uphold-neutral-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send feedback
-            </a>
+              {submitting ? "Sending…" : "Send feedback"}
+            </button>
             <button
               onClick={handleClose}
-              className="mt-2 text-sm text-uphold-neutral-400 hover:text-uphold-neutral-600"
+              className="mt-2 w-full text-sm text-uphold-neutral-400 hover:text-uphold-neutral-600"
             >
               No thanks
+            </button>
+          </div>
+        )}
+
+        {step === "sent" && (
+          <div className="text-center">
+            <div className="w-12 h-12 bg-uphold-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <MessageCircle className="w-6 h-6 text-uphold-green-500" />
+            </div>
+            <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2">
+              Thank you
+            </h3>
+            <p className="text-sm text-uphold-neutral-600 mb-5">
+              We have received your feedback and will use it to improve Upheld.
+            </p>
+            <button
+              onClick={handleClose}
+              className="w-full bg-uphold-green-500 text-white font-semibold py-3 rounded-xl hover:bg-uphold-green-700 transition-colors"
+            >
+              Close
             </button>
           </div>
         )}

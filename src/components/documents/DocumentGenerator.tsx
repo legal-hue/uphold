@@ -31,6 +31,8 @@ export function DocumentGenerator({
   const [aiDraft, setAiDraft] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [useAi, setUseAi] = useState(false);
+  const [showSample, setShowSample] = useState(false);
+  const [savedVersion, setSavedVersion] = useState<string | null>(null);
 
   const updateField = (id: string, value: string) => {
     setValues((prev) => ({ ...prev, [id]: value }));
@@ -72,6 +74,17 @@ export function DocumentGenerator({
     } finally {
       setAiLoading(false);
     }
+  };
+
+  const handleSaveVersion = () => {
+    const key = `uphold_doc_${template.id}`;
+    const version = {
+      savedAt: new Date().toISOString(),
+      text: generatedText,
+      ai: useAi,
+    };
+    localStorage.setItem(key, JSON.stringify(version));
+    setSavedVersion(new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
   };
 
   const handleCopy = async () => {
@@ -149,7 +162,30 @@ export function DocumentGenerator({
         <h1 className="text-2xl md:text-3xl font-bold text-uphold-neutral-800 mb-2">
           {template.name}
         </h1>
-        <p className="text-uphold-neutral-600">{template.description}</p>
+        <p className="text-uphold-neutral-600 mb-3">{template.description}</p>
+        <button
+          onClick={() => setShowSample(!showSample)}
+          className="text-sm text-uphold-green-500 hover:text-uphold-green-700 font-semibold transition-colors flex items-center gap-1"
+        >
+          <Eye className="w-3.5 h-3.5" />
+          {showSample ? "Hide" : "See what this document looks like"}
+        </button>
+        {showSample && (
+          <div className="mt-3 bg-uphold-neutral-50 border border-uphold-neutral-200 rounded-xl p-4 animate-fade-in">
+            <p className="text-xs font-semibold text-uphold-neutral-400 mb-2 uppercase tracking-wide">Sample preview</p>
+            <pre className="whitespace-pre-wrap font-sans text-xs text-uphold-neutral-500 leading-relaxed line-clamp-10 overflow-hidden">
+              {template.generate(
+                Object.fromEntries(
+                  template.fields.map((f) => [
+                    f.id,
+                    f.placeholder || `[${f.label}]`,
+                  ])
+                )
+              )}
+            </pre>
+            <p className="text-xs text-uphold-neutral-400 mt-2 italic">Fill in your details below to generate your personalised version.</p>
+          </div>
+        )}
       </div>
 
       {/* View toggle */}
@@ -254,7 +290,7 @@ export function DocumentGenerator({
                 )}
               </button>
               <p className="text-xs text-uphold-neutral-400 text-center">
-                AI drafts a more detailed, professionally worded version using your details
+                Our AI rewrites this letter using your details — stronger language, more specific facts, more likely to get a response
               </p>
             </div>
           )}
@@ -290,6 +326,17 @@ export function DocumentGenerator({
               </button>
             </div>
           )}
+
+          {/* Save version */}
+          <div className="flex items-center justify-between mb-3">
+            <button
+              onClick={handleSaveVersion}
+              className="text-xs text-uphold-green-500 hover:text-uphold-green-700 font-semibold transition-colors"
+            >
+              {savedVersion ? `Saved at ${savedVersion}` : "Save version to device"}
+            </button>
+            {savedVersion && <span className="text-xs text-uphold-neutral-400">Progress saved</span>}
+          </div>
 
           {/* Action buttons */}
           <div className="flex gap-2 mb-4">

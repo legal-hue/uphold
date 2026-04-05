@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Shield, ArrowLeft, Home } from "lucide-react";
+import { Shield, Home } from "lucide-react";
 import { JourneyMap } from "@/components/journey/JourneyMap";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { housingJourney } from "@/data/journeys/housing";
 import { loadCase, createCase, saveCase } from "@/lib/case";
 import type { UserCase, TriageOutcome } from "@/lib/types";
@@ -77,13 +78,7 @@ export default function HousingJourneyPage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-uphold-neutral-600 hover:text-uphold-neutral-800 text-sm mb-6 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Home
-        </Link>
+        <Breadcrumb items={[{ label: "Housing Journey" }]} />
 
         <div className="mb-8 animate-fade-in-up">
           <div className="flex items-center gap-2 mb-2">

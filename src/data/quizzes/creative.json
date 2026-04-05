@@ -1,0 +1,127 @@
+{
+  "area": "creative",
+  "introMessage": "You create. You deserve to be paid and protected. Let's work out what your rights are.",
+  "questions": [
+    {
+      "id": "what_happened",
+      "text": "What's the issue?",
+      "helpText": "Select all that apply.",
+      "type": "multiple",
+      "required": true,
+      "options": [
+        { "value": "unpaid", "label": "I haven't been paid for my work", "score": 3 },
+        { "value": "late_payment", "label": "Payment is overdue", "score": 3 },
+        { "value": "contract_breach", "label": "The other party broke the terms we agreed", "score": 3 },
+        { "value": "copyright", "label": "Someone used my work without permission", "score": 3 },
+        { "value": "credit", "label": "I wasn't credited for my work", "score": 2 },
+        { "value": "cancelled", "label": "The project was cancelled after I'd started", "score": 2 },
+        { "value": "scope_creep", "label": "They kept changing the brief without extra pay", "score": 2 },
+        { "value": "platform", "label": "A platform removed or demonetised my content", "score": 1 },
+        { "value": "other", "label": "Something else", "score": 1 }
+      ]
+    },
+    {
+      "id": "when_happened",
+      "text": "When did the issue arise?",
+      "helpText": "For payment disputes, use the date the payment was due. For copyright, use the date you first discovered the infringement.",
+      "type": "date",
+      "required": true,
+      "options": [
+        { "value": "date", "label": "", "score": 0, "flag": "deadline" }
+      ]
+    },
+    {
+      "id": "work_type",
+      "text": "What type of creative work is this?",
+      "helpText": "This helps us apply the right legal framework.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "photography", "label": "Photography", "score": 2 },
+        { "value": "design", "label": "Design or illustration", "score": 2 },
+        { "value": "writing", "label": "Writing or copywriting", "score": 2 },
+        { "value": "video", "label": "Video or film", "score": 2 },
+        { "value": "music", "label": "Music or audio", "score": 2 },
+        { "value": "social_content", "label": "Social media / digital content", "score": 2 },
+        { "value": "other_creative", "label": "Other creative work", "score": 1 }
+      ]
+    },
+    {
+      "id": "contract",
+      "text": "Was there a contract or written agreement?",
+      "helpText": "A written contract makes your position significantly stronger. Verbal agreements are still legally binding but harder to prove.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes_written", "label": "Yes, a written contract or email chain", "score": 3 },
+        { "value": "yes_verbal", "label": "Yes, but it was verbal only", "score": 1 },
+        { "value": "partial", "label": "Partial — some things were agreed in writing", "score": 2 },
+        { "value": "no", "label": "No agreement at all", "score": 0 }
+      ]
+    },
+    {
+      "id": "amount",
+      "text": "How much is in dispute?",
+      "helpText": "Claims under £10,000 can go through the Small Claims Court — it's cheap, fast, and designed for individuals.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "under_500", "label": "Under £500", "score": 3 },
+        { "value": "500_to_2000", "label": "£500–£2,000", "score": 3 },
+        { "value": "2000_to_10000", "label": "£2,000–£10,000", "score": 3 },
+        { "value": "over_10000", "label": "Over £10,000", "score": 2 },
+        { "value": "not_money", "label": "It's not a money dispute", "score": 1 }
+      ]
+    },
+    {
+      "id": "chased",
+      "text": "Have you formally chased them?",
+      "helpText": "A formal letter before action is required before you can go to court. We can help you draft one.",
+      "type": "single",
+      "required": true,
+      "options": [
+        { "value": "yes_formal", "label": "Yes, by formal letter or legal notice", "score": 3 },
+        { "value": "yes_informal", "label": "Yes, by email or message", "score": 2 },
+        { "value": "no", "label": "No, not yet", "score": 0 }
+      ]
+    },
+    {
+      "id": "response",
+      "text": "How did they respond?",
+      "helpText": "No response to a letter before action is itself evidence — it shows the court you tried to resolve things first.",
+      "type": "single",
+      "required": false,
+      "conditionalOn": {
+        "questionId": "chased",
+        "value": ["yes_formal", "yes_informal"]
+      },
+      "options": [
+        { "value": "paid_partial", "label": "Paid part of what's owed", "score": 2 },
+        { "value": "disputed", "label": "Disputed the amount or terms", "score": 2 },
+        { "value": "ignored", "label": "Ignored me completely", "score": 3 },
+        { "value": "promised", "label": "Promised to pay but hasn't", "score": 3 },
+        { "value": "aggressive", "label": "Responded aggressively or threatened me", "score": 3 }
+      ]
+    },
+    {
+      "id": "evidence",
+      "text": "What evidence do you have?",
+      "helpText": "Don't worry if you don't have much yet. We'll help you build your case.",
+      "type": "multiple",
+      "required": false,
+      "options": [
+        { "value": "contract_doc", "label": "Written contract or terms", "score": 3 },
+        { "value": "emails", "label": "Emails agreeing the brief and fee", "score": 3 },
+        { "value": "invoice", "label": "Invoice sent to the client", "score": 2 },
+        { "value": "work_delivered", "label": "Proof the work was delivered", "score": 2 },
+        { "value": "copyright_reg", "label": "Copyright registration or timestamps", "score": 2 },
+        { "value": "none", "label": "I don't have much yet", "score": 0 }
+      ]
+    }
+  ],
+  "scoring": {
+    "strong": { "min": 14, "message": "Based on what you've told us, you have strong grounds to pursue this. Here's how to take it forward." },
+    "maybe": { "min": 7, "message": "You have a case worth pursuing. The key step is getting your evidence together and sending a proper letter before action." },
+    "difficult": { "min": 0, "message": "Your position needs strengthening. Here's what to do to build your case before taking formal action." }
+  }
+}

@@ -185,6 +185,12 @@ export const employmentJourney: Journey = {
         "Don't wait too long. Your tribunal deadline keeps running while the grievance process is underway.",
         "If your employer doesn't follow the ACAS Code, that can count in your favour at tribunal.",
       ],
+      resources: [
+        { label: "ACAS: How to raise a grievance", url: "https://www.acas.org.uk/raising-a-grievance-at-work" },
+        { label: "Citizens Advice: Complaining about your employer", url: "https://www.citizensadvice.org.uk/work/problems-at-work/complaining-about-your-employer/" },
+        { label: "ACAS Code of Practice on Disciplinary and Grievance Procedures", url: "https://www.acas.org.uk/acas-code-of-practice-on-disciplinary-and-grievance-procedures" },
+      ],
+      transitionMessage: "Your grievance is on record. The next step is to contact ACAS before you can file a tribunal claim.",
     },
     {
       id: "acas",
@@ -246,6 +252,12 @@ export const employmentJourney: Journey = {
         "If your employer makes a settlement offer, ask for time to consider it. Don't feel pressured to accept on the spot.",
         "If you want to propose your own settlement, use a 'without prejudice' letter. This means it can't be held against you if negotiations fail.",
       ],
+      resources: [
+        { label: "ACAS: Start early conciliation (free)", url: "https://www.acas.org.uk/early-conciliation" },
+        { label: "GOV.UK: Employment tribunal process", url: "https://www.gov.uk/employment-tribunals" },
+        { label: "Equality Advisory Support Service", url: "https://www.equalityadvisoryservice.com" },
+      ],
+      transitionMessage: "You have your ACAS certificate. You can now prepare and file your ET1 tribunal claim.",
     },
     {
       id: "claim",
@@ -314,6 +326,12 @@ export const employmentJourney: Journey = {
         "If you're unsure about the legal basis of your claim, consider getting a one-off advice session from a lawyer or free legal clinic.",
         "Keep your details of claim focused. Include everything relevant, but don't pad it with opinion or emotion.",
       ],
+      resources: [
+        { label: "GOV.UK: Submit your ET1 claim online", url: "https://www.gov.uk/employment-tribunals/make-a-claim" },
+        { label: "ACAS: Guide to tribunal claims", url: "https://www.acas.org.uk/employment-tribunal-claims" },
+        { label: "Free legal clinics (Law Works)", url: "https://www.lawworks.org.uk/legal-advice-individuals" },
+      ],
+      transitionMessage: "Your claim has been submitted. Now prepare for the hearing.",
     },
     {
       id: "hearing",
@@ -386,6 +404,12 @@ export const employmentJourney: Journey = {
         "It's OK to say 'I don't remember' if you genuinely can't recall something. Don't guess.",
         "Take notes during the hearing. You may need to refer back to what was said.",
       ],
+      resources: [
+        { label: "Personal Support Unit (PSU) — support at tribunal", url: "https://www.thepsu.org" },
+        { label: "ACAS: Going to a tribunal hearing", url: "https://www.acas.org.uk/employment-tribunal-hearing" },
+        { label: "Citizens Advice: Representing yourself at tribunal", url: "https://www.citizensadvice.org.uk/work/problems-at-work/employment-tribunals/the-tribunal-hearing/" },
+      ],
+      transitionMessage: "The hearing is done. Whatever happens next, you stood up for your rights.",
     },
     {
       id: "after",

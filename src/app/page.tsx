@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Briefcase, Home, FileText, ArrowRight, Shield, Users, Clock, CheckCircle, MessageCircle } from "lucide-react";
+import { Briefcase, Home, FileText, ArrowRight, Shield, Users, Clock, CheckCircle, MessageCircle, Palette } from "lucide-react";
 import { DownloadBadges } from "@/components/layout/DownloadBadges";
 import { useState, useEffect } from "react";
 
@@ -27,6 +27,13 @@ const areas = [
     href: "/triage/contract",
     colour: "border-purple-200 hover:border-purple-400 bg-purple-50/50 hover:bg-purple-50",
     iconColour: "text-purple-600 bg-purple-100",
+  },
+  {
+    icon: Palette,
+    title: "I'm a creator and haven't been paid",
+    href: "/triage/creative",
+    colour: "border-pink-200 hover:border-pink-400 bg-pink-50/50 hover:bg-pink-50",
+    iconColour: "text-pink-600 bg-pink-100",
   },
 ];
 
@@ -126,14 +133,30 @@ export default function HomePage() {
               href="/triage"
               className="inline-flex items-center gap-3 bg-uphold-green-500 text-white font-semibold text-lg px-10 py-5 rounded-2xl hover:bg-uphold-green-700 transition-all duration-300 hover:scale-105"
             >
-              Check your rights now
+              Check your rights — it&apos;s free
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
 
-          <p className="text-sm text-uphold-neutral-500 mt-6 mb-10 animate-fade-in-up stagger-3">
+          <p className="text-sm text-uphold-neutral-500 mt-6 mb-4 animate-fade-in-up stagger-3">
             Free. No sign-up required. Takes 2 minutes.
           </p>
+
+          {/* Trust bar */}
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 animate-fade-in-up stagger-3 mb-6">
+            <span className="flex items-center gap-1.5 text-xs text-uphold-neutral-500">
+              <CheckCircle className="w-3.5 h-3.5 text-uphold-green-500" />
+              Built by a practising barrister
+            </span>
+            <span className="flex items-center gap-1.5 text-xs text-uphold-neutral-500">
+              <CheckCircle className="w-3.5 h-3.5 text-uphold-green-500" />
+              Based on current UK law
+            </span>
+            <span className="flex items-center gap-1.5 text-xs text-uphold-neutral-500">
+              <CheckCircle className="w-3.5 h-3.5 text-uphold-green-500" />
+              Your data stays on your device
+            </span>
+          </div>
 
           <div id="situations" className="mt-16 space-y-4 max-w-md mx-auto animate-fade-in-up stagger-3">
             {areas.map((area) => (
@@ -209,12 +232,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Creator / founder section */}
+      <section className="py-16 md:py-20 bg-uphold-neutral-800 text-white">
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="flex items-center gap-2 mb-8">
+            <Shield className="w-5 h-5 text-uphold-green-500" />
+            <span className="text-sm font-semibold text-uphold-green-500 uppercase tracking-wide">Who built this</span>
+          </div>
+
+          <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-8">
+            &ldquo;I built Upheld because I kept seeing the same thing: people with valid claims who gave up before they started — not because they had a weak case, but because they didn&apos;t know what they had.&rdquo;
+          </blockquote>
+
+          <div className="flex items-start gap-4 pt-6 border-t border-uphold-neutral-600">
+            <div className="w-12 h-12 bg-uphold-green-500 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold text-lg">
+              K
+            </div>
+            <div>
+              <p className="font-semibold text-white">Practising Barrister</p>
+              <p className="text-sm text-uphold-neutral-400 mt-0.5">Employment &amp; Civil Law · Human Rights</p>
+              <p className="text-sm text-uphold-neutral-400 mt-2 leading-relaxed max-w-lg">
+                Upheld is built on real legal knowledge, not generic advice. Every question, every deadline, every document template is grounded in current UK law — because you deserve tools that actually work.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section className="bg-uphold-green-50 py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex items-center justify-center gap-2 mb-8">
             <Users className="w-5 h-5 text-uphold-green-500" />
-            <span className="text-sm font-medium text-uphold-neutral-600">Inspired by real cases</span>
+            <span className="text-sm font-medium text-uphold-neutral-600">What people like you have done</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -247,9 +297,12 @@ export default function HomePage() {
             href="/triage"
             className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold text-lg px-8 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors"
           >
-            Check your rights now
+            Check your rights — it&apos;s free
             <ArrowRight className="w-5 h-5" />
           </Link>
+          <p className="text-uphold-neutral-500 text-xs mt-4">
+            Assessment is free. Full case tools from £29.99/month with a 7-day free trial.
+          </p>
         </div>
       </section>
     </div>

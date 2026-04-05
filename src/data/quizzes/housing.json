@@ -70,6 +70,23 @@
       ]
     },
     {
+      "id": "landlord_ignore_duration",
+      "text": "How long has your landlord been failing to act?",
+      "helpText": "The longer a landlord ignores a problem they know about, the stronger your case. Over 3 months is a significant breach.",
+      "type": "single",
+      "required": false,
+      "conditionalOn": {
+        "questionId": "landlord_response",
+        "value": ["ignored", "partial", "blamed_me"]
+      },
+      "options": [
+        { "value": "under_1_week", "label": "Less than a week", "score": 1 },
+        { "value": "1_to_4_weeks", "label": "1–4 weeks", "score": 2 },
+        { "value": "1_to_3_months", "label": "1–3 months", "score": 3 },
+        { "value": "over_3_months", "label": "Over 3 months", "score": 4 }
+      ]
+    },
+    {
       "id": "health_impact",
       "text": "Is the problem affecting your health?",
       "helpText": "Health impact strengthens your case significantly. See your GP if you can. It creates evidence.",

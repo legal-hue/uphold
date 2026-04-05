@@ -15,6 +15,12 @@ import {
   Heart,
   DollarSign,
   X,
+  Monitor,
+  Mic,
+  ClipboardList,
+  AlertCircle,
+  MessageSquare,
+  Printer,
 } from "lucide-react";
 import type { PracticeArea } from "@/lib/types";
 import {
@@ -34,6 +40,42 @@ const typeIcons: Record<EvidenceType, typeof FileText> = {
   note: StickyNote,
   medical: Heart,
   financial: DollarSign,
+  screenshot: Monitor,
+  voice_recording: Mic,
+  performance_review: ClipboardList,
+  discipline_letter: AlertCircle,
+  text_message: MessageSquare,
+};
+
+const claimsByArea: Record<string, string[]> = {
+  employment: [
+    "Unfair Dismissal",
+    "Discrimination",
+    "Harassment / Bullying",
+    "Constructive Dismissal",
+    "Unpaid Wages",
+    "Settlement Agreement",
+  ],
+  housing: [
+    "Disrepair / Repairs",
+    "Compensation",
+    "Rent Reduction",
+    "Rehousing Request",
+  ],
+  contract: [
+    "Breach of Contract",
+    "Debt Recovery",
+    "Misrepresentation",
+    "Non-payment",
+  ],
+  creative: [
+    "Unpaid Fees",
+    "Late Payment",
+    "Copyright Infringement",
+    "Contract Breach",
+    "Scope Creep",
+    "Cancelled Project",
+  ],
 };
 
 interface EvidenceBuilderProps {
@@ -41,9 +83,11 @@ interface EvidenceBuilderProps {
 }
 
 function AddEvidenceForm({
+  area,
   onAdd,
   onCancel,
 }: {
+  area: string;
   onAdd: (item: Omit<EvidenceItem, "id" | "createdAt">) => void;
   onCancel: () => void;
 }) {
@@ -51,16 +95,31 @@ function AddEvidenceForm({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState<EvidenceType>("document");
+  const [claimsSupported, setClaimsSupported] = useState<string[]>([]);
 
+  const claims = claimsByArea[area] ?? [];
   const canSubmit = date && title.trim();
+
+  const toggleClaim = (claim: string) => {
+    setClaimsSupported((prev) =>
+      prev.includes(claim) ? prev.filter((c) => c !== claim) : [...prev, claim]
+    );
+  };
 
   const handleSubmit = () => {
     if (!canSubmit) return;
-    onAdd({ date, title: title.trim(), description: description.trim(), type });
+    onAdd({
+      date,
+      title: title.trim(),
+      description: description.trim(),
+      type,
+      claimsSupported: claimsSupported.length > 0 ? claimsSupported : undefined,
+    });
     setDate("");
     setTitle("");
     setDescription("");
     setType("document");
+    setClaimsSupported([]);
   };
 
   return (
@@ -144,6 +203,31 @@ function AddEvidenceForm({
           />
         </div>
 
+        {/* Which claim does this support? */}
+        {claims.length > 0 && (
+          <div>
+            <label className="block text-sm font-semibold text-uphold-neutral-800 mb-2">
+              Which claim does this support? (optional)
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {claims.map((claim) => (
+                <button
+                  key={claim}
+                  type="button"
+                  onClick={() => toggleClaim(claim)}
+                  className={`text-xs font-medium px-3 py-1.5 rounded-full border transition-all ${
+                    claimsSupported.includes(claim)
+                      ? "border-uphold-green-500 bg-uphold-green-50 text-uphold-green-700"
+                      : "border-uphold-neutral-200 text-uphold-neutral-600 hover:border-uphold-neutral-400"
+                  }`}
+                >
+                  {claim}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <button
           onClick={handleSubmit}
           disabled={!canSubmit}
@@ -209,6 +293,15 @@ function TimelineItem({
               <p className="text-xs text-uphold-neutral-600 mt-1 leading-relaxed">
                 {item.description}
               </p>
+            )}
+            {item.claimsSupported && item.claimsSupported.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-1.5">
+                {item.claimsSupported.map((claim) => (
+                  <span key={claim} className="text-xs px-2 py-0.5 bg-uphold-neutral-100 text-uphold-neutral-500 rounded-full">
+                    {claim}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
           <button
@@ -307,21 +400,42 @@ export function EvidenceBuilder({ area }: EvidenceBuilderProps) {
         </div>
       )}
 
-      {/* Add button */}
+      {/* Add + Export buttons */}
       {!showForm && (
-        <button
-          onClick={() => setShowForm(true)}
-          className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3 px-6 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-md mb-6"
-        >
-          <Plus className="w-4 h-4" />
-          Add evidence
-        </button>
+        <div className="flex gap-3 mb-6">
+          <button
+            onClick={() => setShowForm(true)}
+            className="flex-1 flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3 px-6 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-md"
+          >
+            <Plus className="w-4 h-4" />
+            Add evidence
+          </button>
+          {items.length > 0 && (
+            <button
+              onClick={() => {
+                const rows = items.map((item) => {
+                  const d = new Date(item.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+                  const claims = item.claimsSupported?.join(", ") ?? "";
+                  return `<tr><td>${d}</td><td>${evidenceTypeConfig[item.type].label}</td><td>${item.title}</td><td>${item.description || ""}</td><td>${claims}</td></tr>`;
+                }).join("");
+                const html = `<!DOCTYPE html><html><head><title>Evidence Timeline — ${areaLabel}</title><style>body{font-family:sans-serif;padding:24px;color:#1a1a1a}h1{font-size:20px;margin-bottom:16px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;border-bottom:2px solid #ccc;padding:8px 12px;background:#f5f5f5}td{border-bottom:1px solid #eee;padding:8px 12px;vertical-align:top}@media print{button{display:none}}</style></head><body><h1>Evidence Timeline — ${areaLabel}</h1><table><thead><tr><th>Date</th><th>Type</th><th>Title</th><th>Notes</th><th>Claims</th></tr></thead><tbody>${rows}</tbody></table></body></html>`;
+                const w = window.open("", "_blank");
+                if (w) { w.document.write(html); w.document.close(); w.print(); }
+              }}
+              className="flex items-center justify-center gap-2 border-2 border-uphold-neutral-200 text-uphold-neutral-700 font-semibold py-3 px-4 rounded-xl hover:border-uphold-neutral-400 transition-colors"
+              title="Print / Export"
+            >
+              <Printer className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       )}
 
       {/* Add form */}
       {showForm && (
         <div className="mb-6">
           <AddEvidenceForm
+            area={area}
             onAdd={handleAdd}
             onCancel={() => setShowForm(false)}
           />

@@ -3,33 +3,31 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Shield, Briefcase } from "lucide-react";
+import { Shield, Palette } from "lucide-react";
 import { JourneyMap } from "@/components/journey/JourneyMap";
-import { Breadcrumb } from "@/components/layout/Breadcrumb";
-import { employmentJourney } from "@/data/journeys/employment";
+import { creativeJourney } from "@/data/journeys/creative";
 import { loadCase, createCase, saveCase } from "@/lib/case";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import type { UserCase, TriageOutcome } from "@/lib/types";
 
-export default function EmploymentJourneyPage() {
+export default function CreativeJourneyPage() {
   const router = useRouter();
   const [userCase, setUserCase] = useState<UserCase | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Try to load existing case
-    const existing = loadCase("employment");
+    const existing = loadCase("creative");
     if (existing) {
       setUserCase(existing);
       setLoading(false);
       return;
     }
 
-    // Try to create case from triage outcome
     const triageData = localStorage.getItem("uphold_latest_triage");
     if (triageData) {
       try {
         const outcome: TriageOutcome = JSON.parse(triageData);
-        if (outcome.area === "employment") {
+        if (outcome.area === "creative") {
           const newCase = createCase(outcome);
           saveCase(newCase);
           setUserCase(newCase);
@@ -41,7 +39,6 @@ export default function EmploymentJourneyPage() {
       }
     }
 
-    // No triage result - redirect to triage
     setLoading(false);
   }, [router]);
 
@@ -57,16 +54,13 @@ export default function EmploymentJourneyPage() {
   if (!userCase) {
     return (
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <Briefcase className="w-12 h-12 text-uphold-neutral-400 mx-auto mb-4" />
-        <h1 className="text-2xl font-bold text-uphold-neutral-800 mb-3">
-          No assessment found
-        </h1>
+        <Palette className="w-12 h-12 text-uphold-neutral-400 mx-auto mb-4" />
+        <h1 className="text-2xl font-bold text-uphold-neutral-800 mb-3">No assessment found</h1>
         <p className="text-uphold-neutral-600 mb-6">
-          Complete your employment rights check first, then come back here
-          to start your guided journey.
+          Complete your creative rights check first, then come back here to start your guided journey.
         </p>
         <Link
-          href="/triage/employment"
+          href="/triage/creative"
           className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-uphold-green-700 transition-colors"
         >
           Check your rights
@@ -79,45 +73,38 @@ export default function EmploymentJourneyPage() {
   const completedCount = Object.values(userCase.stageStatuses).filter(
     (s) => s === "completed"
   ).length;
-  const allDone = completedCount === employmentJourney.stages.length;
+  const allDone = completedCount === creativeJourney.stages.length;
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
-      <Breadcrumb items={[{ label: "Employment Journey" }]} />
+      <Breadcrumb items={[{ label: "Creative Journey" }]} />
 
-      {/* Header */}
       <div className="mb-8 animate-fade-in-up">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-            <Briefcase className="w-4 h-4 text-blue-600" />
+          <div className="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center">
+            <Palette className="w-4 h-4 text-pink-600" />
           </div>
-          <span className="text-sm font-semibold text-blue-600">
-            Employment
-          </span>
+          <span className="text-sm font-semibold text-pink-600">Creative Economy</span>
         </div>
         <h1 className="text-2xl md:text-3xl font-bold text-uphold-neutral-800 mb-2">
           Your case journey
         </h1>
         <p className="text-uphold-neutral-600">
           {allDone
-            ? "You've completed every stage. Well done. You should be proud."
-            : "Follow each stage step by step. Take your time. There's no rush."}
+            ? "You've completed every stage. Your rights have been upheld."
+            : "Follow each stage step by step. You deserve to be paid."}
         </p>
       </div>
 
-      {/* Journey Map */}
       <JourneyMap
-        stages={employmentJourney.stages}
+        stages={creativeJourney.stages}
         stageStatuses={userCase.stageStatuses}
         currentStageId={userCase.currentStageId}
-        area="employment"
+        area="creative"
       />
 
-      {/* Disclaimer */}
       <div className="mt-8 text-xs text-uphold-neutral-400 text-center p-4 border-t border-uphold-neutral-200">
-        This journey guide is based on general legal principles and does not
-        constitute legal advice. Consider seeking professional advice for your
-        specific situation.
+        This journey guide is based on general legal principles and does not constitute legal advice. Consider seeking professional advice for your specific situation.
       </div>
     </div>
   );

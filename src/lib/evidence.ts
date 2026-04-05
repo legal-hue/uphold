@@ -7,6 +7,7 @@ export interface EvidenceItem {
   description: string;
   type: EvidenceType;
   createdAt: string;
+  claimsSupported?: string[];
 }
 
 export type EvidenceType =
@@ -16,7 +17,12 @@ export type EvidenceType =
   | "witness"
   | "note"
   | "medical"
-  | "financial";
+  | "financial"
+  | "screenshot"
+  | "voice_recording"
+  | "performance_review"
+  | "discipline_letter"
+  | "text_message";
 
 export const evidenceTypeConfig: Record<
   EvidenceType,
@@ -29,6 +35,11 @@ export const evidenceTypeConfig: Record<
   note: { label: "Personal Note", colour: "text-gray-600", bg: "bg-gray-50" },
   medical: { label: "Medical", colour: "text-red-600", bg: "bg-red-50" },
   financial: { label: "Financial", colour: "text-emerald-600", bg: "bg-emerald-50" },
+  screenshot: { label: "Screenshot", colour: "text-cyan-600", bg: "bg-cyan-50" },
+  voice_recording: { label: "Voice Recording", colour: "text-violet-600", bg: "bg-violet-50" },
+  performance_review: { label: "Performance Review", colour: "text-orange-600", bg: "bg-orange-50" },
+  discipline_letter: { label: "Disciplinary Letter", colour: "text-rose-600", bg: "bg-rose-50" },
+  text_message: { label: "Text Message", colour: "text-teal-600", bg: "bg-teal-50" },
 };
 
 function generateId(): string {

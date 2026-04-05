@@ -1,4 +1,4 @@
-export type PracticeArea = 'employment' | 'housing' | 'contract';
+export type PracticeArea = 'employment' | 'housing' | 'contract' | 'creative';
 
 export type QuestionType = 'single' | 'multiple' | 'date' | 'text';
 
@@ -75,6 +75,11 @@ export interface ChecklistItem {
   required: boolean;
 }
 
+export interface StageResource {
+  label: string;
+  url: string;
+}
+
 export interface Stage {
   id: string;
   number: number;
@@ -86,6 +91,8 @@ export interface Stage {
   documentsAvailable: string[];
   estimatedDuration: string;
   tips: string[];
+  resources?: StageResource[];
+  transitionMessage?: string;
 }
 
 export interface Journey {

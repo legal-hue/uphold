@@ -12,10 +12,12 @@ import {
   FileText,
   Lock,
   Shield,
+  ExternalLink,
 } from "lucide-react";
 import type { Stage, StageStatus, Deadline } from "@/lib/types";
 import { getTemplatesForArea } from "@/lib/documents";
 import type { PracticeArea } from "@/lib/types";
+import { Breadcrumb } from "@/components/layout/Breadcrumb";
 
 interface StageDetailProps {
   stage: Stage;
@@ -171,6 +173,32 @@ function DeadlineReminder({ deadlines }: { deadlines: Deadline[] }) {
   );
 }
 
+function ResourceLinks({ resources }: { resources: NonNullable<Stage["resources"]> }) {
+  return (
+    <div className="bg-white rounded-xl border border-uphold-neutral-200 p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <ExternalLink className="w-4 h-4 text-uphold-green-500" />
+        <h3 className="font-bold text-sm text-uphold-neutral-800">Useful links</h3>
+      </div>
+      <ul className="space-y-2">
+        {resources.map((resource) => (
+          <li key={resource.url}>
+            <a
+              href={resource.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-uphold-green-600 hover:text-uphold-green-700 transition-colors"
+            >
+              <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
+              {resource.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function TipsSection({ tips }: { tips: string[] }) {
   return (
     <div className="bg-uphold-warm-50 rounded-xl p-5 border border-uphold-warm-200">
@@ -246,14 +274,13 @@ export function StageDetail({
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
-      {/* Back to journey */}
-      <Link
-        href={`/journey/${area}`}
-        className="inline-flex items-center gap-2 text-uphold-neutral-600 hover:text-uphold-neutral-800 text-sm mb-6 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to journey map
-      </Link>
+      {/* Breadcrumb */}
+      <Breadcrumb
+        items={[
+          { label: area.charAt(0).toUpperCase() + area.slice(1), href: `/journey/${area}` },
+          { label: stage.shortName },
+        ]}
+      />
 
       {/* Stage header */}
       <div className="mb-8 animate-fade-in-up">
@@ -375,9 +402,16 @@ export function StageDetail({
       )}
 
       {/* Tips */}
-      <div className="mb-8">
+      <div className="mb-6">
         <TipsSection tips={stage.tips} />
       </div>
+
+      {/* Resource links */}
+      {stage.resources && stage.resources.length > 0 && (
+        <div className="mb-8">
+          <ResourceLinks resources={stage.resources} />
+        </div>
+      )}
 
       {/* Navigation */}
       <div className="flex items-center justify-between pt-6 border-t border-uphold-neutral-200">

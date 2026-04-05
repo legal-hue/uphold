@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check, Shield, Clock, AlertTriangle } from "lucide-react";
 import type { Quiz, QuizQuestion as QuizQuestionType } from "@/lib/types";
 import { calculateScore } from "@/lib/scoring";
+import { EmailGate } from "./EmailGate";
 import {
   calculateEmploymentDeadlines,
   calculateHousingDeadlines,
   calculateContractDeadlines,
+  calculateCreativeDeadlines,
 } from "@/lib/deadlines";
 
 const microFeedback: Record<string, Record<string, string>> = {
@@ -64,6 +66,31 @@ const microFeedback: Record<string, Record<string, string>> = {
     ignored: "Being ignored strengthens your case. Document the dates you reported it.",
     blamed_me: "The government has been clear: damp and mould are not a lifestyle choice. Your landlord cannot blame you.",
     not_reported: "Reporting is the essential first step. We can help you write the letter.",
+  },
+  landlord_ignore_duration: {
+    under_1_week: "Keep chasing in writing. A clear paper trail matters.",
+    "1_to_4_weeks": "A month is long enough for most repairs to start. This counts in your favour.",
+    "1_to_3_months": "This is a significant delay. Your landlord is likely in breach of their obligations.",
+    over_3_months: "Over 3 months is a serious failure. You have strong grounds for formal action.",
+  },
+  // Creative
+  contract: {
+    yes_written: "A written contract is your strongest protection. You're in a good position.",
+    yes_verbal: "Verbal agreements are binding, but harder to prove. Focus on any written evidence around the agreement.",
+    partial: "Partial written records count. We'll help you piece together what you have.",
+    no: "No written agreement makes things harder, but not impossible. Focus on what was communicated in writing elsewhere.",
+  },
+  chased: {
+    yes_formal: "A formal letter is the right move. Courts take this seriously.",
+    yes_informal: "Good — you have a record. Consider following up with a formal Letter Before Action.",
+    no: "The first step is a formal letter before action. We'll help you draft one.",
+  },
+  response: {
+    paid_partial: "Partial payment is an acknowledgement of the debt. Keep chasing the rest.",
+    disputed: "A dispute doesn't mean they're right. Document your position and be ready to set out the facts.",
+    ignored: "Being ignored is actually useful evidence. The court will see you gave them every opportunity.",
+    promised: "Broken promises are a pattern. Document each one with dates.",
+    aggressive: "Aggressive responses can indicate desperation. Don't respond emotionally — just keep your evidence.",
   },
   // Contract
   contract_type: {
@@ -262,6 +289,7 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [direction, setDirection] = useState<"forward" | "back">("forward");
+  const [showEmailGate, setShowEmailGate] = useState(false);
 
   const question = currentIndex >= 0 ? quiz.questions[currentIndex] : null;
   const totalQuestions = quiz.questions.length;
@@ -317,17 +345,23 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
       let deadlines;
       if (quiz.area === "employment") deadlines = calculateEmploymentDeadlines(answers);
       else if (quiz.area === "housing") deadlines = calculateHousingDeadlines(answers);
+      else if (quiz.area === "creative") deadlines = calculateCreativeDeadlines(answers);
       else deadlines = calculateContractDeadlines(answers);
 
       const outcome = { area: quiz.area, result, score, message, answers, deadlines, completedAt: new Date().toISOString() };
       localStorage.setItem("uphold_latest_triage", JSON.stringify(outcome));
-      router.push(`/triage/${quiz.area}/result`);
+      setShowEmailGate(true);
     }
   };
 
   const handleBack = () => {
     setDirection("back");
     setCurrentIndex(Math.max(-1, currentIndex - 1));
+  };
+
+  const handleEmailContinue = () => {
+    setShowEmailGate(false);
+    router.push(`/triage/${quiz.area}/result`);
   };
 
   // Intro screen
@@ -367,6 +401,9 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-8 md:py-12">
+      {showEmailGate && (
+        <EmailGate area={quiz.area} onContinue={handleEmailContinue} />
+      )}
       {/* Progress bar */}
       <div className="mb-6">
         <div className="flex justify-between text-sm text-uphold-neutral-400 mb-2">
@@ -398,7 +435,7 @@ export function QuizFlow({ quiz }: { quiz: Quiz }) {
             {question.text}
           </h2>
           {question.helpText && (
-            <p className="text-sm text-uphold-neutral-400 leading-relaxed">
+            <p className="text-sm text-uphold-neutral-700 bg-uphold-green-50 border border-uphold-green-100 rounded-xl px-4 py-3 leading-relaxed">
               {question.helpText}
             </p>
           )}

@@ -2,11 +2,13 @@ import type { UserCase, TriageOutcome, StageStatus, PracticeArea } from "./types
 import { employmentJourney } from "@/data/journeys/employment";
 import { housingJourney } from "@/data/journeys/housing";
 import { contractJourney } from "@/data/journeys/contract";
+import { creativeJourney } from "@/data/journeys/creative";
 
 function getJourney(area: PracticeArea) {
   if (area === "employment") return employmentJourney;
   if (area === "housing") return housingJourney;
   if (area === "contract") return contractJourney;
+  if (area === "creative") return creativeJourney;
   return null;
 }
 

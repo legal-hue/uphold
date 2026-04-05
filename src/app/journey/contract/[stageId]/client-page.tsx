@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Shield } from "lucide-react";
 import { StageDetail } from "@/components/journey/StageDetail";
 import { PremiumGate } from "@/components/premium/PremiumGate";
+import { MilestoneTransitionModal } from "@/components/journey/MilestoneTransitionModal";
 import { contractJourney } from "@/data/journeys/contract";
 import { loadCase, saveCase, completeStage } from "@/lib/case";
 import type { UserCase } from "@/lib/types";
@@ -17,6 +18,7 @@ export default function ContractStagePage() {
 
   const [userCase, setUserCase] = useState<UserCase | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showTransition, setShowTransition] = useState(false);
 
   const stage = contractJourney.stages.find((s) => s.id === stageId);
   const stageIndex = contractJourney.stages.findIndex((s) => s.id === stageId);
@@ -37,6 +39,11 @@ export default function ContractStagePage() {
     const updated = completeStage(userCase, stage.id);
     saveCase(updated);
     setUserCase(updated);
+    setShowTransition(true);
+  };
+
+  const handleTransitionContinue = () => {
+    setShowTransition(false);
     if (nextStage) {
       router.push(`/journey/contract/${nextStage.id}`);
     } else {
@@ -51,6 +58,15 @@ export default function ContractStagePage() {
       </div>
     );
   }
+
+  const modal = showTransition && stage ? (
+    <MilestoneTransitionModal
+      completedStage={stage}
+      nextStage={nextStage}
+      onContinue={handleTransitionContinue}
+      onDismiss={() => setShowTransition(false)}
+    />
+  ) : null;
 
   if (!stage) {
     return (
@@ -82,31 +98,37 @@ export default function ContractStagePage() {
 
   if (stageIndex > 0) {
     return (
-      <PremiumGate area="contract">
-        <StageDetail
-          stage={stage}
-          status={status}
-          nextStage={nextStage}
-          prevStage={prevStage}
-          area="contract"
-          caseId={userCase.id}
-          deadlines={userCase.deadlines}
-          onComplete={handleComplete}
-        />
-      </PremiumGate>
+      <>
+        {modal}
+        <PremiumGate area="contract">
+          <StageDetail
+            stage={stage}
+            status={status}
+            nextStage={nextStage}
+            prevStage={prevStage}
+            area="contract"
+            caseId={userCase.id}
+            deadlines={userCase.deadlines}
+            onComplete={handleComplete}
+          />
+        </PremiumGate>
+      </>
     );
   }
 
   return (
-    <StageDetail
-      stage={stage}
-      status={status}
-      nextStage={nextStage}
-      prevStage={prevStage}
-      area="contract"
-      caseId={userCase.id}
-      deadlines={userCase.deadlines}
-      onComplete={handleComplete}
-    />
+    <>
+      {modal}
+      <StageDetail
+        stage={stage}
+        status={status}
+        nextStage={nextStage}
+        prevStage={prevStage}
+        area="contract"
+        caseId={userCase.id}
+        deadlines={userCase.deadlines}
+        onComplete={handleComplete}
+      />
+    </>
   );
 }

@@ -7,11 +7,11 @@ import { Shield } from "lucide-react";
 import { StageDetail } from "@/components/journey/StageDetail";
 import { PremiumGate } from "@/components/premium/PremiumGate";
 import { MilestoneTransitionModal } from "@/components/journey/MilestoneTransitionModal";
-import { employmentJourney } from "@/data/journeys/employment";
+import { creativeJourney } from "@/data/journeys/creative";
 import { loadCase, saveCase, completeStage } from "@/lib/case";
 import type { UserCase } from "@/lib/types";
 
-export default function StagePage() {
+export default function CreativeStagePage() {
   const router = useRouter();
   const params = useParams();
   const stageId = params.stageId as string;
@@ -20,22 +20,17 @@ export default function StagePage() {
   const [loading, setLoading] = useState(true);
   const [showTransition, setShowTransition] = useState(false);
 
-  const stage = employmentJourney.stages.find((s) => s.id === stageId);
-  const stageIndex = employmentJourney.stages.findIndex(
-    (s) => s.id === stageId
-  );
-  const prevStage =
-    stageIndex > 0 ? employmentJourney.stages[stageIndex - 1] : null;
+  const stage = creativeJourney.stages.find((s) => s.id === stageId);
+  const stageIndex = creativeJourney.stages.findIndex((s) => s.id === stageId);
+  const prevStage = stageIndex > 0 ? creativeJourney.stages[stageIndex - 1] : null;
   const nextStage =
-    stageIndex < employmentJourney.stages.length - 1
-      ? employmentJourney.stages[stageIndex + 1]
+    stageIndex < creativeJourney.stages.length - 1
+      ? creativeJourney.stages[stageIndex + 1]
       : null;
 
   useEffect(() => {
-    const existing = loadCase("employment");
-    if (existing) {
-      setUserCase(existing);
-    }
+    const existing = loadCase("creative");
+    if (existing) setUserCase(existing);
     setLoading(false);
   }, []);
 
@@ -50,9 +45,9 @@ export default function StagePage() {
   const handleTransitionContinue = () => {
     setShowTransition(false);
     if (nextStage) {
-      router.push(`/journey/employment/${nextStage.id}`);
+      router.push(`/journey/creative/${nextStage.id}`);
     } else {
-      router.push("/journey/employment");
+      router.push("/journey/creative");
     }
   };
 
@@ -60,7 +55,6 @@ export default function StagePage() {
     return (
       <div className="max-w-xl mx-auto px-4 py-20 text-center">
         <div className="w-12 h-12 border-4 border-uphold-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-uphold-neutral-600">Loading...</p>
       </div>
     );
   }
@@ -77,13 +71,8 @@ export default function StagePage() {
   if (!stage) {
     return (
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-uphold-neutral-800 mb-3">
-          Stage not found
-        </h1>
-        <Link
-          href="/journey/employment"
-          className="text-uphold-green-500 hover:text-uphold-green-700 font-semibold"
-        >
+        <h1 className="text-2xl font-bold text-uphold-neutral-800 mb-3">Stage not found</h1>
+        <Link href="/journey/creative" className="text-uphold-green-500 hover:text-uphold-green-700 font-semibold">
           Back to journey
         </Link>
       </div>
@@ -93,18 +82,13 @@ export default function StagePage() {
   if (!userCase) {
     return (
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-uphold-neutral-800 mb-3">
-          No case found
-        </h1>
-        <p className="text-uphold-neutral-600 mb-6">
-          Complete your employment rights check first.
-        </p>
+        <h1 className="text-2xl font-bold text-uphold-neutral-800 mb-3">No case found</h1>
+        <p className="text-uphold-neutral-600 mb-6">Complete your creative rights check first.</p>
         <Link
-          href="/triage/employment"
+          href="/triage/creative"
           className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold px-6 py-3 rounded-xl hover:bg-uphold-green-700 transition-colors"
         >
-          Check your rights
-          <Shield className="w-4 h-4" />
+          Check your rights <Shield className="w-4 h-4" />
         </Link>
       </div>
     );
@@ -116,13 +100,13 @@ export default function StagePage() {
     return (
       <>
         {modal}
-        <PremiumGate area="employment">
+        <PremiumGate area="creative">
           <StageDetail
             stage={stage}
             status={status}
             nextStage={nextStage}
             prevStage={prevStage}
-            area="employment"
+            area="creative"
             caseId={userCase.id}
             deadlines={userCase.deadlines}
             onComplete={handleComplete}
@@ -140,7 +124,7 @@ export default function StagePage() {
         status={status}
         nextStage={nextStage}
         prevStage={prevStage}
-        area="employment"
+        area="creative"
         caseId={userCase.id}
         deadlines={userCase.deadlines}
         onComplete={handleComplete}

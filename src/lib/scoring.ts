@@ -21,6 +21,21 @@ export function calculateScore(
     }
   }
 
+  // Discrimination boost: these claims don't require 2 years' service, so
+  // offset the low service-length score for short-tenure users
+  if (quiz.area === "employment") {
+    const protectedAnswer = answers["protected_characteristic"];
+    const serviceAnswer = answers["length_of_service"];
+    if (
+      Array.isArray(protectedAnswer) &&
+      protectedAnswer.length > 0 &&
+      !protectedAnswer.includes("none") &&
+      (serviceAnswer === "under_6_months" || serviceAnswer === "6_to_2_years")
+    ) {
+      totalScore += 4;
+    }
+  }
+
   if (totalScore >= quiz.scoring.strong.min) {
     return { result: "strong", score: totalScore, message: quiz.scoring.strong.message };
   } else if (totalScore >= quiz.scoring.maybe.min) {

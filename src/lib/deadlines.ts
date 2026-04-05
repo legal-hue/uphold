@@ -122,6 +122,40 @@ export function calculateContractDeadlines(
   return deadlines;
 }
 
+export function calculateCreativeDeadlines(
+  answers: Record<string, string | string[]>
+): Deadline[] {
+  const deadlines: Deadline[] = [];
+  const eventDate = answers.when_happened as string;
+  if (!eventDate) return deadlines;
+
+  const trigger = new Date(eventDate);
+  if (isNaN(trigger.getTime())) return deadlines;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // 6-year limitation for contract/payment disputes
+  const limitationDeadline = new Date(trigger);
+  limitationDeadline.setFullYear(limitationDeadline.getFullYear() + 6);
+
+  const daysRemaining = Math.ceil(
+    (limitationDeadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  );
+
+  deadlines.push({
+    ruleId: "limitation_creative",
+    name: "Limitation Period for Payment / Contract Claim",
+    triggerDate: eventDate,
+    deadlineDate: limitationDeadline.toISOString().split("T")[0],
+    daysRemaining,
+    isUrgent: daysRemaining <= 90,
+    explanation: `You have until ${formatDate(limitationDeadline)} to bring a claim for unpaid fees or breach of contract (6-year limitation under the Limitation Act 1980). For copyright infringement the period is also 6 years.`,
+  });
+
+  return deadlines;
+}
+
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-GB", {
     day: "numeric",
