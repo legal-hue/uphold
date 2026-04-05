@@ -38,6 +38,9 @@ export function Header() {
               My Journey
             </Link>
           )}
+          <Link href="/expert" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
+            Expert Help
+          </Link>
           <Link href="/about" className="text-sm text-uphold-neutral-600 hover:text-uphold-green-500 transition-colors">
             About
           </Link>
@@ -77,6 +80,13 @@ export function Header() {
               My Journey
             </Link>
           )}
+          <Link
+            href="/expert"
+            className="block text-uphold-neutral-600 hover:text-uphold-green-500 py-2"
+            onClick={() => setMenuOpen(false)}
+          >
+            Expert Help
+          </Link>
           <Link
             href="/about"
             className="block text-uphold-neutral-600 hover:text-uphold-green-500 py-2"

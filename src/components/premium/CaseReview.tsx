@@ -1,6 +1,7 @@
 "use client";
 
-import { Shield, AlertTriangle, Lightbulb, Target } from "lucide-react";
+import Link from "next/link";
+import { Shield, AlertTriangle, Lightbulb, Target, ArrowRight } from "lucide-react";
 import { SwotAnalysis } from "@/lib/swot";
 
 interface CaseReviewProps {
@@ -105,8 +106,22 @@ export function CaseReview({ analysis, area }: CaseReviewProps) {
         );
       })}
 
-      <p className="text-xs text-uphold-neutral-400 text-center leading-relaxed mt-6">
-        For advice specific to your situation, consult a qualified solicitor or barrister.
+      <div className="mt-6 bg-uphold-neutral-50 border border-uphold-neutral-200 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-uphold-neutral-800">Need more than a guided journey?</p>
+          <p className="text-sm text-uphold-neutral-600 mt-0.5">Book a strategy call, document review, or hearing preparation with a qualified barrister.</p>
+        </div>
+        <Link
+          href="/expert"
+          className="flex items-center gap-2 bg-uphold-neutral-800 text-white text-sm font-semibold px-5 py-3 rounded-xl hover:bg-uphold-neutral-600 transition-colors whitespace-nowrap flex-shrink-0"
+        >
+          Get expert help
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+
+      <p className="text-xs text-uphold-neutral-400 text-center leading-relaxed mt-4">
+        For regulated legal advice, consult an SRA-authorised solicitor or barrister with a full practising certificate.
       </p>
     </div>
   );

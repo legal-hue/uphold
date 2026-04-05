@@ -28,6 +28,7 @@ export function Footer() {
               <h4 className="text-sm font-semibold mb-3">App</h4>
               <ul className="space-y-2 text-sm text-uphold-neutral-400">
                 <li><Link href="/triage" className="hover:text-white transition-colors">Check Your Rights</Link></li>
+                <li><Link href="/expert" className="hover:text-white transition-colors">Expert Help</Link></li>
                 <li><Link href="/about" className="hover:text-white transition-colors">About Upheld</Link></li>
                 <li><a href="https://karensafo.com/upheld-privacy.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Privacy Policy</a></li>
                 <li><a href="https://karensafo.com/upheld-terms.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Terms of Use</a></li>
