@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import HomeClient from "@/components/home/HomeClient";
+import { PreviousResultBanner } from "@/components/home/PreviousResultBanner";
+import { HeroSection } from "@/components/home/HeroSection";
+import { SocialProofBar } from "@/components/home/SocialProofBar";
+import { AreaOptions } from "@/components/home/AreaOptions";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { FounderSection } from "@/components/home/FounderSection";
+import { Testimonials } from "@/components/home/Testimonials";
+import { UrgencyCTA } from "@/components/home/UrgencyCTA";
 
 export const metadata: Metadata = {
   title: "Upheld | Free Legal Rights Check for UK Employees, Tenants & Creators",
@@ -51,7 +58,14 @@ export default function Page() {
           }),
         }}
       />
-      <HomeClient />
+      <PreviousResultBanner />
+      <HeroSection />
+      <SocialProofBar />
+      <AreaOptions />
+      <HowItWorks />
+      <FounderSection />
+      <Testimonials />
+      <UrgencyCTA />
     </>
   );
 }

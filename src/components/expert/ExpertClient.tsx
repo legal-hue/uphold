@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, ArrowRight, Send, AlertTriangle } from "lucide-react";
+import { submitExpertEnquiry } from "@/app/expert/actions";
 
 // Update this when the company is incorporated
 const COMPANY_NAME = "Upheld";
@@ -106,13 +107,12 @@ export default function ExpertClient() {
     setSubmitting(true);
     setError("");
     try {
-      const res = await fetch("/api/expert-enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, service: selected }),
-      });
-      if (!res.ok) throw new Error();
-      setSent(true);
+      const result = await submitExpertEnquiry({ ...form, service: selected });
+      if (!result.ok) {
+        setError(result.error || "Something went wrong. Please try again or email legal@karensafo.com directly.");
+      } else {
+        setSent(true);
+      }
     } catch {
       setError("Something went wrong. Please try again or email legal@karensafo.com directly.");
     } finally {
