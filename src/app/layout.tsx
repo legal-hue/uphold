@@ -65,6 +65,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#3D8B5E" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="trustpilot-one-time-domain-verification-id" content="6a2f3708-22a3-4c73-8559-6f8ce48f46ae" />
+        <meta name="google-site-verification" content="OIkUSE2Q90jYFUSvIBmXYpWX02a4GYJT3rH8WjkpuHw" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <script
