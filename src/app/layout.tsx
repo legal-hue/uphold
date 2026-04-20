@@ -11,9 +11,39 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Upheld. Your Rights, Upheld.",
+  metadataBase: new URL("https://upheld.co.uk"),
+  title: {
+    default: "Upheld | Free Legal Rights Check for UK Employees, Tenants & Creators",
+    template: "%s | Upheld",
+  },
   description: "Free legal guidance for UK employees, tenants, and contract disputes. Check your rights, understand your deadlines, and navigate your case step by step.",
-  keywords: ["employment rights", "housing disrepair", "UK legal help", "unfair dismissal", "tribunal"],
+  keywords: ["employment rights", "housing disrepair", "UK legal help", "unfair dismissal", "tribunal", "unfair dismissal solicitor", "housing disrepair claim", "employment tribunal help"],
+  openGraph: {
+    type: "website",
+    siteName: "Upheld",
+    title: "Upheld | Free Legal Rights Check",
+    description: "Check your rights in 2 minutes. Employment, housing, and contract disputes. Free.",
+    locale: "en_GB",
+    url: "https://upheld.co.uk",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Upheld. Your rights, upheld.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Upheld | Free Legal Rights Check",
+    description: "Check your rights in 2 minutes. Employment, housing, and contract disputes. Free.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

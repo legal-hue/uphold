@@ -32,6 +32,8 @@ export function Footer() {
                 <li><Link href="/about" className="hover:text-white transition-colors">About Upheld</Link></li>
                 <li><a href="https://karensafo.com/upheld-privacy.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Privacy Policy</a></li>
                 <li><a href="https://karensafo.com/upheld-terms.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Terms of Use</a></li>
+                <li><a href="https://karensafo.com/upheld-complaints.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Complaints Policy</a></li>
+                <li><a href="https://uk.trustpilot.com/review/www.upheld.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Trustpilot Reviews</a></li>
               </ul>
             </div>
             <div>
@@ -65,6 +67,8 @@ export function Footer() {
           <div className="flex gap-4">
             <a href="https://karensafo.com/upheld-privacy.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Privacy</a>
             <a href="https://karensafo.com/upheld-terms.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Terms</a>
+            <a href="https://karensafo.com/upheld-complaints.html" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Complaints</a>
+            <a href="https://uk.trustpilot.com/review/www.upheld.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Trustpilot</a>
           </div>
         </div>
       </div>
