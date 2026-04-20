@@ -1,7 +1,7 @@
-const CACHE_NAME = "upheld-v1";
+const CACHE_NAME = "upheld-v2";
 const OFFLINE_URL = "/";
 
-const PRECACHE_URLS = ["/", "/triage", "/about"];
+const PRECACHE_URLS = ["/", "/triage", "/about", "/expert"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

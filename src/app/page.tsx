@@ -31,6 +31,26 @@ export default function Page() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Upheld",
+            "url": "https://upheld.co.uk",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Web, iOS, Android",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "GBP"
+            },
+            "description": "Free legal rights checker for UK employment, housing, and contract disputes. Check your rights in 2 minutes.",
+            "featureList": "Legal rights assessment, Deadline calculator, Document templates, AI case review"
+          }),
+        }}
+      />
       <HomeClient />
     </>
   );
