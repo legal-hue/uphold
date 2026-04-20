@@ -67,7 +67,7 @@ export function CaseReview({ analysis, area }: CaseReviewProps) {
           Legal Factors Review
         </h2>
         <p className="text-sm text-uphold-neutral-600">
-          {areaLabel} — the legal factors courts typically consider in cases with these characteristics
+          {areaLabel}: the legal factors courts typically consider in cases with these characteristics
         </p>
       </div>
 

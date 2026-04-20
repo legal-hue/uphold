@@ -63,8 +63,7 @@ export function EmailGate({ area, onContinue }: EmailGateProps) {
           Your result is ready
         </h3>
         <p className="text-sm text-uphold-neutral-600 mb-5 text-center">
-          Get practical updates on {areaLabel}, new features, and free guides —
-          straight to your inbox.
+          Get practical updates on {areaLabel}, new features, and free guides, straight to your inbox.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-3">

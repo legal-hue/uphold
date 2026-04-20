@@ -1,5 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Briefcase, Home, FileText, Palette, ArrowRight, Shield } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Check Your Rights | Employment, Housing & Contract Help",
+  description: "Free legal rights check for UK employees, tenants, and contract disputes. Answer a few questions, get an instant assessment, and know your deadlines. Takes 2 minutes.",
+  openGraph: {
+    title: "Check Your Rights | Upheld",
+    description: "Free legal rights check for UK employees, tenants, and creators. Takes 2 minutes.",
+    url: "https://upheld.co.uk/triage",
+  },
+};
 
 const areas = [
   {

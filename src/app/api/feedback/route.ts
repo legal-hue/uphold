@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         from: "Upheld Feedback <noreply@upheld.app>",
         to: [toEmail],
-        subject: `Upheld feedback — ${rating} star${rating !== 1 ? "s" : ""}`,
+        subject: `Upheld feedback: ${rating} star${rating !== 1 ? "s" : ""}`,
         text: `Rating: ${rating}/5\nTrigger: ${trigger ?? "unknown"}\n\nFeedback:\n${text ?? "(no message)"}`,
       }),
     });

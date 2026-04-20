@@ -82,7 +82,7 @@ const microFeedback: Record<string, Record<string, string>> = {
   },
   chased: {
     yes_formal: "A formal letter is the right move. Courts take this seriously.",
-    yes_informal: "Good — you have a record. Consider following up with a formal Letter Before Action.",
+    yes_informal: "Good. You have a record. Consider following up with a formal Letter Before Action.",
     no: "The first step is a formal letter before action. We'll help you draft one.",
   },
   response: {
@@ -90,7 +90,7 @@ const microFeedback: Record<string, Record<string, string>> = {
     disputed: "A dispute doesn't mean they're right. Document your position and be ready to set out the facts.",
     ignored: "Being ignored is actually useful evidence. The court will see you gave them every opportunity.",
     promised: "Broken promises are a pattern. Document each one with dates.",
-    aggressive: "Aggressive responses can indicate desperation. Don't respond emotionally — just keep your evidence.",
+    aggressive: "Aggressive responses can indicate desperation. Do not respond emotionally. Just keep your evidence.",
   },
   // Contract
   contract_type: {

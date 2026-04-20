@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         from: "Upheld Expert Enquiries <noreply@upheld.app>",
         to: [toEmail],
         reply_to: email,
-        subject: `Expert enquiry: ${service} — ${name}`,
+        subject: `Expert enquiry: ${service} from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\nPractice area: ${area}\nService requested: ${service}\n\nMessage:\n${message}`,
       }),
     });

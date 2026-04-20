@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: "Who built Upheld?",
-    a: "Upheld was built by a practising barrister with experience in employment, housing, and civil law. Every assessment and piece of guidance is based on current UK law.",
+    a: "Upheld was built with legal expertise in employment, housing, and civil law. Every assessment and piece of guidance is based on current UK law.",
   },
   {
     q: "Is my information private?",
