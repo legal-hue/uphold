@@ -1,10 +1,12 @@
 import type { NextConfig } from "next";
 
+const isMobile = process.env.CAPACITOR === "true";
+
 const nextConfig: NextConfig = {
   // Static export for Capacitor native builds
   // To build for mobile: npm run build:mobile
   // For web (Vercel): npm run build (default)
-  ...(process.env.CAPACITOR === "true" ? { output: "export" } : {}),
+  ...(isMobile ? { output: "export" } : {}),
   async headers() {
     return [
       {

@@ -2,7 +2,25 @@
 
 import { useState } from "react";
 import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, ArrowRight, Send, AlertTriangle } from "lucide-react";
-import { submitExpertEnquiry } from "@/app/expert/actions";
+async function submitExpertEnquiry(data: {
+  name: string;
+  email: string;
+  area: string;
+  service: string;
+  message: string;
+}): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch("/api/expert-enquiry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Failed");
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "Something went wrong. Please try again or email legal@karensafo.com directly." };
+  }
+}
 
 // Update this when the company is incorporated
 const COMPANY_NAME = "Upheld";
