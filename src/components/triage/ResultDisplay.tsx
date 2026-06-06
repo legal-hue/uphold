@@ -2,14 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ShieldCheck, AlertTriangle, XCircle, Clock, Phone, ArrowRight, ExternalLink, Heart, CheckCircle, Circle, Lock } from "lucide-react";
+import { ShieldCheck, AlertTriangle, XCircle, Clock, Phone, ArrowRight, ExternalLink, Heart, CheckCircle, Circle, MessageCircle } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { TriageResult, Deadline, PracticeArea } from "@/lib/types";
 import { isSubscribed } from "@/lib/subscription";
+import { verifyStripeSession } from "@/lib/purchases";
 import { DownloadBadges } from "@/components/layout/DownloadBadges";
 import { ReviewPrompt } from "@/components/layout/ReviewPrompt";
 import { generateSwot, type SwotAnalysis } from "@/lib/swot";
 import { CaseReview } from "@/components/premium/CaseReview";
 import { UpgradeScreen } from "@/components/premium/UpgradeScreen";
+import { ManageSubscription } from "@/components/premium/ManageSubscription";
 
 interface TriageOutcomeData {
   area: string;
@@ -176,12 +179,11 @@ function CountdownRing({ days, isUrgent }: { days: number; isUrgent: boolean }) 
 
 function InteractiveChecklist({ steps, area }: { steps: ActionStep[]; area: string }) {
   const storageKey = `uphold_checklist_${area}`;
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
-
-  useEffect(() => {
+  const [checked, setChecked] = useState<Record<number, boolean>>(() => {
+    if (typeof window === "undefined") return {};
     const stored = localStorage.getItem(storageKey);
-    if (stored) setChecked(JSON.parse(stored));
-  }, [storageKey]);
+    return stored ? JSON.parse(stored) : {};
+  });
 
   const toggle = (index: number) => {
     const updated = { ...checked, [index]: !checked[index] };
@@ -255,6 +257,7 @@ function InteractiveChecklist({ steps, area }: { steps: ActionStep[]; area: stri
 }
 
 export function ResultDisplay() {
+  const router = useRouter();
   const [outcome, setOutcome] = useState<TriageOutcomeData | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [premium, setPremium] = useState(false);
@@ -262,9 +265,19 @@ export function ResultDisplay() {
   const [aiAnalysis, setAiAnalysis] = useState<SwotAnalysis | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
 
+  const searchParams = useSearchParams();
+
+  // Verify Stripe session on return from checkout
   useEffect(() => {
-    setPremium(isSubscribed());
-  }, []);
+    const sessionId = searchParams.get("session_id");
+    if (sessionId && !isSubscribed()) {
+      verifyStripeSession(sessionId).then((ok) => {
+        if (ok) setPremium(true);
+      });
+    } else {
+      Promise.resolve().then(() => setPremium(isSubscribed()));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const stored = localStorage.getItem("uphold_latest_triage");
@@ -288,21 +301,33 @@ export function ResultDisplay() {
   useEffect(() => {
     if (!premium || !outcome || !outcome.answers || aiAnalysis) return;
 
-    setAiLoading(true);
-    fetch("/api/ai/assessment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        area: outcome.area,
-        answers: outcome.answers,
-        result: outcome.result,
-      }),
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+    let cancelled = false;
+    const loadAnalysis = async () => {
+      setAiLoading(true);
+      try {
+        const res = await fetch("/api/ai/assessment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            area: outcome.area,
+            answers: outcome.answers,
+            result: outcome.result,
+          }),
+        });
+        const data = res.ok ? await res.json() : null;
+        if (cancelled) return;
         if (data && data.strengths) {
           setAiAnalysis(data);
-        } else {
+          return;
+        }
+        setAiAnalysis(
+          generateSwot(
+            outcome.area as PracticeArea,
+            outcome.answers as Record<string, string | string[]>
+          )
+        );
+      } catch {
+        if (!cancelled) {
           // Fallback to rule-based analysis
           setAiAnalysis(
             generateSwot(
@@ -311,17 +336,15 @@ export function ResultDisplay() {
             )
           );
         }
-      })
-      .catch(() => {
-        // Fallback to rule-based analysis
-        setAiAnalysis(
-          generateSwot(
-            outcome.area as PracticeArea,
-            outcome.answers as Record<string, string | string[]>
-          )
-        );
-      })
-      .finally(() => setAiLoading(false));
+      } finally {
+        if (!cancelled) setAiLoading(false);
+      }
+    };
+
+    void loadAnalysis();
+    return () => {
+      cancelled = true;
+    };
   }, [premium, outcome, aiAnalysis]);
 
   if (!outcome) {
@@ -483,6 +506,30 @@ export function ResultDisplay() {
         </div>
       )}
 
+      {/* Discovery call CTA */}
+      <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
+        <div className="bg-white border-2 border-uphold-green-200 rounded-2xl p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-xl bg-uphold-green-50 flex items-center justify-center flex-shrink-0">
+              <MessageCircle className="w-5 h-5 text-uphold-green-600" />
+            </div>
+            <div className="flex-1">
+              <h2 className="font-bold text-uphold-neutral-800 mb-1">Want to talk it through?</h2>
+              <p className="text-sm text-uphold-neutral-600 mb-4 leading-relaxed">
+                Book a 10-minute call with a qualified legal adviser. We will listen to your situation and tell you honestly where you stand.
+              </p>
+              <Link
+                href="/expert?service=discovery_call"
+                className="inline-flex items-center gap-2 bg-white border-2 border-uphold-green-500 text-uphold-green-600 font-semibold px-5 py-2.5 rounded-xl hover:bg-uphold-green-50 transition-colors text-sm"
+              >
+                Book a call
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Disclaimer */}
       <div className="text-xs text-uphold-neutral-400 text-center p-4 border-t border-uphold-neutral-200">
         This assessment is based on general legal principles and does not constitute legal advice.
@@ -509,15 +556,24 @@ export function ResultDisplay() {
 
       {/* Start journey CTA */}
       <div className={`mb-6 ${revealed ? "animate-fade-in-up stagger-4" : "opacity-0"}`}>
-        <Link
-          href={`/journey/${outcome.area}`}
+        <button
+          type="button"
+          onClick={() => {
+            if (premium) {
+              router.push(`/journey/${outcome.area}`);
+            } else {
+              setShowUpgrade(true);
+            }
+          }}
           className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
         >
-          Start your guided journey
+          {premium ? "Start your guided journey" : "Start your free trial"}
           <span className="block text-sm font-normal opacity-90 mt-1">
-            7-day free trial, then £29.99/month thereafter
+            {premium
+              ? "Continue with your full premium tools"
+              : "Unlock the guided journey, documents, and case assessment"}
           </span>
-        </Link>
+        </button>
       </div>
 
       {/* Download badges */}
@@ -534,6 +590,7 @@ export function ResultDisplay() {
           Start a different assessment
           <ArrowRight className="w-4 h-4" />
         </Link>
+        <ManageSubscription />
       </div>
 
       {/* Review prompt - shows after quiz completion */}

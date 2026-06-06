@@ -16,6 +16,27 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Stripe Web Payments
+
+The web premium subscription uses Stripe Checkout Sessions with `ui_mode:
+"elements"` and an embedded Payment Element.
+
+Set these environment variables locally and in Vercel before taking payments:
+
+```bash
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PRICE_ID=price_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_SITE_URL=https://upheld.co.uk
+```
+
+For local webhook testing:
+
+```bash
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

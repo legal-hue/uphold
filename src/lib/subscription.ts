@@ -5,6 +5,9 @@ export interface Subscription {
   trial: boolean;
   startedAt: string;
   expiresAt: string;
+  provider?: "local" | "stripe" | "revenuecat";
+  customerId?: string;
+  subscriptionId?: string;
 }
 
 export function getSubscription(): Subscription | null {
@@ -41,17 +44,30 @@ export function trialDaysRemaining(): number {
   return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
 }
 
-export function activateSubscription(): void {
-  // Start with 7-day free trial
-  // In production, this would be called after Apple IAP or Stripe confirms
+export function activateSubscription(options: {
+  trial?: boolean;
+  expiresAt?: string;
+  provider?: Subscription["provider"];
+  customerId?: string | null;
+  subscriptionId?: string | null;
+} = {}): void {
   const now = new Date();
-  const trialEnd = new Date(now);
-  trialEnd.setDate(trialEnd.getDate() + 7);
+  const defaultExpiry = new Date(now);
+  defaultExpiry.setDate(defaultExpiry.getDate() + 7);
+
   const sub: Subscription = {
     active: true,
-    trial: true,
+    trial: options.trial ?? true,
     startedAt: now.toISOString(),
-    expiresAt: trialEnd.toISOString(),
+    expiresAt: options.expiresAt ?? defaultExpiry.toISOString(),
+    provider: options.provider ?? "local",
+    customerId: options.customerId ?? undefined,
+    subscriptionId: options.subscriptionId ?? undefined,
   };
   localStorage.setItem(SUBSCRIPTION_KEY, JSON.stringify(sub));
+}
+
+export function deactivateSubscription(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(SUBSCRIPTION_KEY);
 }

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Shield, FileText, Map, FolderSearch, CheckCircle, ArrowRight, RotateCcw, Loader2, ChevronDown, X } from "lucide-react";
+import { Shield, CheckCircle, ArrowRight, RotateCcw, Loader2, ChevronDown, X } from "lucide-react";
 import { activateSubscription } from "@/lib/subscription";
 import { purchasePremium, restorePurchases, isNativeApp } from "@/lib/purchases";
 import { useRouter } from "next/navigation";
+import { StripeElementsCheckout } from "./StripeElementsCheckout";
 
 interface UpgradeScreenProps {
   area: string;
@@ -25,7 +26,7 @@ const comparisonRows = [
 const faqs = [
   {
     q: "Can I cancel before being charged?",
-    a: "Yes. You have 7 full days to try everything. Cancel anytime before the trial ends and you will not be charged. You can cancel in your App Store or Play Store settings.",
+    a: "Yes. You have 7 full days to try everything. Cancel anytime before the trial ends and you will not be charged. App users can cancel in App Store or Play Store settings. Web customers can cancel through Stripe or by contacting Upheld.",
   },
   {
     q: "Does this replace a solicitor?",
@@ -64,17 +65,27 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
   const [loading, setLoading] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [error, setError] = useState("");
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   const handleSubscribe = async () => {
+    if (!isNativeApp()) {
+      setShowPaymentForm(true);
+      setError("");
+      return;
+    }
+
     setLoading(true);
     setError("");
     try {
-      const success = await purchasePremium();
-      if (success) {
-        // Also set local subscription as fallback
-        activateSubscription();
+      const success = await purchasePremium(area);
+      if (success && isNativeApp()) {
+        // Native: purchase completed immediately
+        activateSubscription({ provider: "revenuecat" });
         router.push(`/triage/${area}/result?upgraded=true`);
         router.refresh();
+      }
+      if (!success) {
+        setError("Could not start checkout. Please try again.");
       }
     } catch {
       setError("Something went wrong. Please try again.");
@@ -89,7 +100,7 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
     try {
       const success = await restorePurchases();
       if (success) {
-        activateSubscription();
+        activateSubscription({ provider: "revenuecat" });
         router.push(`/triage/${area}/result?upgraded=true`);
         router.refresh();
       } else {
@@ -181,7 +192,9 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
           <button
             onClick={handleSubscribe}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg disabled:opacity-60"
+            className={`w-full items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg disabled:opacity-60 ${
+              showPaymentForm && !isNativeApp() ? "hidden" : "flex"
+            }`}
           >
             {loading ? (
               <>
@@ -202,6 +215,10 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
 
           {error && (
             <p className="text-xs text-uphold-red text-center mt-2">{error}</p>
+          )}
+
+          {showPaymentForm && !isNativeApp() && (
+            <StripeElementsCheckout area={area} />
           )}
         </div>
 
