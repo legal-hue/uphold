@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, ArrowRight, Send, AlertTriangle } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, Send, AlertTriangle, Calendar } from "lucide-react";
 async function submitExpertEnquiry(data: {
   name: string;
   email: string;
+  phone: string;
   area: string;
   service: string;
   message: string;
@@ -15,8 +17,11 @@ async function submitExpertEnquiry(data: {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error("Failed");
-    return { ok: true };
+    const result = await res.json().catch(() => ({}));
+    if (!res.ok || !result.ok) {
+      return { ok: false, error: result.error || "Failed" };
+    }
+    return result;
   } catch {
     return { ok: false, error: "Something went wrong. Please try again or email legal@karensafo.com directly." };
   }
@@ -26,6 +31,22 @@ async function submitExpertEnquiry(data: {
 const COMPANY_NAME = "Upheld";
 
 const services = [
+  {
+    icon: Phone,
+    title: "Discovery call",
+    duration: "10 minutes",
+    price: "",
+    description: "Not sure what you need? Book a 10-minute call with a qualified legal adviser. We will listen to your situation and point you in the right direction.",
+    includes: [
+      "Quick review of where things stand",
+      "Honest assessment of whether we can help",
+      "Clear recommendation on your next step",
+      "No obligation",
+    ],
+    value: "discovery_call",
+    popular: false,
+    booking: true,
+  },
   {
     icon: Phone,
     title: "Strategy call",
@@ -110,22 +131,84 @@ const CLIENT_NOTICE = `Client Information Notice: ${COMPANY_NAME}
 
 By submitting an enquiry and proceeding to instruct ${COMPANY_NAME}, you confirm that you have read and understood this notice.`;
 
+function getAvailableSlots(): { date: Date; label: string; timeSlots: string[] }[] {
+  const slots: { date: Date; label: string; timeSlots: string[] }[] = [];
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  for (let i = 0; i < 28 && slots.length < 8; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    const day = date.getDay();
+
+    // Wednesday = 3, Friday = 5
+    if (day !== 3 && day !== 5) continue;
+
+    // Skip if today and already past 5pm
+    if (i === 0 && now.getHours() >= 19) continue;
+
+    const dayName = day === 3 ? "Wednesday" : "Friday";
+    const dateStr = date.toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+    const label = `${dayName} ${dateStr}`;
+
+    // Available times: 5:00pm, 5:15pm, 5:30pm, 5:45pm, 6:00pm, 6:15pm, 6:30pm, 6:45pm
+    const timeSlots = ["5:00 pm", "5:15 pm", "5:30 pm", "5:45 pm", "6:00 pm", "6:15 pm", "6:30 pm", "6:45 pm"];
+
+    // If today, filter out past times
+    if (i === 0) {
+      const currentHour = now.getHours();
+      const currentMin = now.getMinutes();
+      const filtered = timeSlots.filter((t) => {
+        const [h, m] = t.replace(" pm", "").split(":").map(Number);
+        const hour24 = h === 12 ? 12 : h + 12;
+        return hour24 > currentHour || (hour24 === currentHour && m > currentMin);
+      });
+      if (filtered.length > 0) {
+        slots.push({ date, label, timeSlots: filtered });
+      }
+    } else {
+      slots.push({ date, label, timeSlots });
+    }
+  }
+
+  return slots;
+}
+
 export default function ExpertClient() {
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", area: "", message: "" });
+  const [selectedSlot, setSelectedSlot] = useState<string>("");
+
+  const availableSlots = useMemo(() => getAvailableSlots(), []);
+
+  useEffect(() => {
+    const service = searchParams.get("service");
+    if (service && services.some((s) => s.value === service)) {
+      setSelected(service);
+    }
+  }, [searchParams]);
+  const [form, setForm] = useState({ name: "", email: "", phone: "", area: "", message: "" });
   const [noticeAccepted, setNoticeAccepted] = useState(false);
   const [showNotice, setShowNotice] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
+  const isDiscovery = selected === "discovery_call";
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selected || !form.name || !form.email || !form.area || !noticeAccepted) return;
+    if (!selected || !form.name || !form.email || !form.area) return;
+    if (isDiscovery && !form.phone) return;
+    if (isDiscovery && !selectedSlot) return;
+    if (!isDiscovery && !noticeAccepted) return;
     setSubmitting(true);
     setError("");
     try {
-      const result = await submitExpertEnquiry({ ...form, service: selected });
+      const messageWithSlot = isDiscovery
+        ? `Requested slot: ${selectedSlot}\n\n${form.message}`
+        : form.message;
+      const result = await submitExpertEnquiry({ ...form, message: messageWithSlot, service: selected });
       if (!result.ok) {
         setError(result.error || "Something went wrong. Please try again or email legal@karensafo.com directly.");
       } else {
@@ -212,7 +295,7 @@ export default function ExpertClient() {
                   <div className="flex items-baseline gap-3 flex-wrap">
                     <h3 className="font-bold text-uphold-neutral-800">{s.title}</h3>
                     <span className="text-sm text-uphold-neutral-500">{s.duration}</span>
-                    <span className="font-semibold text-uphold-green-600 ml-auto">{s.price}</span>
+                    {s.price && <span className="font-semibold text-uphold-green-600 ml-auto">{s.price}</span>}
                   </div>
                   <p className="text-sm text-uphold-neutral-600 mt-1 leading-relaxed">{s.description}</p>
                   {selected === s.value && (
@@ -237,9 +320,13 @@ export default function ExpertClient() {
             <div className="w-12 h-12 bg-uphold-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2">Enquiry received</h3>
+            <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2">
+              {isDiscovery ? "Call requested" : "Enquiry received"}
+            </h3>
             <p className="text-sm text-uphold-neutral-600">
-              We will be in touch within one working day to confirm your booking and payment details. A copy of the Client Information Notice will be sent to your email.
+              {isDiscovery
+                ? "We will confirm your call time by email or phone within one working day."
+                : "We will be in touch within one working day to confirm your booking and payment details. A copy of the Client Information Notice will be sent to your email."}
             </p>
           </div>
         ) : (
@@ -279,6 +366,19 @@ export default function ExpertClient() {
                     className="w-full border-2 border-uphold-neutral-200 rounded-xl px-4 py-3 text-sm focus:border-uphold-green-500 focus:outline-none transition-colors"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-uphold-neutral-700 mb-1">
+                    Phone number {isDiscovery ? "" : <span className="text-uphold-neutral-400">(optional)</span>}
+                  </label>
+                  <input
+                    type="tel"
+                    required={isDiscovery}
+                    value={form.phone}
+                    onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                    placeholder="Best number to reach you"
+                    className="w-full border-2 border-uphold-neutral-200 rounded-xl px-4 py-3 text-sm focus:border-uphold-green-500 focus:outline-none transition-colors"
+                  />
+                </div>
               </div>
 
               <div>
@@ -296,53 +396,97 @@ export default function ExpertClient() {
                 </select>
               </div>
 
+              {/* Time slot picker for discovery calls */}
+              {isDiscovery && (
+                <div>
+                  <label className="block text-sm font-medium text-uphold-neutral-700 mb-2">
+                    <Calendar className="w-4 h-4 inline-block mr-1 -mt-0.5" />
+                    Pick a time (Wednesdays and Fridays, after 5 pm)
+                  </label>
+                  {availableSlots.length === 0 ? (
+                    <p className="text-sm text-uphold-neutral-500 italic">No slots available right now. Email hello@upheld.co.uk to arrange a time.</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {availableSlots.map((slot) => (
+                        <div key={slot.label}>
+                          <p className="text-xs font-semibold text-uphold-neutral-600 mb-1.5">{slot.label}</p>
+                          <div className="flex flex-wrap gap-2">
+                            {slot.timeSlots.map((time) => {
+                              const value = `${slot.label} at ${time}`;
+                              return (
+                                <button
+                                  key={value}
+                                  type="button"
+                                  onClick={() => setSelectedSlot(value)}
+                                  className={`px-3 py-1.5 rounded-lg text-sm font-medium border-2 transition-colors ${
+                                    selectedSlot === value
+                                      ? "border-uphold-green-500 bg-uphold-green-50 text-uphold-green-700"
+                                      : "border-uphold-neutral-200 text-uphold-neutral-600 hover:border-uphold-neutral-400"
+                                  }`}
+                                >
+                                  {time}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div>
                 <label className="block text-sm font-medium text-uphold-neutral-700 mb-1">
-                  Brief description of your situation
+                  {isDiscovery ? "Briefly, what is this about?" : "Brief description of your situation"}
                 </label>
                 <textarea
                   value={form.message}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  placeholder="A few sentences about what happened and what you need help with..."
-                  rows={4}
+                  placeholder={isDiscovery ? "One or two sentences so we can prepare..." : "A few sentences about what happened and what you need help with..."}
+                  rows={isDiscovery ? 2 : 4}
                   className="w-full border-2 border-uphold-neutral-200 rounded-xl px-4 py-3 text-sm focus:border-uphold-green-500 focus:outline-none transition-colors resize-none"
                 />
               </div>
 
-              {/* Client notice checkbox */}
-              <label className="flex items-start gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={noticeAccepted}
-                  onChange={(e) => setNoticeAccepted(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 accent-uphold-green-500 flex-shrink-0"
-                />
-                <span className="text-sm text-uphold-neutral-600">
-                  I have read and understood the{" "}
-                  <button
-                    type="button"
-                    onClick={() => setShowNotice(true)}
-                    className="text-uphold-green-600 underline hover:text-uphold-green-800"
-                  >
-                    Client Information Notice
-                  </button>
-                  , including that {COMPANY_NAME} is not a regulated law firm and the Legal Ombudsman cannot consider complaints about these services.
-                </span>
-              </label>
+              {/* Client notice checkbox - only for paid services */}
+              {!isDiscovery && (
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={noticeAccepted}
+                    onChange={(e) => setNoticeAccepted(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 accent-uphold-green-500 flex-shrink-0"
+                  />
+                  <span className="text-sm text-uphold-neutral-600">
+                    I have read and understood the{" "}
+                    <button
+                      type="button"
+                      onClick={() => setShowNotice(true)}
+                      className="text-uphold-green-600 underline hover:text-uphold-green-800"
+                    >
+                      Client Information Notice
+                    </button>
+                    , including that {COMPANY_NAME} is not a regulated law firm and the Legal Ombudsman cannot consider complaints about these services.
+                  </span>
+                </label>
+              )}
 
               {error && <p className="text-sm text-red-500">{error}</p>}
 
               <button
                 type="submit"
-                disabled={submitting || !selected || !noticeAccepted}
+                disabled={submitting || !selected || (!isDiscovery && !noticeAccepted) || (isDiscovery && (!selectedSlot || !form.phone))}
                 className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3.5 rounded-xl hover:bg-uphold-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {submitting ? "Sending…" : "Send enquiry"}
+                {submitting ? "Sending…" : isDiscovery ? "Request call" : "Send enquiry"}
                 {!submitting && <Send className="w-4 h-4" />}
               </button>
 
               <p className="text-xs text-uphold-neutral-400 text-center">
-                We will reply within one working day with confirmation and payment details. No upfront payment required.
+                {isDiscovery
+                  ? "We will confirm your call by email or phone within one working day."
+                  : "We will reply within one working day with confirmation and payment details. No upfront payment required."}
               </p>
             </form>
           </div>

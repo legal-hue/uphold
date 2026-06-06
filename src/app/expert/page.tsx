@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import ExpertClient from "@/components/expert/ExpertClient";
 
 export const metadata: Metadata = {
@@ -12,5 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default function ExpertPage() {
-  return <ExpertClient />;
+  return (
+    <Suspense>
+      <ExpertClient />
+    </Suspense>
+  );
 }
