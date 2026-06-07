@@ -109,6 +109,9 @@ export function StripeElementsCheckout({
 
         setSession(actionsResult.actions.getSession());
 
+        // The Payment Element renders Apple Pay / Google Pay automatically when
+        // available (domain registered + HTTPS + supported device), and PayPal
+        // once it is activated on the Stripe account.
         const element = checkout.createPaymentElement({
           layout: "accordion",
         });
