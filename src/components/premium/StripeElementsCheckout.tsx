@@ -10,7 +10,14 @@ import {
 import { Loader2, LockKeyhole, ShieldCheck } from "lucide-react";
 
 interface StripeElementsCheckoutProps {
-  area: string;
+  /** Subscription usage: posts { area } to the default subscription endpoint. */
+  area?: string;
+  /** Override the checkout endpoint (e.g. one-off expert payments). */
+  endpoint?: string;
+  /** Override the POST body (defaults to { area }). */
+  body?: Record<string, unknown>;
+  /** Override the submit button label (defaults to the trial CTA). */
+  submitLabel?: string;
 }
 
 const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
@@ -19,7 +26,14 @@ function displayAmount(amount?: { amount: string } | null): string | null {
   return amount?.amount || null;
 }
 
-export function StripeElementsCheckout({ area }: StripeElementsCheckoutProps) {
+export function StripeElementsCheckout({
+  area,
+  endpoint = "/api/stripe/checkout",
+  body,
+  submitLabel = "Start free trial",
+}: StripeElementsCheckoutProps) {
+  const requestBody = body ?? { area };
+  const requestKey = `${endpoint}:${JSON.stringify(requestBody)}`;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const checkoutRef = useRef<StripeCheckoutElementsSdk | null>(null);
   const paymentElementRef = useRef<StripePaymentElement | null>(null);
@@ -51,10 +65,10 @@ export function StripeElementsCheckout({ area }: StripeElementsCheckoutProps) {
         return;
       }
 
-      const clientSecret = fetch("/api/stripe/checkout", {
+      const clientSecret = fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ area }),
+        body: JSON.stringify(requestBody),
       })
         .then(async (res) => {
           const data = await res.json().catch(() => ({}));
@@ -124,7 +138,8 @@ export function StripeElementsCheckout({ area }: StripeElementsCheckoutProps) {
       paymentElementRef.current = null;
       checkoutRef.current = null;
     };
-  }, [area]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestKey]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -255,7 +270,7 @@ export function StripeElementsCheckout({ area }: StripeElementsCheckoutProps) {
         ) : (
           <>
             <LockKeyhole className="h-5 w-5" />
-            Start free trial
+            {submitLabel}
           </>
         )}
       </button>

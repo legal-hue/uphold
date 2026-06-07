@@ -3,6 +3,30 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { Shield, Phone, FileText, BookOpen, Mic, CheckCircle, Send, AlertTriangle, Calendar } from "lucide-react";
+import { CalendlyEmbed } from "@/components/expert/CalendlyEmbed";
+import { StripeElementsCheckout } from "@/components/premium/StripeElementsCheckout";
+
+// Appointment services book via Calendly (one event type / URL each).
+// Document and case reviews are async deliverables and keep the enquiry form.
+const CALENDLY_URLS: Record<string, string | undefined> = {
+  discovery_call: process.env.NEXT_PUBLIC_CALENDLY_DISCOVERY,
+  strategy_call: process.env.NEXT_PUBLIC_CALENDLY_STRATEGY,
+  hearing_prep: process.env.NEXT_PUBLIC_CALENDLY_HEARING,
+};
+
+// Appointment services that book a time slot (vs reviews, which are deliverables).
+const APPOINTMENT_SERVICES = ["discovery_call", "strategy_call", "hearing_prep"];
+
+// Display price for each paid service. Discovery is free and not listed.
+const PAID_SERVICE_PRICES: Record<string, string> = {
+  strategy_call: "£150",
+  hearing_prep: "£350",
+  document_review: "£150",
+  case_review: "£250",
+};
+
+const PAID_KEY = "upheld_expert_paid";
+
 async function submitExpertEnquiry(data: {
   name: string;
   email: string;
@@ -51,7 +75,7 @@ const services = [
     icon: Phone,
     title: "Strategy call",
     duration: "30 minutes",
-    price: "£75",
+    price: "£150",
     description: "Talk through your situation with an experienced legal adviser. Get a clear picture of where you stand, what your options are, and what to do next.",
     includes: [
       "Review of your triage results before the call",
@@ -141,18 +165,18 @@ function getAvailableSlots(): { date: Date; label: string; timeSlots: string[] }
     date.setDate(today.getDate() + i);
     const day = date.getDay();
 
-    // Wednesday = 3, Friday = 5
-    if (day !== 3 && day !== 5) continue;
+    // Tuesday = 2, Wednesday = 3
+    if (day !== 2 && day !== 3) continue;
 
-    // Skip if today and already past 5pm
-    if (i === 0 && now.getHours() >= 19) continue;
+    // Skip if today and already past 8pm
+    if (i === 0 && now.getHours() >= 20) continue;
 
-    const dayName = day === 3 ? "Wednesday" : "Friday";
+    const dayName = day === 2 ? "Tuesday" : "Wednesday";
     const dateStr = date.toLocaleDateString("en-GB", { day: "numeric", month: "long" });
     const label = `${dayName} ${dateStr}`;
 
-    // Available times: 5:00pm, 5:15pm, 5:30pm, 5:45pm, 6:00pm, 6:15pm, 6:30pm, 6:45pm
-    const timeSlots = ["5:00 pm", "5:15 pm", "5:30 pm", "5:45 pm", "6:00 pm", "6:15 pm", "6:30 pm", "6:45 pm"];
+    // Available times: 6:00pm, 6:30pm, 7:00pm, 7:30pm (30-minute slots, 6 to 8 pm)
+    const timeSlots = ["6:00 pm", "6:30 pm", "7:00 pm", "7:30 pm"];
 
     // If today, filter out past times
     if (i === 0) {
@@ -193,8 +217,54 @@ export default function ExpertClient() {
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [paidServices, setPaidServices] = useState<Record<string, boolean>>({});
+  const [showPayment, setShowPayment] = useState(false);
+
+  // Load any previously paid services and verify a return from Stripe checkout.
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem(PAID_KEY);
+        if (stored) setPaidServices(JSON.parse(stored));
+      } catch {}
+    }
+
+    const sessionId = searchParams.get("session_id");
+    const paidFlag = searchParams.get("paid");
+    if (sessionId && paidFlag === "true") {
+      fetch("/api/stripe/expert-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.paid && data.service) {
+            setPaidServices((prev) => {
+              const next = { ...prev, [data.service]: true };
+              try {
+                localStorage.setItem(PAID_KEY, JSON.stringify(next));
+              } catch {}
+              return next;
+            });
+            setNoticeAccepted(true);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [searchParams]);
 
   const isDiscovery = selected === "discovery_call";
+  const calendlyUrl = selected ? CALENDLY_URLS[selected] : undefined;
+  const isAppointment = !!selected && APPOINTMENT_SERVICES.includes(selected);
+  const isPaidService = !!selected && !isDiscovery && !!PAID_SERVICE_PRICES[selected];
+  const hasPaid = !!selected && paidServices[selected] === true;
+  const servicePrice = selected ? PAID_SERVICE_PRICES[selected] : undefined;
+  const selectedService = services.find((s) => s.value === selected);
+  // Booking panel (Calendly / notice / pay) vs the details form. Reviews fall
+  // through to the form once paid, so they can submit their document.
+  const showBookingPanel =
+    (isDiscovery && !!calendlyUrl) || (isPaidService && (!hasPaid || isAppointment));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,10 +275,13 @@ export default function ExpertClient() {
     setSubmitting(true);
     setError("");
     try {
-      const messageWithSlot = isDiscovery
-        ? `Requested slot: ${selectedSlot}\n\n${form.message}`
-        : form.message;
-      const result = await submitExpertEnquiry({ ...form, message: messageWithSlot, service: selected });
+      const prefix = isDiscovery
+        ? `Requested slot: ${selectedSlot}\n\n`
+        : hasPaid
+          ? `PAID in app: ${selectedService?.title} (${servicePrice}).\n\n`
+          : "";
+      const messageWithContext = `${prefix}${form.message}`;
+      const result = await submitExpertEnquiry({ ...form, message: messageWithContext, service: selected });
       if (!result.ok) {
         setError(result.error || "Something went wrong. Please try again or email legal@karensafo.com directly.");
       } else {
@@ -321,24 +394,98 @@ export default function ExpertClient() {
               <CheckCircle className="w-6 h-6 text-white" />
             </div>
             <h3 className="text-lg font-bold text-uphold-neutral-800 mb-2">
-              {isDiscovery ? "Call requested" : "Enquiry received"}
+              {isDiscovery ? "Call requested" : hasPaid ? "Details received" : "Enquiry received"}
             </h3>
             <p className="text-sm text-uphold-neutral-600">
               {isDiscovery
                 ? "We will confirm your call time by email or phone within one working day."
-                : "We will be in touch within one working day to confirm your booking and payment details. A copy of the Client Information Notice will be sent to your email."}
+                : hasPaid
+                  ? "Thank you. Your payment is confirmed and we have your details. We will be in touch within one working day to begin your review."
+                  : "We will be in touch within one working day to confirm your booking and payment details. A copy of the Client Information Notice will be sent to your email."}
             </p>
+          </div>
+        ) : showBookingPanel ? (
+          <div className="bg-white border border-uphold-neutral-200 rounded-2xl p-6">
+            <h2 className="text-lg font-bold text-uphold-neutral-800 mb-1">
+              {isAppointment ? "Book: " : ""}{selectedService?.title}
+            </h2>
+            <p className="text-sm text-uphold-neutral-500 mb-5">
+              {isAppointment
+                ? "Appointments run Tuesday and Wednesday evenings, 6 to 8 pm. "
+                : ""}
+              {servicePrice && !hasPaid
+                ? `This is a paid service (${servicePrice}). Payment is taken now, before you ${isAppointment ? "book a time" : "send your details"}.`
+                : ""}
+              {servicePrice && hasPaid ? `Payment received (${servicePrice}).${calendlyUrl ? " Pick a time below." : ""}` : ""}
+            </p>
+
+            {isDiscovery ? (
+              <CalendlyEmbed url={calendlyUrl as string} />
+            ) : !noticeAccepted ? (
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={noticeAccepted}
+                    onChange={(e) => setNoticeAccepted(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 accent-uphold-green-500 flex-shrink-0"
+                  />
+                  <span className="text-sm text-uphold-neutral-600">
+                    I have read and understood the{" "}
+                    <button
+                      type="button"
+                      onClick={() => setShowNotice(true)}
+                      className="text-uphold-green-600 underline hover:text-uphold-green-800"
+                    >
+                      Client Information Notice
+                    </button>
+                    , including that {COMPANY_NAME} is not a regulated law firm and the Legal Ombudsman cannot consider complaints about these services.
+                  </span>
+                </label>
+                <p className="text-xs text-uphold-neutral-400">
+                  Please confirm you have read the notice above to continue.
+                </p>
+              </div>
+            ) : !hasPaid ? (
+              <div>
+                {!showPayment ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowPayment(true)}
+                    className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3.5 rounded-xl hover:bg-uphold-green-700 transition-colors"
+                  >
+                    Pay {servicePrice} to continue
+                  </button>
+                ) : (
+                  <StripeElementsCheckout
+                    endpoint="/api/stripe/expert-checkout"
+                    body={{ service: selected }}
+                    submitLabel={`Pay ${servicePrice}`}
+                  />
+                )}
+              </div>
+            ) : calendlyUrl ? (
+              <CalendlyEmbed url={calendlyUrl} />
+            ) : (
+              <p className="text-sm text-uphold-neutral-600">
+                Payment received. We will email you a booking link shortly. If you do not hear from us within one working day, contact legal@karensafo.com.
+              </p>
+            )}
           </div>
         ) : (
           <div className="bg-white border border-uphold-neutral-200 rounded-2xl p-6">
             <h2 className="text-lg font-bold text-uphold-neutral-800 mb-1">
-              {selected
-                ? `Book: ${services.find((s) => s.value === selected)?.title}`
-                : "Select a service above to continue"}
+              {!selected
+                ? "Select a service above to continue"
+                : hasPaid
+                  ? `Send your details: ${selectedService?.title}`
+                  : `Book: ${selectedService?.title}`}
             </h2>
             {selected && (
               <p className="text-sm text-uphold-neutral-500 mb-5">
-                Fill in your details and we will confirm your booking within one working day.
+                {hasPaid
+                  ? "Your payment is confirmed. Share your details and document so we can begin."
+                  : "Fill in your details and we will confirm your booking within one working day."}
               </p>
             )}
 
@@ -401,7 +548,7 @@ export default function ExpertClient() {
                 <div>
                   <label className="block text-sm font-medium text-uphold-neutral-700 mb-2">
                     <Calendar className="w-4 h-4 inline-block mr-1 -mt-0.5" />
-                    Pick a time (Wednesdays and Fridays, after 5 pm)
+                    Pick a time (Tuesdays and Wednesdays, 6 to 8 pm)
                   </label>
                   {availableSlots.length === 0 ? (
                     <p className="text-sm text-uphold-neutral-500 italic">No slots available right now. Email hello@upheld.co.uk to arrange a time.</p>
@@ -449,8 +596,8 @@ export default function ExpertClient() {
                 />
               </div>
 
-              {/* Client notice checkbox - only for paid services */}
-              {!isDiscovery && (
+              {/* Client notice checkbox - paid services, unless already accepted at payment */}
+              {!isDiscovery && !hasPaid && (
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -479,14 +626,16 @@ export default function ExpertClient() {
                 disabled={submitting || !selected || (!isDiscovery && !noticeAccepted) || (isDiscovery && (!selectedSlot || !form.phone))}
                 className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3.5 rounded-xl hover:bg-uphold-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {submitting ? "Sending…" : isDiscovery ? "Request call" : "Send enquiry"}
+                {submitting ? "Sending…" : isDiscovery ? "Request call" : hasPaid ? "Send details" : "Send enquiry"}
                 {!submitting && <Send className="w-4 h-4" />}
               </button>
 
               <p className="text-xs text-uphold-neutral-400 text-center">
                 {isDiscovery
                   ? "We will confirm your call by email or phone within one working day."
-                  : "We will reply within one working day with confirmation and payment details. No upfront payment required."}
+                  : hasPaid
+                    ? "Your payment is confirmed. We will reply within one working day to begin your review."
+                    : "We will reply within one working day with confirmation and payment details. No upfront payment required."}
               </p>
             </form>
           </div>
