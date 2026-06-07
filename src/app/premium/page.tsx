@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Shield, CheckCircle, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Upheld Premium | Full Case Tools for £29.99/month, 7-Day Free Trial",
+  title: "Upheld Premium | Full Case Tools for £79/month, 7-Day Free Trial",
   description:
-    "Upheld Premium gives you the full case assessment, step-by-step guided journey, document generator, and evidence builder for employment, housing, contract, and creator disputes. 7-day free trial, then £29.99/month. Cancel anytime.",
+    "Upheld Premium gives you the full case assessment, step-by-step guided journey, document generator, and evidence builder for employment, housing, contract, and creator disputes. 7-day free trial, then £79/month. Cancel anytime.",
   openGraph: {
     title: "Upheld Premium",
     description:
-      "Full case assessment, guided journey, document generator, and evidence builder. 7-day free trial, then £29.99/month.",
+      "Full case assessment, guided journey, document generator, and evidence builder. 7-day free trial, then £79/month.",
     url: "https://upheld.co.uk/premium",
   },
 };
@@ -68,12 +68,12 @@ export default function PremiumPage() {
           <div className="flex items-baseline justify-between mb-1">
             <span className="text-sm font-medium text-uphold-neutral-600">Upheld Premium</span>
             <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-uphold-neutral-800">£29.99</span>
+              <span className="text-3xl font-bold text-uphold-neutral-800">£79</span>
               <span className="text-sm text-uphold-neutral-500">/month</span>
             </div>
           </div>
           <p className="text-xs text-uphold-neutral-500 mb-5">
-            7 days free, then £29.99/month. Cancel anytime.
+            7 days free, then £79/month. Cancel anytime.
           </p>
           <Link
             href="/#situations"

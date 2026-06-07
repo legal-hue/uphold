@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "What happens after the 7-day trial?",
-    a: "After the free trial, Upheld Premium is £29.99/month. You can cancel at any time from your App Store or Play Store settings. If you cancel before the trial ends, you will not be charged.",
+    a: "After the free trial, Upheld Premium is £79/month. You can cancel at any time from your App Store or Play Store settings. If you cancel before the trial ends, you will not be charged.",
   },
   {
     q: "What if my situation is complicated or unusual?",
