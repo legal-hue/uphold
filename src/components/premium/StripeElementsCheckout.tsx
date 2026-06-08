@@ -30,7 +30,7 @@ export function StripeElementsCheckout({
   area,
   endpoint = "/api/stripe/checkout",
   body,
-  submitLabel = "Start free trial",
+  submitLabel = "Pay now",
 }: StripeElementsCheckoutProps) {
   const requestBody = body ?? { area };
   const requestKey = `${endpoint}:${JSON.stringify(requestBody)}`;
@@ -157,7 +157,7 @@ export function StripeElementsCheckout({
     }
 
     if (!trimmedEmail) {
-      setError("Enter the email address you want linked to your subscription.");
+      setError("Enter the email address for your receipt.");
       return;
     }
 
@@ -211,7 +211,7 @@ export function StripeElementsCheckout({
 
       <div>
         <label className="mb-1 block text-sm font-medium text-uphold-neutral-700">
-          Email for receipts and subscription updates
+          Email for your receipt
         </label>
         <input
           type="email"

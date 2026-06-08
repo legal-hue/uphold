@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Shield, CheckCircle, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Upheld Premium | Full Case Tools for £79/month, 7-Day Free Trial",
+  title: "Upheld Premium | Full Case Toolkit for a One-Off £79",
   description:
-    "Upheld Premium gives you the full case assessment, step-by-step guided journey, document generator, and evidence builder for employment, housing, contract, and creator disputes. 7-day free trial, then £79/month. Cancel anytime.",
+    "Upheld Premium gives you the full case assessment, step-by-step guided journey, document generator, and evidence builder for employment, housing, contract, and creator disputes. A single one-off payment of £79. No subscription.",
   openGraph: {
     title: "Upheld Premium",
     description:
-      "Full case assessment, guided journey, document generator, and evidence builder. 7-day free trial, then £79/month.",
+      "Full case assessment, guided journey, document generator, and evidence builder. One-off £79, no subscription.",
     url: "https://upheld.co.uk/premium",
   },
 };
@@ -27,8 +27,8 @@ const comparisonRows = [
 
 const faqs = [
   {
-    q: "Can I cancel before being charged?",
-    a: "Yes. You have 7 full days to try everything. Cancel any time before the trial ends and you will not be charged. Web customers can cancel through the Manage subscription link or by contacting Upheld.",
+    q: "Is this a subscription?",
+    a: "No. It is a single one-off payment of £79 that unlocks the full toolkit for your case. There is no monthly fee and nothing to cancel.",
   },
   {
     q: "Does this replace a solicitor?",
@@ -63,27 +63,27 @@ export default function PremiumPage() {
         {/* Price card */}
         <div className="bg-white rounded-2xl border-2 border-uphold-green-500 p-6 mb-10 max-w-md mx-auto">
           <div className="bg-uphold-green-50 text-uphold-green-700 text-sm font-semibold text-center py-2 px-4 rounded-lg mb-4 border border-uphold-green-100">
-            7-day free trial
+            One-off payment
           </div>
           <div className="flex items-baseline justify-between mb-1">
-            <span className="text-sm font-medium text-uphold-neutral-600">Upheld Premium</span>
+            <span className="text-sm font-medium text-uphold-neutral-600">Upheld full case toolkit</span>
             <div className="flex items-baseline gap-1">
               <span className="text-3xl font-bold text-uphold-neutral-800">£79</span>
-              <span className="text-sm text-uphold-neutral-500">/month</span>
+              <span className="text-sm text-uphold-neutral-500">one-off</span>
             </div>
           </div>
           <p className="text-xs text-uphold-neutral-500 mb-5">
-            7 days free, then £79/month. Cancel anytime.
+            A single payment of £79. No subscription, no recurring charges.
           </p>
           <Link
             href="/#situations"
             className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg"
           >
-            Start your free trial
+            Unlock full access
             <ArrowRight className="w-5 h-5" />
           </Link>
           <p className="text-xs text-uphold-neutral-400 text-center mt-3">
-            Begin with a quick, free check of your situation. No charge for 7 days.
+            Begin with a free check of your situation, then unlock the full toolkit for £79.
           </p>
         </div>
 
@@ -139,7 +139,7 @@ export default function PremiumPage() {
             href="/#situations"
             className="inline-flex items-center gap-2 bg-uphold-green-500 text-white font-semibold px-8 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg"
           >
-            Start your free trial
+            Unlock full access
             <ArrowRight className="w-5 h-5" />
           </Link>
           <p className="text-xs text-uphold-neutral-400 mt-4 max-w-md mx-auto leading-relaxed">

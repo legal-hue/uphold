@@ -59,10 +59,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      "name": "What happens after the 7-day trial?",
+      "name": "Is Upheld Premium a subscription?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "After the free trial, Upheld Premium is £79/month. You can cancel at any time from your App Store or Play Store settings. If you cancel before the trial ends, you will not be charged.",
+        "text": "No. Upheld Premium is a one-off payment of £79 that unlocks the full toolkit for your case. There is no monthly subscription and nothing to cancel.",
       },
     },
     {

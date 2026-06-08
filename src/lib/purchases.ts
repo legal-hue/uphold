@@ -148,13 +148,14 @@ export async function restorePurchases(): Promise<boolean> {
 }
 
 /**
- * True when the current subscriber can manage billing through Stripe
- * (web customers only — native subscribers manage via the App/Play Store).
+ * The case unlock is a one-off payment, so there is no subscription to manage
+ * or cancel. This stays false unless a recurring subscription is ever stored
+ * (kept for forward compatibility).
  */
 export function canManageStripeBilling(): boolean {
   if (isNativeApp()) return false;
   const sub = getSubscription();
-  return sub?.provider === "stripe" && !!getStoredStripe()?.customerId;
+  return sub?.provider === "stripe" && !!getStoredStripe()?.subscriptionId;
 }
 
 /**

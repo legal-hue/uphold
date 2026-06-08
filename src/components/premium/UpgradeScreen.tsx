@@ -25,8 +25,8 @@ const comparisonRows = [
 
 const faqs = [
   {
-    q: "Can I cancel before being charged?",
-    a: "Yes. You have 7 full days to try everything. Cancel anytime before the trial ends and you will not be charged. App users can cancel in App Store or Play Store settings. Web customers can cancel through Stripe or by contacting Upheld.",
+    q: "Is this a subscription?",
+    a: "No. It is a single one-off payment of £79 that unlocks the full toolkit for your case. There is nothing to cancel and you will not be charged again.",
   },
   {
     q: "Does this replace a solicitor?",
@@ -165,29 +165,29 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
           ))}
         </div>
 
-        {/* Risk reversal callout */}
+        {/* Reassurance callout */}
         <div className="bg-uphold-green-50 border border-uphold-green-100 rounded-xl p-4 mb-6 flex items-start gap-3">
           <Shield className="w-5 h-5 text-uphold-green-500 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-uphold-neutral-800">Try it free for 7 days, no risk</p>
-            <p className="text-xs text-uphold-neutral-600 mt-1">Cancel before your trial ends and you will not be charged. No questions asked. Your case information stays on your device.</p>
+            <p className="text-sm font-semibold text-uphold-neutral-800">One payment, no subscription</p>
+            <p className="text-xs text-uphold-neutral-600 mt-1">Pay once and the full toolkit for your case is yours. No monthly fees, nothing to cancel. Your case information stays on your device.</p>
           </div>
         </div>
 
         {/* Pricing card */}
         <div className="bg-white rounded-2xl border-2 border-uphold-green-500 p-6 mb-6">
           <div className="bg-uphold-green-50 text-uphold-green-700 text-sm font-semibold text-center py-2 px-4 rounded-lg mb-4 border border-uphold-green-100">
-            7-day free trial
+            One-off payment
           </div>
 
           <div className="flex items-baseline justify-between mb-1">
-            <span className="text-sm font-medium text-uphold-neutral-600">Upheld Premium</span>
+            <span className="text-sm font-medium text-uphold-neutral-600">Upheld full case toolkit</span>
             <div className="flex items-baseline gap-1">
               <span className="text-3xl font-bold text-uphold-neutral-800">£79</span>
-              <span className="text-sm text-uphold-neutral-500">/month</span>
+              <span className="text-sm text-uphold-neutral-500">one-off</span>
             </div>
           </div>
-          <p className="text-xs text-uphold-neutral-500 mb-5">7 days free, then £79/month thereafter. Cancel anytime.</p>
+          <p className="text-xs text-uphold-neutral-500 mb-5">A single payment of £79. No subscription, no recurring charges.</p>
 
           <button
             onClick={handleSubscribe}
@@ -203,14 +203,14 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
               </>
             ) : (
               <>
-                Start free trial
+                Unlock full access
                 <ArrowRight className="w-5 h-5" />
               </>
             )}
           </button>
 
           <p className="text-xs text-uphold-neutral-400 text-center mt-3">
-            No charge for 7 days. Cancel anytime before the trial ends.
+            One payment of £79. No subscription.
           </p>
 
           {error && (
@@ -218,7 +218,7 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
           )}
 
           {showPaymentForm && !isNativeApp() && (
-            <StripeElementsCheckout area={area} />
+            <StripeElementsCheckout area={area} submitLabel="Pay £79" />
           )}
         </div>
 

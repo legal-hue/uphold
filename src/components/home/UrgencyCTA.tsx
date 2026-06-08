@@ -23,7 +23,7 @@ export function UrgencyCTA() {
           <ArrowRight className="w-5 h-5" />
         </Link>
         <p className="text-uphold-neutral-500 text-xs mt-4">
-          Assessment is free. Full case tools from £79/month with a 7-day free trial.
+          Assessment is free. Unlock the full case toolkit for a one-off £79, no subscription.
         </p>
       </div>
     </section>

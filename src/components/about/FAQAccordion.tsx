@@ -25,8 +25,8 @@ const faqs = [
     a: "We calculate deadlines based on the standard rules for each type of claim. Individual circumstances, such as ACAS early conciliation, can extend them. Always verify your specific deadline with a legal professional.",
   },
   {
-    q: "What happens after the 7-day trial?",
-    a: "After the free trial, Upheld Premium is £79/month. You can cancel at any time from your App Store or Play Store settings. If you cancel before the trial ends, you will not be charged.",
+    q: "Is Upheld Premium a subscription?",
+    a: "No. Upheld Premium is a one-off payment of £79 that unlocks the full toolkit for your case. There is no monthly subscription and nothing to cancel.",
   },
   {
     q: "What if my situation is complicated or unusual?",
