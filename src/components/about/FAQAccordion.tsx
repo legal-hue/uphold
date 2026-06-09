@@ -25,8 +25,8 @@ const faqs = [
     a: "We calculate deadlines based on the standard rules for each type of claim. Individual circumstances, such as ACAS early conciliation, can extend them. Always verify your specific deadline with a legal professional.",
   },
   {
-    q: "How much does Upheld Premium cost?",
-    a: "Two options: a one-off £79 payment that unlocks the full toolkit for a single case, or ongoing cover at £29.99 per month with a 7-day free trial, which you can cancel anytime.",
+    q: "Is Upheld Premium a subscription?",
+    a: "No. Upheld Premium is a one-off payment of £79 that unlocks the full toolkit for your case. There is no monthly subscription and nothing to cancel.",
   },
   {
     q: "What if my situation is complicated or unusual?",

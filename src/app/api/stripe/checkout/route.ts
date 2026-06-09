@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getStripe, PRICE_ID } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import type { PracticeArea } from "@/lib/types";
 
 const VALID_AREAS: PracticeArea[] = ["employment", "housing", "contract", "creative"];
@@ -17,57 +17,32 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const area = VALID_AREAS.includes(body.area) ? body.area : "employment";
-    const plan = body.plan === "oneoff" ? "oneoff" : "subscription";
     const origin = getReturnOrigin(req);
-    const returnUrl = `${origin}/triage/${area}/result?session_id={CHECKOUT_SESSION_ID}&upgraded=true`;
 
-    let session;
-    if (plan === "oneoff") {
-      // One-off: pay once, unlock the full toolkit for this case forever.
-      session = await getStripe().checkout.sessions.create({
-        ui_mode: "elements",
-        mode: "payment",
-        billing_address_collection: "auto",
-        line_items: [
-          {
-            price_data: {
-              currency: "gbp",
-              product_data: {
-                name: "Upheld full case toolkit",
-                description:
-                  "One-off unlock: full case assessment, guided journey, document generator, and evidence builder.",
-              },
-              unit_amount: UNLOCK_AMOUNT,
+    const session = await getStripe().checkout.sessions.create({
+      ui_mode: "elements",
+      mode: "payment",
+      billing_address_collection: "auto",
+      line_items: [
+        {
+          price_data: {
+            currency: "gbp",
+            product_data: {
+              name: "Upheld full case toolkit",
+              description:
+                "One-off unlock: full case assessment, guided journey, document generator, and evidence builder.",
             },
-            quantity: 1,
+            unit_amount: UNLOCK_AMOUNT,
           },
-        ],
-        client_reference_id: area,
-        metadata: { area, plan },
-        payment_intent_data: { metadata: { area, plan } },
-        return_url: returnUrl,
-        allow_promotion_codes: true,
-      });
-    } else {
-      // Subscription: ongoing cover, £29.99/month with a 7-day free trial.
-      if (!PRICE_ID) {
-        return Response.json(
-          { error: "Stripe subscription price is not configured" },
-          { status: 500 }
-        );
-      }
-      session = await getStripe().checkout.sessions.create({
-        ui_mode: "elements",
-        mode: "subscription",
-        billing_address_collection: "auto",
-        line_items: [{ price: PRICE_ID, quantity: 1 }],
-        client_reference_id: area,
-        metadata: { area, plan },
-        subscription_data: { trial_period_days: 7, metadata: { area } },
-        return_url: returnUrl,
-        allow_promotion_codes: true,
-      });
-    }
+          quantity: 1,
+        },
+      ],
+      client_reference_id: area,
+      metadata: { area, product: "case_unlock" },
+      payment_intent_data: { metadata: { area, product: "case_unlock" } },
+      return_url: `${origin}/triage/${area}/result?session_id={CHECKOUT_SESSION_ID}&upgraded=true`,
+      allow_promotion_codes: true,
+    });
 
     if (!session.client_secret) {
       return Response.json(
