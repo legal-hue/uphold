@@ -59,10 +59,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      "name": "Is Upheld Premium a subscription?",
+      "name": "How much does Upheld Premium cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Upheld Premium is a one-off payment of £79 that unlocks the full toolkit for your case. There is no monthly subscription and nothing to cancel.",
+        "text": "Two options: a one-off £79 payment that unlocks the full toolkit for a single case, or ongoing cover at £29.99 per month with a 7-day free trial, which you can cancel anytime.",
       },
     },
     {

@@ -567,7 +567,7 @@ export function ResultDisplay() {
           }}
           className="block w-full bg-uphold-green-500 text-white text-center font-semibold text-lg px-6 py-4 rounded-xl hover:bg-uphold-green-700 transition-colors shadow-lg shadow-uphold-green-500/20"
         >
-          {premium ? "Start your guided journey" : "Unlock full access (£79)"}
+          {premium ? "Start your guided journey" : "Unlock full access"}
           <span className="block text-sm font-normal opacity-90 mt-1">
             {premium
               ? "Continue with your full premium tools"

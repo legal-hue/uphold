@@ -25,8 +25,8 @@ const comparisonRows = [
 
 const faqs = [
   {
-    q: "Is this a subscription?",
-    a: "No. It is a single one-off payment of £79 that unlocks the full toolkit for your case. There is nothing to cancel and you will not be charged again.",
+    q: "How does pricing work?",
+    a: "Two options. A one-off £79 payment unlocks the full toolkit for this case, with nothing to cancel. Or, for ongoing cover (handy if you have more than one issue, or for businesses and creators), £29.99/month with a 7-day free trial, cancel anytime.",
   },
   {
     q: "Does this replace a solicitor?",
@@ -65,21 +65,22 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
   const [loading, setLoading] = useState(false);
   const [restoring, setRestoring] = useState(false);
   const [error, setError] = useState("");
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [plan, setPlan] = useState<"subscription" | "oneoff" | null>(null);
 
-  const handleSubscribe = async () => {
+  const handleChoose = async (chosen: "subscription" | "oneoff") => {
     if (!isNativeApp()) {
-      setShowPaymentForm(true);
+      // Web: reveal the embedded Stripe form for the chosen plan.
+      setPlan(chosen);
       setError("");
       return;
     }
 
+    // Native only offers the subscription via RevenueCat.
     setLoading(true);
     setError("");
     try {
       const success = await purchasePremium(area);
       if (success && isNativeApp()) {
-        // Native: purchase completed immediately
         activateSubscription({ provider: "revenuecat" });
         router.push(`/triage/${area}/result?upgraded=true`);
         router.refresh();
@@ -165,60 +166,64 @@ export function UpgradeScreen({ area, onClose }: UpgradeScreenProps) {
           ))}
         </div>
 
-        {/* Reassurance callout */}
-        <div className="bg-uphold-green-50 border border-uphold-green-100 rounded-xl p-4 mb-6 flex items-start gap-3">
-          <Shield className="w-5 h-5 text-uphold-green-500 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-uphold-neutral-800">One payment, no subscription</p>
-            <p className="text-xs text-uphold-neutral-600 mt-1">Pay once and the full toolkit for your case is yours. No monthly fees, nothing to cancel. Your case information stays on your device.</p>
-          </div>
-        </div>
-
-        {/* Pricing card */}
-        <div className="bg-white rounded-2xl border-2 border-uphold-green-500 p-6 mb-6">
-          <div className="bg-uphold-green-50 text-uphold-green-700 text-sm font-semibold text-center py-2 px-4 rounded-lg mb-4 border border-uphold-green-100">
-            One-off payment
-          </div>
-
-          <div className="flex items-baseline justify-between mb-1">
-            <span className="text-sm font-medium text-uphold-neutral-600">Upheld full case toolkit</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-uphold-neutral-800">£79</span>
-              <span className="text-sm text-uphold-neutral-500">one-off</span>
+        {/* Plan options: subscription (featured) + one-off */}
+        <div className="space-y-4 mb-6">
+          {/* Subscription (recommended) */}
+          <div className={`bg-white rounded-2xl border-2 p-6 relative ${plan === "subscription" ? "border-uphold-green-500" : "border-uphold-green-500"}`}>
+            <span className="absolute -top-3 left-6 text-xs font-semibold bg-uphold-green-500 text-white px-3 py-1 rounded-full">
+              Recommended
+            </span>
+            <div className="flex items-baseline justify-between mb-1 mt-1">
+              <span className="text-sm font-medium text-uphold-neutral-600">Ongoing cover</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-uphold-neutral-800">£29.99</span>
+                <span className="text-sm text-uphold-neutral-500">/month</span>
+              </div>
             </div>
-          </div>
-          <p className="text-xs text-uphold-neutral-500 mb-5">A single payment of £79. No subscription, no recurring charges.</p>
-
-          <button
-            onClick={handleSubscribe}
-            disabled={loading}
-            className={`w-full items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg disabled:opacity-60 ${
-              showPaymentForm && !isNativeApp() ? "hidden" : "flex"
-            }`}
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Processing...
-              </>
-            ) : (
-              <>
-                Unlock full access
-                <ArrowRight className="w-5 h-5" />
-              </>
+            <p className="text-xs text-uphold-neutral-500 mb-4">
+              7-day free trial, then £29.99/month. Best if you have more than one issue, or for businesses and creators. Cancel anytime.
+            </p>
+            {plan !== "subscription" && (
+              <button
+                onClick={() => handleChoose("subscription")}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3.5 rounded-xl hover:bg-uphold-green-700 transition-colors disabled:opacity-60"
+              >
+                {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Start 7-day free trial <ArrowRight className="w-4 h-4" /></>}
+              </button>
             )}
-          </button>
+            {plan === "subscription" && !isNativeApp() && (
+              <StripeElementsCheckout area={area} body={{ area, plan: "subscription" }} submitLabel="Start free trial" />
+            )}
+          </div>
 
-          <p className="text-xs text-uphold-neutral-400 text-center mt-3">
-            One payment of £79. No subscription.
-          </p>
+          {/* One-off */}
+          <div className={`bg-white rounded-2xl border-2 p-6 ${plan === "oneoff" ? "border-uphold-green-500" : "border-uphold-neutral-200"}`}>
+            <div className="flex items-baseline justify-between mb-1">
+              <span className="text-sm font-medium text-uphold-neutral-600">This case only</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-3xl font-bold text-uphold-neutral-800">£79</span>
+                <span className="text-sm text-uphold-neutral-500">one-off</span>
+              </div>
+            </div>
+            <p className="text-xs text-uphold-neutral-500 mb-4">
+              A single payment of £79 to unlock the full toolkit for this case. No subscription, nothing to cancel.
+            </p>
+            {plan !== "oneoff" && !isNativeApp() && (
+              <button
+                onClick={() => handleChoose("oneoff")}
+                className="w-full flex items-center justify-center gap-2 bg-white border-2 border-uphold-green-500 text-uphold-green-600 font-semibold py-3.5 rounded-xl hover:bg-uphold-green-50 transition-colors"
+              >
+                Pay once, £79 <ArrowRight className="w-4 h-4" />
+              </button>
+            )}
+            {plan === "oneoff" && !isNativeApp() && (
+              <StripeElementsCheckout area={area} body={{ area, plan: "oneoff" }} submitLabel="Pay £79" />
+            )}
+          </div>
 
           {error && (
-            <p className="text-xs text-uphold-red text-center mt-2">{error}</p>
-          )}
-
-          {showPaymentForm && !isNativeApp() && (
-            <StripeElementsCheckout area={area} submitLabel="Pay £79" />
+            <p className="text-xs text-uphold-red text-center">{error}</p>
           )}
         </div>
 

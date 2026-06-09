@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Shield, CheckCircle, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Upheld Premium | Full Case Toolkit for a One-Off £79",
+  title: "Upheld Premium | Full Case Toolkit from £29.99/month or £79 One-Off",
   description:
-    "Upheld Premium gives you the full case assessment, step-by-step guided journey, document generator, and evidence builder for employment, housing, contract, and creator disputes. A single one-off payment of £79. No subscription.",
+    "Upheld Premium gives you the full case assessment, step-by-step guided journey, document generator, and evidence builder for employment, housing, contract, and creator disputes. Ongoing cover from £29.99/month with a 7-day free trial, or a one-off £79 for a single case.",
   openGraph: {
     title: "Upheld Premium",
     description:
-      "Full case assessment, guided journey, document generator, and evidence builder. One-off £79, no subscription.",
+      "Full case assessment, guided journey, document generator, and evidence builder. £29.99/month with a 7-day trial, or a one-off £79.",
     url: "https://upheld.co.uk/premium",
   },
 };
@@ -27,8 +27,8 @@ const comparisonRows = [
 
 const faqs = [
   {
-    q: "Is this a subscription?",
-    a: "No. It is a single one-off payment of £79 that unlocks the full toolkit for your case. There is no monthly fee and nothing to cancel.",
+    q: "How does pricing work?",
+    a: "Two options. A one-off £79 payment unlocks the full toolkit for a single case, with nothing to cancel. Or, for ongoing cover, £29.99/month with a 7-day free trial, which suits anyone with more than one issue and businesses or creators. Cancel the subscription anytime.",
   },
   {
     q: "Does this replace a solicitor?",
@@ -60,31 +60,50 @@ export default function PremiumPage() {
           </p>
         </div>
 
-        {/* Price card */}
-        <div className="bg-white rounded-2xl border-2 border-uphold-green-500 p-6 mb-10 max-w-md mx-auto">
-          <div className="bg-uphold-green-50 text-uphold-green-700 text-sm font-semibold text-center py-2 px-4 rounded-lg mb-4 border border-uphold-green-100">
-            One-off payment
+        {/* Plans */}
+        <div className="grid gap-4 md:grid-cols-2 mb-10 max-w-2xl mx-auto">
+          {/* Subscription (recommended) */}
+          <div className="bg-white rounded-2xl border-2 border-uphold-green-500 p-6 relative">
+            <span className="absolute -top-3 left-6 text-xs font-semibold bg-uphold-green-500 text-white px-3 py-1 rounded-full">
+              Recommended
+            </span>
+            <div className="mb-1 mt-1">
+              <span className="text-sm font-medium text-uphold-neutral-600">Ongoing cover</span>
+            </div>
+            <div className="flex items-baseline gap-1 mb-2">
+              <span className="text-3xl font-bold text-uphold-neutral-800">£29.99</span>
+              <span className="text-sm text-uphold-neutral-500">/month</span>
+            </div>
+            <p className="text-xs text-uphold-neutral-500 mb-4">
+              7-day free trial, then £29.99/month. Best if you have more than one issue, or for businesses and creators. Cancel anytime.
+            </p>
+            <Link
+              href="/#situations"
+              className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-3.5 rounded-xl hover:bg-uphold-green-700 transition-colors"
+            >
+              Start free trial <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-          <div className="flex items-baseline justify-between mb-1">
-            <span className="text-sm font-medium text-uphold-neutral-600">Upheld full case toolkit</span>
-            <div className="flex items-baseline gap-1">
+
+          {/* One-off */}
+          <div className="bg-white rounded-2xl border border-uphold-neutral-200 p-6">
+            <div className="mb-1">
+              <span className="text-sm font-medium text-uphold-neutral-600">This case only</span>
+            </div>
+            <div className="flex items-baseline gap-1 mb-2">
               <span className="text-3xl font-bold text-uphold-neutral-800">£79</span>
               <span className="text-sm text-uphold-neutral-500">one-off</span>
             </div>
+            <p className="text-xs text-uphold-neutral-500 mb-4">
+              A single payment of £79 to unlock the full toolkit for this case. No subscription, nothing to cancel.
+            </p>
+            <Link
+              href="/#situations"
+              className="w-full flex items-center justify-center gap-2 bg-white border-2 border-uphold-green-500 text-uphold-green-600 font-semibold py-3.5 rounded-xl hover:bg-uphold-green-50 transition-colors"
+            >
+              Pay once, £79 <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-          <p className="text-xs text-uphold-neutral-500 mb-5">
-            A single payment of £79. No subscription, no recurring charges.
-          </p>
-          <Link
-            href="/#situations"
-            className="w-full flex items-center justify-center gap-2 bg-uphold-green-500 text-white font-semibold py-4 rounded-xl hover:bg-uphold-green-700 transition-colors text-lg"
-          >
-            Unlock full access
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-          <p className="text-xs text-uphold-neutral-400 text-center mt-3">
-            Begin with a free check of your situation, then unlock the full toolkit for £79.
-          </p>
         </div>
 
         {/* Comparison table */}
